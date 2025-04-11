@@ -1,0 +1,79 @@
+fileFormatVersion: 2
+guid: 41d4b50c2071d9a4a8dabd458ae301e4
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
+    { value: true });\r\nconst UnityEngine_1 = require(\"UnityEngine\");\r\nconst
+    ZEPETO_Character_Controller_1 = require(\"ZEPETO.Character.Controller\");\r\nconst
+    ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nconst TypeSyncHelper_1 = require(\"../../ZepetoScripts/SyncHelper/TypeSyncHelper\");\r\nconst
+    TourManager_1 = require(\"../Game/Tour/TourManager\");\r\nconst ScreenShotModeManager_1
+    = require(\"../../ZepetoScripts/ScreenShotScripts/ScreenShotModeManager\");\r\nconst
+    UIController_1 = require(\"../../ZepetoScripts/ScreenShotScripts/UIController\");\r\nclass
+    CameraController extends ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n    RemoteStart()
+    {\r\n        const myCharacter = ZEPETO_Character_Controller_1.ZepetoPlayers.instance.LocalPlayer.zepetoPlayer.character;\r\n       
+    const characterPos = myCharacter.transform.position;\r\n        ZEPETO_Character_Controller_1.ZepetoPlayers.instance.ZepetoCamera.transform.RotateAround(characterPos,
+    UnityEngine_1.Vector3.up, 180);\r\n    }\r\n    Start() {\r\n        this._localCamera
+    = ZEPETO_Character_Controller_1.ZepetoPlayers.instance.ZepetoCamera.camera;\r\n       
+    this.screenshotManager = this._screenShotManager.GetComponent($typeof(UIController_1.default));\r\n   
+    }\r\n    SetHorrorCamera(isSet) {\r\n        this.ChangeHorrorCam(isSet);\r\n   
+    }\r\n    ChangeBalloonCam(view) {\r\n        switch (view) {\r\n            case
+    (TypeSyncHelper_1.CameraView.Air):\r\n                this.ControlMainCamera(false);\r\n               
+    this.ChangeCamFPS(false);\r\n                TourManager_1.default.Instance.AirCamera.SetActive(true);\r\n               
+    break;\r\n            case (TypeSyncHelper_1.CameraView.FPS):\r\n               
+    this.ControlMainCamera(true);\r\n                this.ChangeCamFPS(true);\r\n               
+    TourManager_1.default.Instance.AirCamera.SetActive(false);\r\n               
+    break;\r\n            case (TypeSyncHelper_1.CameraView.Default):\r\n               
+    this.ControlMainCamera(true);\r\n                this.ChangeCamFPS(false);\r\n               
+    TourManager_1.default.Instance.AirCamera.SetActive(false);\r\n               
+    break;\r\n        }\r\n    }\r\n    SetHallCam() {\r\n        const myCharacter
+    = ZEPETO_Character_Controller_1.ZepetoPlayers.instance.LocalPlayer.zepetoPlayer.character;\r\n       
+    const characterPos = myCharacter.transform.position;\r\n        this.screenshotManager.SignalFromHall(true);\r\n   
+    }\r\n    ControlMainCamera(active) {\r\n        if (!this._localCamera)\r\n           
+    this._localCamera = ZEPETO_Character_Controller_1.ZepetoPlayers.instance.ZepetoCamera.camera;\r\n       
+    this._localCamera.targetDisplay = active ? 0 : 1;\r\n        this._localCamera.enabled
+    = active;\r\n    }\r\n    ChangeHorrorCam(isFPS) {\r\n        /* Get Camera Data
+    */\r\n        this.InitHorrorOffset();\r\n        /* Default */\r\n        const
+    cam = ZEPETO_Character_Controller_1.ZepetoPlayers.instance.cameraData;\r\n       
+    const offset = isFPS ? this.camOffset_FPS : this.camOffset_OutDoor;\r\n       
+    cam.offset = offset.offset;\r\n        cam.maxZoomDistance = offset.maxZoomDistance;\r\n       
+    cam.minZoomDistance = offset.minZoomDistance;\r\n    }\r\n    InitHorrorOffset()
+    {\r\n        if (this.camOffset_InDoor && this.camOffset_OutDoor && this.camOffset_FPS)\r\n           
+    return;\r\n        /* Set Init Data */\r\n        this.camOffset_InDoor = {\r\n           
+    offset: UnityEngine_1.Vector3.op_Multiply(UnityEngine_1.Vector3.up, 0.1),\r\n           
+    maxZoomDistance: 3,\r\n            minZoomDistance: -1,\r\n        };\r\n       
+    this.camOffset_OutDoor = {\r\n            offset: UnityEngine_1.Vector3.op_Multiply(UnityEngine_1.Vector3.up,
+    0.5),\r\n            maxZoomDistance: 8,\r\n            minZoomDistance: 3,\r\n       
+    };\r\n        this.camOffset_FPS = {\r\n            offset: UnityEngine_1.Vector3.op_Multiply(UnityEngine_1.Vector3.up,
+    0.1),\r\n            maxZoomDistance: 1,\r\n            minZoomDistance: 1,\r\n       
+    };\r\n    }\r\n    ChangeCamFPS(isFPS) {\r\n        /* Get Camera Data */\r\n       
+    this.InitOffset();\r\n        /* Default */\r\n        const cam = ZEPETO_Character_Controller_1.ZepetoPlayers.instance.cameraData;\r\n       
+    const offset = isFPS ? this.camOffset_FPS : this.camOffset_OutDoor;\r\n       
+    cam.offset = offset.offset;\r\n        cam.maxZoomDistance = offset.maxZoomDistance;\r\n       
+    cam.minZoomDistance = offset.minZoomDistance;\r\n    }\r\n    InitOffset() {\r\n       
+    if (this.camOffset_InDoor && this.camOffset_OutDoor && this.camOffset_FPS)\r\n           
+    return;\r\n        /* Set Init Data */\r\n        this.camOffset_InDoor = {\r\n           
+    offset: UnityEngine_1.Vector3.op_Multiply(UnityEngine_1.Vector3.up, 0.1),\r\n           
+    maxZoomDistance: 3,\r\n            minZoomDistance: -1,\r\n        };\r\n       
+    this.camOffset_OutDoor = {\r\n            offset: UnityEngine_1.Vector3.op_Multiply(UnityEngine_1.Vector3.up,
+    0.5),\r\n            maxZoomDistance: 8,\r\n            minZoomDistance: 3,\r\n       
+    };\r\n        this.camOffset_FPS = {\r\n            offset: UnityEngine_1.Vector3.op_Multiply(UnityEngine_1.Vector3.up,
+    0.1),\r\n            maxZoomDistance: -1,\r\n            minZoomDistance: -1,\r\n       
+    };\r\n    }\r\n}\r\nexports.default = CameraController;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiQ2FtZXJhQ29udHJvbGxlci5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIkNhbWVyYUNvbnRyb2xsZXIudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7QUFBQSw2Q0FBcUU7QUFDckUsNkVBQTREO0FBQzVELGlEQUFxRDtBQUNyRCxrRkFBMkU7QUFDM0UsMERBQW1EO0FBQ25ELHVHQUFnRztBQUNoRyxxRkFBOEU7QUFFOUUsTUFBcUIsZ0JBQWlCLFNBQVEscUNBQXFCO0lBVXhELFdBQVc7UUFDZCxNQUFNLFdBQVcsR0FBRywyQ0FBYSxDQUFDLFFBQVEsQ0FBQyxXQUFXLENBQUMsWUFBWSxDQUFDLFNBQVMsQ0FBQztRQUM5RSxNQUFNLFlBQVksR0FBRyxXQUFXLENBQUMsU0FBUyxDQUFDLFFBQVEsQ0FBQztRQUNwRCwyQ0FBYSxDQUFDLFFBQVEsQ0FBQyxZQUFZLENBQUMsU0FBUyxDQUFDLFlBQVksQ0FBQyxZQUFZLEVBQUUscUJBQU8sQ0FBQyxFQUFFLEVBQUUsR0FBRyxDQUFDLENBQUM7SUFDOUYsQ0FBQztJQUVPLEtBQUs7UUFDVCxJQUFJLENBQUMsWUFBWSxHQUFHLDJDQUFhLENBQUMsUUFBUSxDQUFDLFlBQVksQ0FBQyxNQUFNLENBQUM7UUFDL0QsSUFBSSxDQUFDLGlCQUFpQixHQUFHLElBQUksQ0FBQyxrQkFBa0IsQ0FBQyxZQUFZLFNBQUMsc0JBQVksRUFBRyxDQUFDO0lBQ2xGLENBQUM7SUFFTSxlQUFlLENBQUMsS0FBYztRQUNqQyxJQUFJLENBQUMsZUFBZSxDQUFDLEtBQUssQ0FBQyxDQUFDO0lBQ2hDLENBQUM7SUFFTSxnQkFBZ0IsQ0FBQyxJQUFnQjtRQUNwQyxRQUFRLElBQUksRUFBRTtZQUNWLEtBQUssQ0FBQywyQkFBVSxDQUFDLEdBQUcsQ0FBQztnQkFDakIsSUFBSSxDQUFDLGlCQUFpQixDQUFDLEtBQUssQ0FBQyxDQUFDO2dCQUM5QixJQUFJLENBQUMsWUFBWSxDQUFDLEtBQUssQ0FBQyxDQUFDO2dCQUN6QixxQkFBVyxDQUFDLFFBQVEsQ0FBQyxTQUFTLENBQUMsU0FBUyxDQUFDLElBQUksQ0FBQyxDQUFDO2dCQUMvQyxNQUFNO1lBQ1YsS0FBSyxDQUFDLDJCQUFVLENBQUMsR0FBRyxDQUFDO2dCQUNqQixJQUFJLENBQUMsaUJBQWlCLENBQUMsSUFBSSxDQUFDLENBQUM7Z0JBQzdCLElBQUksQ0FBQyxZQUFZLENBQUMsSUFBSSxDQUFDLENBQUM7Z0JBQ3hCLHFCQUFXLENBQUMsUUFBUSxDQUFDLFNBQVMsQ0FBQyxTQUFTLENBQUMsS0FBSyxDQUFDLENBQUM7Z0JBQ2hELE1BQU07WUFDVixLQUFLLENBQUMsMkJBQVUsQ0FBQyxPQUFPLENBQUM7Z0JBQ3JCLElBQUksQ0FBQyxpQkFBaUIsQ0FBQyxJQUFJLENBQUMsQ0FBQztnQkFDN0IsSUFBSSxDQUFDLFlBQVksQ0FBQyxLQUFLLENBQUMsQ0FBQztnQkFDekIscUJBQVcsQ0FBQyxRQUFRLENBQUMsU0FBUyxDQUFDLFNBQVMsQ0FBQyxLQUFLLENBQUMsQ0FBQztnQkFDaEQsTUFBTTtTQUNiO0lBQ0wsQ0FBQztJQUVNLFVBQVU7UUFDYixNQUFNLFdBQVcsR0FBRywyQ0FBYSxDQUFDLFFBQVEsQ0FBQyxXQUFXLENBQUMsWUFBWSxDQUFDLFNBQVMsQ0FBQztRQUM5RSxNQUFNLFlBQVksR0FBRyxXQUFXLENBQUMsU0FBUyxDQUFDLFFBQVEsQ0FBQztRQUNwRCxJQUFJLENBQUMsaUJBQWlCLENBQUMsY0FBYyxDQUFDLElBQUksQ0FBQyxDQUFDO0lBQ2hELENBQUM7SUFFTyxpQkFBaUIsQ0FBQyxNQUFlO1FBQ3JDLElBQUksQ0FBQyxJQUFJLENBQUMsWUFBWTtZQUFFLElBQUksQ0FBQyxZQUFZLEdBQUcsMkNBQWEsQ0FBQyxRQUFRLENBQUMsWUFBWSxDQUFDLE1BQU0sQ0FBQztRQUN2RixJQUFJLENBQUMsWUFBWSxDQUFDLGFBQWEsR0FBRyxNQUFNLENBQUMsQ0FBQyxDQUFDLENBQUMsQ0FBQyxDQUFDLENBQUMsQ0FBQyxDQUFDO1FBQ2pELElBQUksQ0FBQyxZQUFZLENBQUMsT0FBTyxHQUFHLE1BQU0sQ0FBQztJQUN2QyxDQUFDO0lBRU8sZUFBZSxDQUFDLEtBQWM7UUFDbEMscUJBQXFCO1FBQ3JCLElBQUksQ0FBQyxnQkFBZ0IsRUFBRSxDQUFDO1FBRXhCLGFBQWE7UUFDYixNQUFNLEdBQUcsR0FBRywyQ0FBYSxDQUFDLFFBQVEsQ0FBQyxVQUFVLENBQUM7UUFDOUMsTUFBTSxNQUFNLEdBQUcsS0FBSyxDQUFDLENBQUMsQ0FBQyxJQUFJLENBQUMsYUFBYSxDQUFDLENBQUMsQ0FBQyxJQUFJLENBQUMsaUJBQWlCLENBQUM7UUFDbkUsR0FBRyxDQUFDLE1BQU0sR0FBRyxNQUFNLENBQUMsTUFBTSxDQUFDO1FBQzNCLEdBQUcsQ0FBQyxlQUFlLEdBQUcsTUFBTSxDQUFDLGVBQWUsQ0FBQztRQUM3QyxHQUFHLENBQUMsZUFBZSxHQUFHLE1BQU0sQ0FBQyxlQUFlLENBQUM7SUFDakQsQ0FBQztJQUVPLGdCQUFnQjtRQUNwQixJQUFHLElBQUksQ0FBQyxnQkFBZ0IsSUFBSSxJQUFJLENBQUMsaUJBQWlCLElBQUksSUFBSSxDQUFDLGFBQWE7WUFBRSxPQUFPO1FBRWpGLG1CQUFtQjtRQUNuQixJQUFJLENBQUMsZ0JBQWdCLEdBQUc7WUFDcEIsTUFBTSxFQWxGc0IscUJBQU8sQ0F3SXV0aUIsV0FBWSxDQXREOXZpQixxQkFBTyxDQUFDLEVBQUUsRUFBRyxHQUFHLENBQUE7WUFDeEIsZUFBZSxFQUFFLENBQUM7WUFDbEIsZUFBZSxFQUFFLENBQUMsQ0FBQztTQUN0QixDQUFBO1FBQ0QsSUFBSSxDQUFDLGlCQUFpQixHQUFHO1lBQ3JCLE1BQU0sRUF2RnNCLHFCQUFPLENBd0l1dGlCLFdBQVksQ0FqRDl2aUIscUJBQU8sQ0FBQyxFQUFFLEVBQUcsR0FBRyxDQUFBO1lBQ3hCLGVBQWUsRUFBRSxDQUFDO1lBQ2xCLGVBQWUsRUFBRSxDQUFDO1NBQ3JCLENBQUE7UUFDRCxJQUFJLENBQUMsYUFBYSxHQUFHO1lBQ2pCLE1BQU0sRUE1RnNCLHFCQUFPLENBd0l1dGlCLFdBQVksQ0E1Qzl2aUIscUJBQU8sQ0FBQyxFQUFFLEVBQUcsR0FBRyxDQUFBO1lBQ3hCLGVBQWUsRUFBRSxDQUFDO1lBQ2xCLGVBQWUsRUFBRSxDQUFDO1NBQ3JCLENBQUE7SUFDTCxDQUFDO0lBRU8sWUFBWSxDQUFDLEtBQWM7UUFDL0IscUJBQXFCO1FBQ3JCLElBQUksQ0FBQyxVQUFVLEVBQUUsQ0FBQztRQUVsQixhQUFhO1FBQ2IsTUFBTSxHQUFHLEdBQUcsMkNBQWEsQ0FBQyxRQUFRLENBQUMsVUFBVSxDQUFDO1FBQzlDLE1BQU0sTUFBTSxHQUFHLEtBQUssQ0FBQyxDQUFDLENBQUMsSUFBSSxDQUFDLGFBQWEsQ0FBQyxDQUFDLENBQUMsSUFBSSxDQUFDLGlCQUFpQixDQUFDO1FBQ25FLEdBQUcsQ0FBQyxNQUFNLEdBQUcsTUFBTSxDQUFDLE1BQU0sQ0FBQztRQUMzQixHQUFHLENBQUMsZUFBZSxHQUFHLE1BQU0sQ0FBQyxlQUFlLENBQUM7UUFDN0MsR0FBRyxDQUFDLGVBQWUsR0FBRyxNQUFNLENBQUMsZUFBZSxDQUFDO0lBQ2pELENBQUM7SUFFTyxVQUFVO1FBQ2QsSUFBRyxJQUFJLENBQUMsZ0JBQWdCLElBQUksSUFBSSxDQUFDLGlCQUFpQixJQUFJLElBQUksQ0FBQyxhQUFhO1lBQUUsT0FBTztRQUVqRixtQkFBbUI7UUFDbkIsSUFBSSxDQUFDLGdCQUFnQixHQUFHO1lBQ3BCLE1BQU0sRUFuSHNCLHFCQUFPLENBd0l1dGlCLFdBQVksQ0FyQjl2aUIscUJBQU8sQ0FBQyxFQUFFLEVBQUcsR0FBRyxDQUFBO1lBQ3hCLGVBQWUsRUFBRSxDQUFDO1lBQ2xCLGVBQWUsRUFBRSxDQUFDLENBQUM7U0FDdEIsQ0FBQTtRQUNELElBQUksQ0FBQyxpQkFBaUIsR0FBRztZQUNyQixNQUFNLEVBeEhzQixxQkFBTyxDQXdJdXRpQixXQUFZLENBaEI5dmlCLHFCQUFPLENBQUMsRUFBRSxFQUFHLEdBQUcsQ0FBQTtZQUN4QixlQUFlLEVBQUUsQ0FBQztZQUNsQixlQUFlLEVBQUUsQ0FBQztTQUNyQixDQUFBO1FBQ0QsSUFBSSxDQUFDLGFBQWEsR0FBRztZQUNqQixNQUFNLEVBN0hzQixxQkFBTyxDQXdJdXRpQixXQUFZLENBWDl2aUIscUJBQU8sQ0FBQyxFQUFFLEVBQUcsR0FBRyxDQUFBO1lBQ3hCLGVBQWUsRUFBRSxDQUFDLENBQUM7WUFDbkIsZUFBZSxFQUFFLENBQUMsQ0FBQztTQUN0QixDQUFBO0lBQ0wsQ0FBQztDQUNKO0FBMUhELG1DQTBIQyJ9","assetPath":"Assets/Scripts/Controller/CameraController.ts","manifest":{"properties":[{"assembly":"UnityEngine.CoreModule","name":"_screenShotManager","type":"UnityEngine.GameObject","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]}],"name":"CameraController","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: 9c1818389bb9fae1d7a0da68ee7010f6
+  onlyWriteTrigger: 0

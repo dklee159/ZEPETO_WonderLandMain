@@ -1,0 +1,45 @@
+fileFormatVersion: 2
+guid: 4f1ea3fabec5caa43bc80184c86037fd
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
+    { value: true });\r\nconst TMPro_1 = require(\"TMPro\");\r\nconst UnityEngine_1
+    = require(\"UnityEngine\");\r\nconst UnityEngine_UI_1 = require(\"UnityEngine.UI\");\r\nconst
+    ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nconst UIController_1 = require(\"./UIController\");\r\nclass
+    ToastController extends ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n    /* GameManager
+    */\r\n    RemoteStart() {\r\n        this.TextAnimationOFF();\r\n    }\r\n   
+    /* GameManager */\r\n    Toast(text) {\r\n        this.StartCoroutine(this.ShowToastMessage(text));\r\n   
+    }\r\n    *ShowToastMessage(text) {\r\n        if (!this.waitForSecond)\r\n           
+    this.waitForSecond = new UnityEngine_1.WaitForSeconds(1);\r\n        yield this.waitForSecond;\r\n       
+    // Choice Target\r\n        const isFailed = (text == UIController_1.TOAST_MESSAGE.feedFailed);\r\n       
+    const targetMessgae = isFailed ? this.toastErrorMessage : this.toastSuccessMessage;\r\n       
+    // Instantiate GameObject\r\n        const toastMessage = UnityEngine_1.GameObject.Instantiate(targetMessgae);\r\n       
+    toastMessage.transform.SetParent(this.toastCanvas);\r\n        // Set Target
+    Text\r\n        toastMessage.GetComponentInChildren($typeof(UnityEngine_UI_1.Text)).text
+    = text;\r\n        // Finish\r\n        UnityEngine_1.GameObject.Destroy(toastMessage,
+    1);\r\n    }\r\n    TextAnimate(text) {\r\n        this.textAnimation.gameObject.SetActive(true);\r\n       
+    this.textAnimation_Text.text = text;\r\n        this.textAnimation.Play();\r\n   
+    }\r\n    TextAnimationOFF() {\r\n        this.textAnimation.gameObject.SetActive(false);\r\n   
+    }\r\n    TextAnimate_OneSec(text) {\r\n        console.log(text);\r\n       
+    this.textAnimation_OneSec.Stop();\r\n        this.textAnimation_OneSec.gameObject.SetActive(true);\r\n       
+    this.textAnimation_OneSec_Text.text = text;\r\n        this.textAnimation_OneSec.Play();\r\n   
+    }\r\n    TextAnimationOFF_OneSec() {\r\n        this.textAnimation_OneSec.gameObject.SetActive(false);\r\n   
+    }\r\n}\r\nexports.default = ToastController;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiVG9hc3RDb250cm9sbGVyLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiVG9hc3RDb250cm9sbGVyLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7O0FBQUEsaUNBQXdDO0FBQ3hDLDZDQUErRTtBQUMvRSxtREFBc0M7QUFDdEMsaURBQXNEO0FBQ3RELGlEQUErQztBQUUvQyxNQUFxQixlQUFnQixTQUFRLHFDQUFxQjtJQWE5RCxpQkFBaUI7SUFDVixXQUFXO1FBQ2QsSUFBSSxDQUFDLGdCQUFnQixFQUFFLENBQUM7SUFDNUIsQ0FBQztJQUVELGlCQUFpQjtJQUNWLEtBQUssQ0FBQyxJQUFXO1FBQ3BCLElBQUksQ0FBQyxjQUFjLENBQUMsSUFBSSxDQUFDLGdCQUFnQixDQUFDLElBQUksQ0FBQyxDQUFDLENBQUM7SUFDckQsQ0FBQztJQUVPLENBQUUsZ0JBQWdCLENBQUMsSUFBVztRQUNsQyxJQUFHLENBQUMsSUFBSSxDQUFDLGFBQWE7WUFBRSxJQUFJLENBQUMsYUFBYSxHQUFHLElBQUksNEJBQWMsQ0FBQyxDQUFDLENBQUMsQ0FBQztRQUNuRSxNQUFNLElBQUksQ0FBQyxhQUFhLENBQUM7UUFFekIsZ0JBQWdCO1FBQ2hCLE1BQU0sUUFBUSxHQUFHLENBQUMsSUFBSSxJQUFJLDRCQUFhLENBQUMsVUFBVSxDQUFDLENBQUM7UUFDcEQsTUFBTSxhQUFhLEdBQUcsUUFBUSxDQUFDLENBQUMsQ0FBQyxJQUFJLENBQUMsaUJBQWlCLENBQUMsQ0FBQyxDQUFDLElBQUksQ0FBQyxtQkFBbUIsQ0FBQztRQUVuRix5QkFBeUI7UUFDekIsTUFBTSxZQUFZLEdBQWUsd0JBQVUsQ0FBQyxXQUFXLENBQWEsYUFBYSxDQUFDLENBQUM7UUFDbkYsWUFBWSxDQUFDLFNBQVMsQ0FBQyxTQUFTLENBQUMsSUFBSSxDQUFDLFdBQVcsQ0FBQyxDQUFDO1FBRW5ELGtCQUFrQjtRQUNsQixZQUFZLENBQUMsc0JBQXNCLFNBQUMscUJBQUksRUFBRyxDQUFDLElBQUksR0FBRyxJQUFJLENBQUM7UUFFeEQsU0FBUztRQUNULHdCQUFVLENBQUMsT0FBTyxDQUFDLFlBQVksRUFBRSxDQUFDLENBQUMsQ0FBQztJQUN4QyxDQUFDO0lBRU0sV0FBVyxDQUFDLElBQVc7UUFDMUIsSUFBSSxDQUFDLGFBQWEsQ0FBQyxVQUFVLENBQUMsU0FBUyxDQUFDLElBQUksQ0FBQyxDQUFDO1FBQzlDLElBQUksQ0FBQyxrQkFBa0IsQ0FBQyxJQUFJLEdBQUcsSUFBSSxDQUFDO1FBQ3BDLElBQUksQ0FBQyxhQUFhLENBQUMsSUFBSSxFQUFFLENBQUM7SUFDOUIsQ0FBQztJQUVNLGdCQUFnQjtRQUNuQixJQUFJLENBQUMsYUFBYSxDQUFDLFVBQVUsQ0FBQyxTQUFTLENBQUMsS0FBSyxDQUFDLENBQUM7SUFDbkQsQ0FBQztJQUVNLGtCQUFrQixDQUFDLElBQVk7UUFDbEMsT0FBTyxDQUFDLEdBQUcsQ0FBQyxJQUFJLENBQUMsQ0FBQztRQUVsQixJQUFJLENBQUMsb0JBQW9CLENBQUMsSUFBSSxFQUFFLENBQUM7UUFDakMsSUFBSSxDQUFDLG9CQUFvQixDQUFDLFVBQVUsQ0FBQyxTQUFTLENBQUMsSUFBSSxDQUFDLENBQUM7UUFDckQsSUFBSSxDQUFDLHlCQUF5QixDQUFDLElBQUksR0FBRyxJQUFJLENBQUM7UUFDM0MsSUFBSSxDQUFDLG9CQUFvQixDQUFDLElBQUksRUFBRSxDQUFDO0lBQ3JDLENBQUM7SUFFTSx1QkFBdUI7UUFDMUIsSUFBSSxDQUFDLG9CQUFvQixDQUFDLFVBQVUsQ0FBQyxTQUFTLENBQUMsS0FBSyxDQUFDLENBQUM7SUFDMUQsQ0FBQztDQUNKO0FBaEVELGtDQWdFQyJ9","assetPath":"Assets/ZepetoScripts/ScreenShotScripts/ToastController.ts","manifest":{"properties":[{"assembly":"UnityEngine.CoreModule","name":"toastErrorMessage","type":"UnityEngine.GameObject","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"toastSuccessMessage","type":"UnityEngine.GameObject","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"toastCanvas","type":"UnityEngine.Transform","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"Unity.TextMeshPro","name":"textAnimation_Text","type":"TMPro.TextMeshProUGUI","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.AnimationModule","name":"textAnimation","type":"UnityEngine.Animation","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"Unity.TextMeshPro","name":"textAnimation_OneSec_Text","type":"TMPro.TextMeshProUGUI","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.AnimationModule","name":"textAnimation_OneSec","type":"UnityEngine.Animation","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]}],"name":"ToastController","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: 2e0377f5d5793e532efd96c08114a759
+  onlyWriteTrigger: 0

@@ -1,0 +1,106 @@
+fileFormatVersion: 2
+guid: 1ea5040f53ca85b429bddb62a483c4d2
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: "{\"source\":\"\\\"use strict\\\";\\r\\nObject.defineProperty(exports,
+    \\\"__esModule\\\", { value: true });\\r\\nconst UnityEngine_1 = require(\\\"UnityEngine\\\");\\r\\nconst
+    ZEPETO_Character_Controller_1 = require(\\\"ZEPETO.Character.Controller\\\");\\r\\nconst
+    ZEPETO_Script_1 = require(\\\"ZEPETO.Script\\\");\\r\\nconst Chest_1 = require(\\\"./Chest\\\");\\r\\nconst
+    UIManager_1 = require(\\\"../../Manager/UIManager\\\");\\r\\nconst TypeSyncHelper_1
+    = require(\\\"../../../ZepetoScripts/SyncHelper/TypeSyncHelper\\\");\\r\\nconst
+    LeaderBoardManager_1 = require(\\\"../../Manager/LeaderBoardManager\\\");\\r\\nclass
+    TreasureHunt extends ZEPETO_Script_1.ZepetoScriptBehaviour {\\r\\n    constructor()
+    {\\r\\n        super(...arguments);\\r\\n        this.controlInteractions = [];\\r\\n       
+    /* Game property */\\r\\n        this.isStart = false;\\r\\n        this.score
+    = 0;\\r\\n        this.timer = 0;\\r\\n        this.limitTime = 90;\\r\\n       
+    this.chestAmount = 20;\\r\\n        this.chestMap = new Map();\\r\\n    }\\r\\n   
+    set Score(score) {\\r\\n        if (typeof score == \\\"number\\\") {\\r\\n           
+    this.score = score;\\r\\n            this.txt_Score.transform.GetChild(0).gameObject.SetActive(true);\\r\\n           
+    this.txt_Score.text = `${score.toString()}p`;\\r\\n        }\\r\\n        else
+    if (typeof score == \\\"string\\\") {\\r\\n            this.txt_Score.transform.GetChild(0).gameObject.SetActive(false);\\r\\n           
+    this.txt_Score.text = score;\\r\\n        }\\r\\n    }\\r\\n    set Txt_Timer(timer)
+    {\\r\\n        this.txt_Timer.text = `${(this.limitTime - UnityEngine_1.Mathf.Floor(timer)).toString()}sec`;\\r\\n   
+    }\\r\\n    Start() {\\r\\n        // \uB9E4\uD551\\r\\n        for (let i = 0;
+    i < this.chestsParent.childCount; i++) {\\r\\n            this.chestMap.set(i,
+    this.chestsParent.GetChild(i).GetComponent($typeof(Chest_1.default)));\\r\\n       
+    }\\r\\n        this.ChestForEach(chest => {\\r\\n            chest.onTrigger.AddListener(()
+    => {\\r\\n                if (this.isStart) {\\r\\n                    this.RandomOn();\\r\\n                   
+    chest.Off();\\r\\n                    this.Score = this.score + 1;\\r\\n               
+    }\\r\\n            });\\r\\n        });\\r\\n        this.btn_resultClose.onClick.AddListener(()
+    => {\\r\\n            this.panel_all.SetActive(false);\\r\\n            this.panel_result.SetActive(false);\\r\\n           
+    this.controlInteractions.forEach((inter => {\\r\\n                inter.SetActive(true);\\r\\n           
+    }));\\r\\n            this.ChestAllOff();\\r\\n        });\\r\\n        this.ChestAllOff();\\r\\n       
+    this.panel_all.SetActive(false);\\r\\n        this.panel_result.SetActive(false);\\r\\n   
+    }\\r\\n    // \uC2DC\uC791 \uBA54\uC18C\uB4DC\\r\\n    StartTreasureHunt() {\\r\\n       
+    if (this.isStart)\\r\\n            return;\\r\\n        this.isStart = true;\\r\\n       
+    if (!this.localCharacter) {\\r\\n            this.localCharacter =\\r\\n               
+    ZEPETO_Character_Controller_1.ZepetoPlayers.instance.LocalPlayer.zepetoPlayer.character;\\r\\n       
+    }\\r\\n        if (!this.localCamera) {\\r\\n            this.localCamera = ZEPETO_Character_Controller_1.ZepetoPlayers.instance.ZepetoCamera;\\r\\n       
+    }\\r\\n        /* init */\\r\\n        this.timer = 0;\\r\\n        this.Score
+    = 0;\\r\\n        this.Txt_Timer = 0;\\r\\n        this.StartCoroutine(this.CorStartTreasureHunt());\\r\\n   
+    }\\r\\n    *CorStartTreasureHunt() {\\r\\n        // teleport charcter\\r\\n       
+    const fadeUI = UIManager_1.default.Instance.GetScreenImage(TypeSyncHelper_1.ScreenCanvasType.Fade);\\r\\n       
+    const anim = fadeUI.GetComponent($typeof(UnityEngine_1.Animator));\\r\\n       
+    anim.SetTrigger(TypeSyncHelper_1.Anim.Active);\\r\\n        yield new UnityEngine_1.WaitForSeconds(1);\\r\\n       
+    this.localCharacter.Teleport(this.spawnPoint.position, this.spawnPoint.rotation);\\r\\n       
+    const dist = this.localCamera.distance;\\r\\n        if (dist <= 4) {\\r\\n           
+    while (this.localCamera.distance <= 4) {\\r\\n                this.localCamera.DoZoom(4);\\r\\n               
+    yield null;\\r\\n            }\\r\\n        }\\r\\n        else {\\r\\n           
+    while (this.localCamera.distance > 4) {\\r\\n                this.localCamera.DoZoom(-4);\\r\\n               
+    yield null;\\r\\n            }\\r\\n        }\\r\\n        // set camera pos,
+    rot\\r\\n        this.localCamera.StateMachine.Stop();\\r\\n        this.localCamera.cameraParent.transform.position
+    =\\r\\n            this.cameraPoint.position;\\r\\n        this.localCamera.cameraParent.transform.rotation
+    =\\r\\n            this.cameraPoint.rotation;\\r\\n        this.localCamera.StateMachine.Start(this.localCamera.currentState);\\r\\n       
+    this.controlInteractions.forEach((inter => {\\r\\n            inter.SetActive(false);\\r\\n       
+    }));\\r\\n        anim.SetTrigger(TypeSyncHelper_1.Anim.Blackout);\\r\\n       
+    yield new UnityEngine_1.WaitForSeconds(2);\\r\\n        anim.SetTrigger(TypeSyncHelper_1.Anim.BackToIdle);\\r\\n       
+    // set ui\\r\\n        this.panel_all.SetActive(true);\\r\\n        this.panel_record.SetActive(true);\\r\\n       
+    this.panel_result.SetActive(false);\\r\\n        this.Score = \\\"START\\\";\\r\\n       
+    // spawn chest\\r\\n        this.SpawnChests();\\r\\n        while (this.timer
+    <= this.limitTime) {\\r\\n            const prev = UnityEngine_1.Mathf.Floor(this.timer);\\r\\n           
+    this.timer += UnityEngine_1.Time.deltaTime;\\r\\n            const curr = UnityEngine_1.Mathf.Floor(this.timer);\\r\\n           
+    if (prev !== curr) {\\r\\n                if (curr == 1)\\r\\n                   
+    this.Score = 0;\\r\\n                this.Txt_Timer = curr;\\r\\n           
+    }\\r\\n            yield null;\\r\\n        }\\r\\n        this.FinishTreasureHunt();\\r\\n   
+    }\\r\\n    FinishTreasureHunt() {\\r\\n        this.isStart = false;\\r\\n       
+    this.Score = \\\"FINISH\\\";\\r\\n        this.panel_record.SetActive(false);\\r\\n       
+    this.panel_result.SetActive(true);\\r\\n        this.txt_resultScore.text = `${this.score}p`;\\r\\n       
+    LeaderBoardManager_1.default.Instance.SetTreasureHuntRank(this.score);\\r\\n       
+    this.StartCoroutine(this.CorFinishTreasureHunt());\\r\\n    }\\r\\n    *CorFinishTreasureHunt()
+    {\\r\\n    }\\r\\n    ChestForEach(onChest) {\\r\\n        for (let i = 0; i
+    < this.chestsParent.childCount; i++) {\\r\\n            onChest(this.chestMap.get(i),
+    i);\\r\\n        }\\r\\n    }\\r\\n    ChestOn(index) {\\r\\n        this.chestMap.get(index).On();\\r\\n   
+    }\\r\\n    ChestOff(index) {\\r\\n        this.chestMap.get(index).Off();\\r\\n   
+    }\\r\\n    GetInPool() {\\r\\n        let i;\\r\\n        this.ChestForEach((chest,
+    index) => {\\r\\n            if (!i) {\\r\\n                if (!chest.gameObject.activeSelf)
+    {\\r\\n                    i = index;\\r\\n                }\\r\\n           
+    }\\r\\n        });\\r\\n        return this.chestMap.get(i);\\r\\n    }\\r\\n   
+    RandomOn() {\\r\\n        this.GetInPool().On();\\r\\n    }\\r\\n    ChestAllOff()
+    {\\r\\n        this.ChestForEach(chest => {\\r\\n            chest.Off();\\r\\n       
+    });\\r\\n    }\\r\\n    SpawnChests() {\\r\\n        const eNum = this.chestsParent.childCount
+    - this.chestAmount;\\r\\n        const aNum = UnityEngine_1.Mathf.Floor(this.chestsParent.childCount
+    / eNum);\\r\\n        const r = UnityEngine_1.Mathf.Floor(UnityEngine_1.Random.Range(0,
+    this.chestsParent.childCount));\\r\\n        // mix and on\\r\\n        this.ChestForEach((chest,
+    i) => {\\r\\n            if (UnityEngine_1.Random.Range(0, 1) > 0.3) {\\r\\n               
+    const ranS = UnityEngine_1.Mathf.Floor(UnityEngine_1.Random.Range(0, this.chestsParent.childCount));\\r\\n               
+    chest.transform.SetSiblingIndex(ranS);\\r\\n            }\\r\\n            if
+    ((r - i) % aNum != 0)\\r\\n                this.ChestOn(i);\\r\\n        });\\r\\n   
+    }\\r\\n}\\r\\nexports.default = TreasureHunt;\\r\\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiVHJlYXN1cmVIdW50LmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiVHJlYXN1cmVIdW50LnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7O0FBQUEsNkNBQW1HO0FBRW5HLDZFQUlxQztBQUNyQyxpREFBc0Q7QUFDdEQsbUNBQTRCO0FBQzVCLHVEQUFnRDtBQUNoRCxxRkFBMEY7QUFDMUYseUVBQWtFO0FBRWxFLE1BQXFCLFlBQWEsU0FBUSxxQ0FBcUI7SUFBL0Q7O1FBRThCLHdCQUFtQixHQUFpQixFQUFFLENBQUM7UUFpQmpFLG1CQUFtQjtRQUNYLFlBQU8sR0FBWSxLQUFLLENBQUM7UUFDekIsVUFBSyxHQUFXLENBQUMsQ0FBQztRQUNsQixVQUFLLEdBQVcsQ0FBQyxDQUFDO1FBQ1QsY0FBUyxHQUFXLEVBQUUsQ0FBQztRQUN2QixnQkFBVyxHQUFXLEVBQUUsQ0FBQztRQUNsQyxhQUFRLEdBQXVCLElBQUksR0FBRyxFQUFpQixDQUFDO0lBb01wRSxDQUFDO0lBbE1HLElBQVksS0FBSyxDQUFDLEtBQXNCO1FBQ3BDLElBQUksT0FBTyxLQUFLLElBQUksUUFBUSxFQUFFO1lBQzFCLElBQUksQ0FBQyxLQUFLLEdBQUcsS0FBSyxDQUFDO1lBQ25CLElBQUksQ0FBQyxTQUFTLENBQUMsU0FBUyxDQUFDLFFBQVEsQ0FBQyxDQUFDLENBQUMsQ0FBQyxVQUFVLENBQUMsU0FBUyxDQUFDLElBQUksQ0FBQyxDQUFDO1lBQ2hFLElBQUksQ0FBQyxTQUFTLENBQUMsSUFBSSxHQUFHLEdBQUcsS0FBSyxDQUFDLFFBQVEsRUFBRSxHQUFHLENBQUM7U0FDaEQ7YUFDSSxJQUFJLE9BQU8sS0FBSyxJQUFJLFFBQVEsRUFBRTtZQUMvQixJQUFJLENBQUMsU0FBUyxDQUFDLFNBQVMsQ0FBQyxRQUFRLENBQUMsQ0FBQyxDQUFDLENBQUMsVUFBVSxDQUFDLFNBQVMsQ0FBQyxLQUFLLENBQUMsQ0FBQztZQUNqRSxJQUFJLENBQUMsU0FBUyxDQUFDLElBQUksR0FBRyxLQUFL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\",\"assetPath\":\"Assets/Scripts/Game/TreasureHunt/TreasureHunt.ts\",\"manifest\":{\"properties\":[{\"assembly\":\"UnityEngine.CoreModule\",\"name\":\"controlInteractions\",\"type\":\"UnityEngine.GameObject[]\",\"isArray\":true,\"initValue\":[],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[{\"name\":\"Header\",\"args\":[\"\\\"Object\\\"\"]},{\"name\":\"SerializeField\",\"args\":[]}]},{\"assembly\":\"UnityEngine.CoreModule\",\"name\":\"chestsParent\",\"type\":\"UnityEngine.Transform\",\"isArray\":false,\"initValue\":[],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[{\"name\":\"SerializeField\",\"args\":[]}]},{\"assembly\":\"UnityEngine.CoreModule\",\"name\":\"spawnPoint\",\"type\":\"UnityEngine.Transform\",\"isArray\":false,\"initValue\":[],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[{\"name\":\"SerializeField\",\"args\":[]}]},{\"assembly\":\"UnityEngine.CoreModule\",\"name\":\"cameraPoint\",\"type\":\"UnityEngine.Transform\",\"isArray\":false,\"initValue\":[],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[{\"name\":\"SerializeField\",\"args\":[]}]},{\"assembly\":\"UnityEngine.CoreModule\",\"name\":\"panel_all\",\"type\":\"UnityEngine.GameObject\",\"isArray\":false,\"initValue\":[],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[{\"name\":\"Header\",\"args\":[\"\\\"UI\\\"\"]},{\"name\":\"SerializeField\",\"args\":[]}]},{\"assembly\":\"UnityEngine.CoreModule\",\"name\":\"panel_result\",\"type\":\"UnityEngine.GameObject\",\"isArray\":false,\"initValue\":[],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[{\"name\":\"SerializeField\",\"args\":[]}]},{\"assembly\":\"UnityEngine.CoreModule\",\"name\":\"panel_record\",\"type\":\"UnityEngine.GameObject\",\"isArray\":false,\"initValue\":[],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[{\"name\":\"SerializeField\",\"args\":[]}]},{\"assembly\":\"UnityEngine.UI\",\"name\":\"txt_Timer\",\"type\":\"UnityEngine.UI.Text\",\"isArray\":false,\"initValue\":[],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[{\"name\":\"SerializeField\",\"args\":[]}]},{\"assembly\":\"UnityEngine.UI\",\"name\":\"txt_Score\",\"type\":\"UnityEngine.UI.Text\",\"isArray\":false,\"initValue\":[],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[{\"name\":\"SerializeField\",\"args\":[]}]},{\"assembly\":\"UnityEngine.UI\",\"name\":\"txt_resultScore\",\"type\":\"UnityEngine.UI.Text\",\"isArray\":false,\"initValue\":[],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[{\"name\":\"SerializeField\",\"args\":[]}]},{\"assembly\":\"UnityEngine.UI\",\"name\":\"btn_resultClose\",\"type\":\"UnityEngine.UI.Button\",\"isArray\":false,\"initValue\":[],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[{\"name\":\"SerializeField\",\"args\":[]}]}],\"name\":\"TreasureHunt\",\"description\":\"\",\"hasAnimatorMove\":false},\"isCompiled\":true}"
+  typescriptHash: 35f4f39e6794b87f4d68d380e9c16038
+  onlyWriteTrigger: 0

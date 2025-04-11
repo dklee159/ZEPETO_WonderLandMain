@@ -1,0 +1,32 @@
+fileFormatVersion: 2
+guid: f1c40e9a5ada49a4a8e5d11eb5980531
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
+    { value: true });\r\nconst UnityEngine_UI_1 = require(\"UnityEngine.UI\");\r\nconst
+    ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nconst TranslateManager_1 = require(\"./TranslateManager\");\r\nclass
+    LocalizationImageController extends ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n   
+    constructor() {\r\n        super(...arguments);\r\n        this.sprites = [];\r\n       
+    this.isStarted = false;\r\n    }\r\n    Start() {\r\n        this.onStart();\r\n   
+    }\r\n    onStart() {\r\n        if (this.isStarted)\r\n            return;\r\n       
+    this.isStarted = true;\r\n        this.GetComponent($typeof(UnityEngine_UI_1.Image)).sprite
+    = this.sprites[TranslateManager_1.default.nowSystemLanguage - 1];\r\n    }\r\n}\r\nexports.default
+    = LocalizationImageController;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiTG9jYWxpemF0aW9uSW1hZ2VDb250cm9sbGVyLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiTG9jYWxpemF0aW9uSW1hZ2VDb250cm9sbGVyLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7O0FBQUEsbURBQXVDO0FBRXZDLGlEQUFxRDtBQUNyRCx5REFBa0Q7QUFFbEQsTUFBcUIsMkJBQTRCLFNBQVEscUNBQXFCO0lBQTlFOztRQUNzQixZQUFPLEdBQWMsRUFBRSxDQUFDO1FBQ2xDLGNBQVMsR0FBYSxLQUFLLENBQUM7SUFZeEMsQ0FBQztJQVZHLEtBQUs7UUFDRCxJQUFJLENBQUMsT0FBTyxFQUFFLENBQUM7SUFDbkIsQ0FBQztJQUVELE9BQU87UUFDSCxJQUFHLElBQUksQ0FBQyxTQUFTO1lBQUUsT0FBTztRQUMxQixJQUFJLENBQUMsU0FBUyxHQUFHLElBQUksQ0FBQztRQUV0QixJQUFJLENBQUMsWUFBWSxTQUFDLHNCQUFLLEVBQUcsQ0FBQyxNQUFNLEdBQUcsSUFBSSxDQUFDLE9BQU8sQ0FBQywwQkFBZ0IsQ0FBQyxpQkFBaUIsR0FBRyxDQUFDLENBQUMsQ0FBQztJQUM3RixDQUFDO0NBQ0o7QUFkRCw4Q0FjQyJ9","assetPath":"Assets/ZepetoScripts/Localize/LocalizationImageController.ts","manifest":{"properties":[{"assembly":"UnityEngine.CoreModule","name":"sprites","type":"UnityEngine.Sprite[]","isArray":true,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]}],"name":"LocalizationImageController","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: fb466acb54b0ecb93036ea27c841fe4e
+  onlyWriteTrigger: 0

@@ -1,0 +1,34 @@
+fileFormatVersion: 2
+guid: 18b3ebd67bc5b714b8d5681f7a1c30e4
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
+    { value: true });\r\nconst UnityEngine_1 = require(\"UnityEngine\");\r\nconst
+    ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nconst MaterialManager_1 = require(\"../Manager/MaterialManager\");\r\nclass
+    MaterialController extends ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n    constructor()
+    {\r\n        super(...arguments);\r\n        /* Properties */\r\n        this.speedX
+    = 0.1;\r\n        this.speedY = 0.1;\r\n        this.curX = 0.1;\r\n        this.curY
+    = 0.1;\r\n    }\r\n    get mat() { return this._mat; }\r\n    set mat(value)
+    { this._mat = value; }\r\n    Start() {\r\n        this.curX = this.GetComponent($typeof(UnityEngine_1.Renderer)).material.mainTextureOffset.x;\r\n       
+    this.curY = this.GetComponent($typeof(UnityEngine_1.Renderer)).material.mainTextureOffset.y;\r\n       
+    this.mat = this.GetComponent($typeof(UnityEngine_1.Renderer)).material;\r\n       
+    MaterialManager_1.default.materialEffects.push(this);\r\n    }\r\n}\r\nexports.default
+    = MaterialController;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiTWF0ZXJpYWxDb250cm9sbGVyLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiTWF0ZXJpYWxDb250cm9sbGVyLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7O0FBQUEsNkNBQWlEO0FBQ2pELGlEQUFxRDtBQUNyRCxnRUFBeUQ7QUFFekQsTUFBcUIsa0JBQW1CLFNBQVEscUNBQXFCO0lBQXJFOztRQUVJLGdCQUFnQjtRQUNULFdBQU0sR0FBVSxHQUFHLENBQUM7UUFDcEIsV0FBTSxHQUFVLEdBQUcsQ0FBQztRQUNwQixTQUFJLEdBQVUsR0FBRyxDQUFDO1FBQ2xCLFNBQUksR0FBVSxHQUFHLENBQUM7SUFjN0IsQ0FBQztJQVhHLElBQVcsR0FBRyxLQUFlLE9BQU8sSUFBSSxDQUFDLElBQUksQ0FBQyxDQUFDLENBQUM7SUFDaEQsSUFBVyxHQUFHLENBQUMsS0FBZSxJQUFJLElBQUksQ0FBQyxJQUFJLEdBQUcsS0FBSyxDQUFDLENBQUMsQ0FBQztJQUV0RCxLQUFLO1FBQ0QsSUFBSSxDQUFDLElBQUksR0FBRyxJQUFJLENBQUMsWUFBWSxTQUFDLHNCQUFRLEdBQUksUUFBUSxDQUFDLGlCQUFpQixDQUFDLENBQUMsQ0FBQztRQUN2RSxJQUFJLENBQUMsSUFBSSxHQUFHLElBQUksQ0FBQyxZQUFZLFNBQUMsc0JBQVEsR0FBSSxRQUFRLENBQUMsaUJBQWlCLENBQUMsQ0FBQyxDQUFDO1FBRXZFLElBQUksQ0FBQyxHQUFHLEdBQUcsSUFBSSxDQUFDLFlBQVksU0FBQyxzQkFBUSxHQUFJLFFBQVEsQ0FBQztRQUVsRCx5QkFBZSxDQUFDLGVBQWUsQ0FBQyxJQUFJLENBQUMsSUFBSSxDQUFDLENBQUM7SUFDL0MsQ0FBQztDQUNKO0FBcEJELHFDQW9CQyJ9","assetPath":"Assets/Scripts/World/MaterialController.ts","manifest":{"properties":[{"assembly":"mscorlib","name":"speedX","type":"System.Single","isArray":false,"initValue":["0.1"],"enumKeys":[],"enumValues":[],"attributes":[]},{"assembly":"mscorlib","name":"speedY","type":"System.Single","isArray":false,"initValue":["0.1"],"enumKeys":[],"enumValues":[],"attributes":[]},{"assembly":"mscorlib","name":"curX","type":"System.Single","isArray":false,"initValue":["0.1"],"enumKeys":[],"enumValues":[],"attributes":[]},{"assembly":"mscorlib","name":"curY","type":"System.Single","isArray":false,"initValue":["0.1"],"enumKeys":[],"enumValues":[],"attributes":[]}],"name":"MaterialController","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: 8d1c5694fd34f9cba1232aa0e7fbd547
+  onlyWriteTrigger: 0

@@ -1,0 +1,63 @@
+fileFormatVersion: 2
+guid: 4bb0e6b316e6dcc4c84fa3496c9c6b50
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
+    { value: true });\r\nexports.InteractionType = void 0;\r\nconst ZEPETO_Script_1
+    = require(\"ZEPETO.Script\");\r\nconst UnityEngine_1 = require(\"UnityEngine\");\r\nconst
+    InteractionBtn_1 = require(\"./InteractionBtn\");\r\nconst MiniMapController_1
+    = require(\"../World/MiniMapController\");\r\nconst DrawController_1 = require(\"../Game/Draw/DrawController\");\r\nconst
+    HorrorZoneController_1 = require(\"../Game/HorrorZone/HorrorZoneController\");\r\nconst
+    InteractionController_1 = require(\"./InteractionController\");\r\nconst LeaderBoardManager_1
+    = require(\"../Manager/LeaderBoardManager\");\r\nconst BalloonShopController_1
+    = require(\"../Game/BalloonShop/BalloonShopController\");\r\nconst TourBallonController_1
+    = require(\"../Game/Tour/TourBallonController\");\r\nconst NpcController_1 =
+    require(\"../Controller/NpcController\");\r\nconst TreasureHunt_1 = require(\"../Game/TreasureHunt/TreasureHunt\");\r\nclass
+    GameInteraction extends ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n    Start()
+    {\r\n        this._interactionBtn = this.GetComponent($typeof(InteractionBtn_1.default));\r\n       
+    this._interactionBtn.onClickEvent.AddListener(() => {\r\n            this._interactionBtn.HideIcon();\r\n           
+    this.DoInteraction();\r\n        });\r\n    }\r\n    DoInteraction() {\r\n       
+    switch (this._interactionType) {\r\n            case (InteractionType.HorrorZone):\r\n               
+    this._controller.GetComponent($typeof(HorrorZoneController_1.default)).OpenUI();\r\n               
+    break;\r\n            case (InteractionType.BalloonShop):\r\n               
+    this._controller.GetComponent($typeof(BalloonShopController_1.default)).OpenUI();\r\n               
+    break;\r\n            case (InteractionType.MiniMap):\r\n                this._controller.GetComponent($typeof(MiniMapController_1.default)).OpenUI();\r\n               
+    break;\r\n            case (InteractionType.TourBalloon):\r\n               
+    this._controller.GetComponent($typeof(TourBallonController_1.default)).OpenUI();\r\n               
+    break;\r\n            case (InteractionType.Draw):\r\n                this._controller.GetComponent($typeof(DrawController_1.default)).OpenUI();\r\n               
+    break;\r\n            case (InteractionType.AnimInteraction):\r\n               
+    this.GetComponent($typeof(InteractionController_1.default)).SendSignal();\r\n               
+    break;\r\n            case (InteractionType.LeaderBoard):\r\n               
+    LeaderBoardManager_1.default.Instance.OpenRankUI();\r\n                break;\r\n           
+    case (InteractionType.NpcInteraction):\r\n                this.GetComponent($typeof(NpcController_1.default)).OpenDialogue();\r\n               
+    break;\r\n            case (InteractionType.TreasureHunt):\r\n               
+    this._controller.GetComponent($typeof(TreasureHunt_1.default)).StartTreasureHunt();\r\n               
+    break;\r\n        }\r\n    }\r\n}\r\nexports.default = GameInteraction;\r\nvar
+    InteractionType;\r\n(function (InteractionType) {\r\n    InteractionType[InteractionType[\"HorrorZone\"]
+    = 0] = \"HorrorZone\";\r\n    InteractionType[InteractionType[\"BalloonShop\"]
+    = 1] = \"BalloonShop\";\r\n    InteractionType[InteractionType[\"MiniMap\"] =
+    2] = \"MiniMap\";\r\n    InteractionType[InteractionType[\"TourBalloon\"] = 3]
+    = \"TourBalloon\";\r\n    InteractionType[InteractionType[\"Draw\"] = 4] = \"Draw\";\r\n   
+    InteractionType[InteractionType[\"AnimInteraction\"] = 5] = \"AnimInteraction\";\r\n   
+    InteractionType[InteractionType[\"LeaderBoard\"] = 6] = \"LeaderBoard\";\r\n   
+    InteractionType[InteractionType[\"NpcInteraction\"] = 7] = \"NpcInteraction\";\r\n   
+    InteractionType[InteractionType[\"TreasureHunt\"] = 8] = \"TreasureHunt\";\r\n})(InteractionType
+    = exports.InteractionType || (exports.InteractionType = {}));\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiR2FtZUludGVyYWN0aW9uLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiR2FtZUludGVyYWN0aW9uLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7OztBQUFBLGlEQUFxRDtBQUNyRCw2Q0FBeUM7QUFDekMscURBQThDO0FBQzlDLGtFQUEyRDtBQUMzRCxnRUFBeUQ7QUFDekQsa0ZBQTJFO0FBQzNFLG1FQUE0RDtBQUM1RCxzRUFBK0Q7QUFDL0QscUZBQThFO0FBQzlFLDRFQUFxRTtBQUNyRSwrREFBd0Q7QUFDeEQsb0VBQTZEO0FBRTdELE1BQXFCLGVBQWdCLFNBQVEscUNBQXFCO0lBTTlELEtBQUs7UUFDRCxJQUFJLENBQUMsZUFBZSxHQUFHLElBQUksQ0FBQyxZQUFZLFNBQUMsd0JBQWMsRUFBRyxDQUFDO1FBQzNELElBQUksQ0FBQyxlQUFlLENBQUMsWUFBWSxDQUFDLFdBQVcsQ0FBQyxHQUFHLEVBQUU7WUFDL0MsSUFBSSxDQUFDLGVBQWUsQ0FBQyxRQUFRLEVBQUUsQ0FBQztZQUNoQyxJQUFJLENBQUMsYUFBYSxFQUFFLENBQUM7UUFDekIsQ0FBQyxDQUFDLENBQUE7SUFDTixDQUFDO0lBRU8sYUFBYTtRQUNqQixRQUFRLElBQUksQ0FBQyxnQkFBZ0IsRUFBRTtZQUMzQixLQUFLLENBQUMsZUFBZSxDQUFDLFVBQVUsQ0FBQztnQkFDN0IsSUFBSSxDQUFDLFdBQVcsQ0FBQyxZQUFZLFNBQUMsOEJBQW9CLEVBQUcsQ0FBQyxNQUFNLEVBQUUsQ0FBQztnQkFDL0QsTUFBTTtZQUNWLEtBQUssQ0FBQyxlQUFlLENBQUMsV0FBVyxDQUFDO2dCQUM5QixJQUFJLENBQUMsV0FBVyxDQUFDLFlBQVksU0FBQywrQkFBcUIsRUFBRyxDQUFDLE1BQU0sRUFBRSxDQUFDO2dCQUNoRSxNQUFNO1lBQ1YsS0FBSyxDQUFDLGVBQWUsQ0FBQyxPQUFPLENBQUM7Z0JBQzFCLElBQUksQ0FBQyxXQUFXLENBQUMsWUFBWSxTQUFDLDJCQUFpQixFQUFHLENBQUMsTUFBTSxFQUFFLENBQUM7Z0JBQzVELE1BQU07WUFDVixLQUFLLENBQUMsZUFBZSxDQUFDLFdBQVcsQ0FBQztnQkFDOUIsSUFBSSxDQUFDLFdBQVcsQ0FBQyxZQUFZLFNBQUMsOEJBQW9CLEVBQUcsQ0FBQyxNQUFNLEVBQUUsQ0FBQztnQkFDL0QsTUFBTTtZQUNWLEtBQUssQ0FBQyxlQUFlLENBQUMsSUFBSSxDQUFDO2dCQUN2QixJQUFJLENBQUMsV0FBVyxDQUFDLFlBQVksU0FBQyx3QkFBYyxFQUFHLENBQUMsTUFBTSxFQUFFLENBQUM7Z0JBQ3pELE1BQU07WUFDVixLQUFLLENBQUMsZUFBZSxDQUFDLGVBQWUsQ0FBQztnQkFDbEMsSUFBSSxDQUFDLFlBQVksU0FBQywrQkFBcUIsRUFBRyxDQUFDLFVBQVUsRUFBRSxDQUFDO2dCQUN4RCxNQUFNO1lBQ1YsS0FBSyxDQUFDLGVBQWUsQ0FBQyxXQUFXLENBQUM7Z0JBQzlCLDRCQUFrQixDQUFDLFFBQVEsQ0FBQyxVQUFVLEVBQUUsQ0FBQztnQkFDekMsTUFBTTtZQUNWLEtBQUssQ0FBQyxlQUFlLENBQUMsY0FBYyxDQUFDO2dCQUNqQyxJQUFJLENBQUMsWUFBWSxTQUFDLHVCQUFhLEVBQUcsQ0FBQyxZQUFZLEVBQUUsQ0FBQztnQkFDbEQsTUFBTTtZQUNWLEtBQUssQ0FBQyxlQUFlLENBQUMsWUFBWSxDQUFDO2dCQUMvQixJQUFJLENBQUMsV0FBVyxDQUFDLFlBQVksU0FBQyxzQkFBWSxFQUFHLENBQUMsaUJBQWlCLEVBQUUsQ0FBQztnQkFDbEUsTUFBTTtTQUNiO0lBQ0wsQ0FBQztDQUNKO0FBN0NELGtDQTZDQztBQUVELElBQVksZUFVWDtBQVZELFdBQVksZUFBZTtJQUN2QixpRUFBVSxDQUFBO0lBQ1YsbUVBQVcsQ0FBQTtJQUNYLDJEQUFPLENBQUE7SUFDUCxtRUFBVyxDQUFBO0lBQ1gscURBQUksQ0FBQTtJQUNKLDJFQUFlLENBQUE7SUFDZixtRUFBVyxDQUFBO0lBQ1gseUVBQWMsQ0FBQTtJQUNkLHFFQUFZLENBQUE7QUFDaEIsQ0FBQyxFQVZXLGVBQWUsR0FBZix1QkFBZSxLQUFmLHVCQUFlLFFBVTFCIn0=","assetPath":"Assets/Scripts/Interaction/GameInteraction.ts","manifest":{"properties":[{"assembly":"","name":"_interactionType","type":"InteractionType","isArray":false,"initValue":[],"enumKeys":["HorrorZone","BalloonShop","MiniMap","TourBalloon","Draw","AnimInteraction","LeaderBoard","NpcInteraction","TreasureHunt"],"enumValues":["0","1","2","3","4","5","6","7","8"],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"_controller","type":"UnityEngine.GameObject","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]}],"name":"GameInteraction","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: faa8a58104f4786a186d78aaa89784d9
+  onlyWriteTrigger: 0

@@ -1,0 +1,11 @@
+fileFormatVersion: 2
+guid: 19ed3cf2cfcd71440bf646278fbc6ced
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures:
+  - _TX_Gradient_Vertical_01: {fileID: 2800000, guid: 93ea19c7d0848ed47806cc339c1b1536, type: 3}
+  nonModifiableTextures: []
+  preprocessorOverride: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

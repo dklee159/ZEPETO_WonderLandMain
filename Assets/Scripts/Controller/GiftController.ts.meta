@@ -1,0 +1,63 @@
+fileFormatVersion: 2
+guid: d1fbcabaf1cd3a54c9decd05ee8233e7
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
+    { value: true });\r\nconst UnityEngine_1 = require(\"UnityEngine\");\r\nconst
+    UnityEngine_UI_1 = require(\"UnityEngine.UI\");\r\nconst ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nconst
+    DataManager_1 = require(\"../Manager/DataManager\");\r\nconst TypeSyncHelper_1
+    = require(\"../../ZepetoScripts/SyncHelper/TypeSyncHelper\");\r\nconst EquipManager_1
+    = require(\"../Manager/EquipManager\");\r\nclass GiftController extends ZEPETO_Script_1.ZepetoScriptBehaviour
+    {\r\n    constructor() {\r\n        super(...arguments);\r\n        this.hasCollection
+    = false;\r\n    }\r\n    Start() {\r\n        EquipManager_1.default.Instance.equipBalloon.AddListener(()
+    => {\r\n            if (this.mike_1.isOn)\r\n                this.mike_1.isOn
+    = false;\r\n            if (this.mike_2.isOn)\r\n                this.mike_2.isOn
+    = false;\r\n        });\r\n    }\r\n    RemoteStart() {\r\n        this.giftButton.onClick.AddListener(()
+    => {\r\n            this.giftUI.SetActive(!this.giftUI.activeSelf);\r\n       
+    });\r\n        this.giftCloseButton.onClick.AddListener(() => {\r\n           
+    this.giftUI.SetActive(false);\r\n        });\r\n        this.mike_1.onValueChanged.AddListener(()
+    => {\r\n            if (!this.mike_1.isOn)\r\n                EquipManager_1.default.Instance.UnequipItem(TypeSyncHelper_1.EquipList.AwardsMike_1);\r\n           
+    else\r\n                EquipManager_1.default.Instance.EquipItem(TypeSyncHelper_1.EquipList.AwardsMike_1);\r\n       
+    });\r\n        this.mike_2.onValueChanged.AddListener(() => {\r\n           
+    if (!this.mike_2.isOn)\r\n                EquipManager_1.default.Instance.UnequipItem(TypeSyncHelper_1.EquipList.AwardsMike_2);\r\n           
+    else\r\n                EquipManager_1.default.Instance.EquipItem(TypeSyncHelper_1.EquipList.AwardsMike_2);\r\n       
+    });\r\n        this.head.onValueChanged.AddListener(() => {\r\n            if
+    (!this.head.isOn)\r\n                EquipManager_1.default.Instance.UnequipItem(TypeSyncHelper_1.EquipList.AwardsHead);\r\n           
+    else\r\n                EquipManager_1.default.Instance.EquipItem(TypeSyncHelper_1.EquipList.AwardsHead);\r\n       
+    });\r\n        this.neck_1.onValueChanged.AddListener(() => {\r\n           
+    if (!this.neck_1.isOn)\r\n                EquipManager_1.default.Instance.UnequipItem(TypeSyncHelper_1.EquipList.AwardsNeck_1);\r\n           
+    else\r\n                EquipManager_1.default.Instance.EquipItem(TypeSyncHelper_1.EquipList.AwardsNeck_1);\r\n       
+    });\r\n        this.neck_2.onValueChanged.AddListener(() => {\r\n           
+    if (!this.neck_2.isOn)\r\n                EquipManager_1.default.Instance.UnequipItem(TypeSyncHelper_1.EquipList.AwardsNeck_2);\r\n           
+    else\r\n                EquipManager_1.default.Instance.EquipItem(TypeSyncHelper_1.EquipList.AwardsNeck_2);\r\n       
+    });\r\n    }\r\n    SetInteractable(canInteractable) {\r\n        this.mike_1.interactable
+    = canInteractable && this.hasCollection;\r\n        this.mike_2.interactable
+    = canInteractable && this.hasCollection;\r\n        this.head.interactable =
+    canInteractable && this.hasCollection;\r\n        this.neck_1.interactable =
+    canInteractable && this.hasCollection;\r\n        this.neck_2.interactable =
+    canInteractable && this.hasCollection;\r\n    }\r\n    UpdateGiftUI() {\r\n       
+    const wonderCollections = DataManager_1.default.Instance.PlayerDB.wonderCollection;\r\n       
+    for (const wonderCollection of wonderCollections) {\r\n            if (wonderCollection.id
+    == TypeSyncHelper_1.WonderCollectionList.Hiddle_Collection) {\r\n               
+    this.hasCollection = wonderCollection.has;\r\n                this.wonderHiddenItems.SetActive(wonderCollection.has);\r\n               
+    this.SetInteractable(wonderCollection.has);\r\n                return wonderCollection.has;\r\n           
+    }\r\n        }\r\n    }\r\n}\r\nexports.default = GiftController;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiR2lmdENvbnRyb2xsZXIuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyJHaWZ0Q29udHJvbGxlci50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOztBQUFBLDZDQUF5QztBQUN6QyxtREFBK0M7QUFDL0MsaURBQXFEO0FBQ3JELHdEQUFpRDtBQUNqRCxrRkFBZ0c7QUFDaEcsMERBQW1EO0FBRW5ELE1BQXFCLGNBQWUsU0FBUSxxQ0FBcUI7SUFBakU7O1FBYVksa0JBQWEsR0FBYSxLQUFLLENBQUM7SUE0RDVDLENBQUM7SUExRFcsS0FBSztRQUNULHNCQUFZLENBQUMsUUFBUSxDQUFDLFlBQVksQ0FBQyxXQUFXLENBQUMsR0FBRyxFQUFFO1lBQ2hELElBQUcsSUFBSSxDQUFDLE1BQU0sQ0FBQyxJQUFJO2dCQUFFLElBQUksQ0FBQyxNQUFNLENBQUMsSUFBSSxHQUFHLEtBQUssQ0FBQztZQUM5QyxJQUFHLElBQUksQ0FBQyxNQUFNLENBQUMsSUFBSTtnQkFBRSxJQUFJLENBQUMsTUFBTSxDQUFDLElBQUksR0FBRyxLQUFLLENBQUM7UUFDbEQsQ0FBQyxDQUFDLENBQUM7SUFDUCxDQUFDO0lBRU0sV0FBVztRQUNkLElBQUksQ0FBQyxVQUFVLENBQUMsT0FBTyxDQUFDLFdBQVcsQ0FBQyxHQUFHLEVBQUU7WUFDckMsSUFBSSxDQUFDLE1BQU0sQ0FBQyxTQUFTLENBQUMsQ0FBQyxJQUFJLENBQUMsTUFBTSxDQUFDLFVBQVUsQ0FBQyxDQUFDO1FBQ25ELENBQUMsQ0FBQyxDQUFDO1FBRUgsSUFBSSxDQUFDLGVBQWUsQ0FBQyxPQUFPLENBQUMsV0FBVyxDQUFDLEdBQUUsRUFBRTtZQUN6QyxJQUFJLENBQUMsTUFBTSxDQUFDLFNBQVMsQ0FBQyxLQUFLLENBQUMsQ0FBQztRQUNqQyxDQUFDLENBQUMsQ0FBQztRQUVILElBQUksQ0FBQyxNQUFNLENBQUMsY0FBYyxDQUFDLFdBQVcsQ0FBQyxHQUFHLEVBQUU7WUFDeEMsSUFBRyxDQUFDLElBQUksQ0FBQyxNQUFN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","assetPath":"Assets/Scripts/Controller/GiftController.ts","manifest":{"properties":[{"assembly":"UnityEngine.UI","name":"giftButton","type":"UnityEngine.UI.Button","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"giftUI","type":"UnityEngine.GameObject","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.UI","name":"giftCloseButton","type":"UnityEngine.UI.Button","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"wonderHiddenItems","type":"UnityEngine.GameObject","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.UI","name":"mike_1","type":"UnityEngine.UI.Toggle","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"Header","args":["\"Hidden
+    Items\""]},{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.UI","name":"mike_2","type":"UnityEngine.UI.Toggle","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.UI","name":"head","type":"UnityEngine.UI.Toggle","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.UI","name":"neck_1","type":"UnityEngine.UI.Toggle","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.UI","name":"neck_2","type":"UnityEngine.UI.Toggle","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]}],"name":"GiftController","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: 21f2b17ef11d628aa6f4dfea126646e5
+  onlyWriteTrigger: 0

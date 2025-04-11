@@ -1,0 +1,48 @@
+fileFormatVersion: 2
+guid: 84bd9e2a041686f4d981028fc285cfdf
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
+    { value: true });\r\nconst UnityEngine_1 = require(\"UnityEngine\");\r\nconst
+    ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nconst MaterialController_1 =
+    require(\"../World/MaterialController\");\r\nclass MaterialManager extends ZEPETO_Script_1.ZepetoScriptBehaviour
+    {\r\n    constructor() {\r\n        super(...arguments);\r\n        this.tex
+    = \"_MainTex\";\r\n    }\r\n    static get Instance() {\r\n        if (!MaterialManager._instance)
+    {\r\n            const managerObj = UnityEngine_1.GameObject.Find(\"MaterialManager\");\r\n           
+    if (managerObj)\r\n                MaterialManager._instance = managerObj.GetComponent($typeof(MaterialManager));\r\n       
+    }\r\n        return MaterialManager._instance;\r\n    }\r\n    Awake() {\r\n       
+    MaterialManager._instance = this;\r\n    }\r\n    FixedUpdate() {\r\n       
+    this.SetMaterials();\r\n    }\r\n    SetMaterials() {\r\n        if (!MaterialManager.materialEffects)\r\n           
+    return;\r\n        if (MaterialManager.materialEffects.length == 0)\r\n           
+    return;\r\n        for (const controller of MaterialManager.materialEffects)
+    {\r\n            controller.curX += UnityEngine_1.Time.deltaTime * controller.speedX;\r\n           
+    controller.curY += UnityEngine_1.Time.deltaTime * controller.speedY;\r\n           
+    controller.mat.SetTextureOffset(this.tex, new UnityEngine_1.Vector2(controller.curX,
+    controller.curX));\r\n        }\r\n    }\r\n    GetCurrentSkyBox() {\r\n       
+    return this.skyBox.GetFloat(\"_GradientFadeEnd\");\r\n    }\r\n    SetSkyBox(light)
+    {\r\n        if (light) {\r\n            this.skyBox.SetFloat(\"_GradientFadeBegin\",
+    0.62);\r\n            this.skyBox.SetFloat(\"_GradientFadeEnd\", 1);\r\n           
+    this.skyBox.SetFloat(\"_StarLayer1MaxRadius\", 0);\r\n            this.nightEffects.SetActive(false);\r\n       
+    }\r\n        else {\r\n            this.skyBox.SetFloat(\"_GradientFadeBegin\",
+    -1);\r\n            this.skyBox.SetFloat(\"_GradientFadeEnd\", -1);\r\n           
+    this.skyBox.SetFloat(\"_StarLayer1MaxRadius\", 0.0068);\r\n            this.nightEffects.SetActive(true);\r\n       
+    }\r\n    }\r\n}\r\nexports.default = MaterialManager;\r\nMaterialManager.materialEffects
+    = [];\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiTWF0ZXJpYWxNYW5hZ2VyLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiTWF0ZXJpYWxNYW5hZ2VyLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7O0FBQUEsNkNBQWtFO0FBQ2xFLGlEQUFxRDtBQUNyRCxvRUFBNkQ7QUFFN0QsTUFBcUIsZUFBZ0IsU0FBUSxxQ0FBcUI7SUFBbEU7O1FBWXFCLFFBQUcsR0FBVyxVQUFVLENBQUM7SUF3QzlDLENBQUM7SUFqRFUsTUFBTSxLQUFLLFFBQVE7UUFDdEIsSUFBSSxDQUFDLGVBQWUsQ0FBQyxTQUFTLEVBQUU7WUFDNUIsTUFBTSxVQUFVLEdBQUcsd0JBQVUsQ0FBQyxJQUFJLENBQUMsaUJBQWlCLENBQUMsQ0FBQztZQUN0RCxJQUFJLFVBQVU7Z0JBQUUsZUFBZSxDQUFDLFNBQVMsR0FBRyxVQUFVLENBQUMsWUFBWSxTQUFDLGVBQWUsRUFBRyxDQUFDO1NBQzFGO1FBQ0QsT0FBTyxlQUFlLENBQUMsU0FBUyxDQUFDO0lBQ3JDLENBQUM7SUFPRCxLQUFLO1FBQ0QsZUFBZSxDQUFDLFNBQVMsR0FBRyxJQUFJLENBQUM7SUFDckMsQ0FBQztJQUVPLFdBQVc7UUFDZixJQUFJLENBQUMsWUFBWSxFQUFFLENBQUM7SUFDeEIsQ0FBQztJQUVPLFlBQVk7UUFDaEIsSUFBRyxDQUFDLGVBQWUsQ0FBQyxlQUFlO1lBQUUsT0FBTztRQUM1QyxJQUFHLGVBQWUsQ0FBQyxlQUFlLENBQUMsTUFBTSxJQUFJLENBQUM7WUFBRSxPQUFPO1FBRXZELEtBQUksTUFBTSxVQUFVLElBQUksZUFBZSxDQUFDLGVBQWUsRUFBRTtZQUNyRCxVQUFVLENBQUMsSUFBSSxJQUFJLGtCQUFJLENBQUMsU0FBUyxHQUFHLFVBQVUsQ0FBQyxNQUFNLENBQUM7WUFDdEQsVUFBVSxDQUFDLElBQUksSUFBSSxrQkFBSSxDQUFDLFNBQVMsR0FBRyxVQUFVLENBQUMsTUFBTSxDQUFDO1lBQ3RELFVBQVUsQ0FBQyxHQUFHLENBQUMsZ0JBQWdCLENBQUMsSUFBSSxDQUFDLEdBQUcsRUFBRSxJQUFJLHFCQUFPLENBQUMsVUFBVSxDQUFDLElBQUksRUFBRSxVQUFVLENBQUMsSUFBSSxDQUFDLENBQUMsQ0FBQztTQUM1RjtJQUNMLENBQUM7SUFFTSxnQkFBZ0I7UUFDbkIsT0FBTyxJQUFJLENBQUMsTUFBTSxDQUFDLFFBQVEsQ0FBQyxrQkFBa0IsQ0FBQyxDQUFDO0lBQ3BELENBQUM7SUFFTSxTQUFTLENBQUMsS0FBYztRQUMzQixJQUFJLEtBQUssRUFBRTtZQUNQLElBQUksQ0FBQyxNQUFNLENBQUMsUUFBUSxDQUFDLG9CQUFvQixFQUFFLElBQUksQ0FBQyxDQUFBO1lBQ2hELElBQUksQ0FBQyxNQUFNLENBQUMsUUFBUSxDQUFDLGtCQUFrQixFQUFFLENBQUMsQ0FBQyxDQUFBO1lBQzNDLElBQUksQ0FBQyxNQUFNLENBQUMsUUFBUSxDQUFDLHNCQUFzQixFQUFFLENBQUMsQ0FBQyxDQUFBO1lBQy9DLElBQUksQ0FBQyxZQUFZLENBQUMsU0FBUyxDQUFDLEtBQUssQ0FBQyxDQUFDO1NBQ3RDO2FBQU07WUFDSCxJQUFJLENBQUMsTUFBTSxDQUFDLFFBQVEsQ0FBQyxvQkFBb0IsRUFBRSxDQUFDLENBQUMsQ0FBQyxDQUFBO1lBQzlDLElBQUksQ0FBQyxNQUFNLENBQUMsUUFBUSxDQUFDLGtCQUFrQixFQUFFLENBQUMsQ0FBQyxDQUFDLENBQUE7WUFDNUMsSUFBSSxDQUFDLE1BQU0sQ0FBQyxRQUFRLENBQUMsc0JBQXNCLEVBQUUsTUFBTSxDQUFDLENBQUE7WUFDcEQsSUFBSSxDQUFDLFlBQVksQ0FBQyxTQUFTLENBQUMsSUFBSSxDQUFDLENBQUM7U0FDckM7SUFDTCxDQUFDOztBQW5ETCxrQ0FvREM7QUF6Q2lCLCtCQUFlLEdBQXlCLEVBQUUsQ0FBQyJ9","assetPath":"Assets/Scripts/Manager/MaterialManager.ts","manifest":{"properties":[{"assembly":"UnityEngine.CoreModule","name":"skyBox","type":"UnityEngine.Material","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"nightEffects","type":"UnityEngine.GameObject","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]}],"name":"MaterialManager","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: 87a989379a5a36d51dde2a7aec82ccc3
+  onlyWriteTrigger: 0

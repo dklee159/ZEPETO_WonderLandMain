@@ -1,0 +1,41 @@
+fileFormatVersion: 2
+guid: 10370298ac51b5644a1d30aeb51e963f
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
+    { value: true });\r\nconst ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nconst
+    UnityEngine_UI_1 = require(\"UnityEngine.UI\");\r\nconst MaterialManager_1 =
+    require(\"../Manager/MaterialManager\");\r\nclass DayLightController extends
+    ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n    constructor() {\r\n        super(...arguments);\r\n       
+    this.dayLightImages = [];\r\n    }\r\n    RemoteStart() {\r\n        this.StartCoroutine(this.CheckDayLight());\r\n       
+    // this.dayLight = MaterialManager.Instance.GetCurrentSkyBox() === 1;\r\n       
+    // this.dayLightUI.GetComponent<Image>().sprite = this.dayLight ? this.dayLightImages[0]
+    : this.dayLightImages[1]\r\n        this.dayLightUI.onClick.AddListener(() =>
+    {\r\n            MaterialManager_1.default.Instance.SetSkyBox(!this.dayLight);\r\n           
+    this.dayLight = !this.dayLight;\r\n            this.dayLightUI.GetComponent($typeof(UnityEngine_UI_1.Image)).sprite
+    = this.dayLight ? this.dayLightImages[0] : this.dayLightImages[1];\r\n       
+    });\r\n    }\r\n    *CheckDayLight() {\r\n        while (true) {\r\n           
+    yield null;\r\n            if (!MaterialManager_1.default.Instance)\r\n               
+    return;\r\n            this.dayLight = MaterialManager_1.default.Instance.GetCurrentSkyBox()
+    === 1;\r\n            this.dayLightUI.GetComponent($typeof(UnityEngine_UI_1.Image)).sprite
+    = this.dayLight ? this.dayLightImages[0] : this.dayLightImages[1];\r\n           
+    break;\r\n        }\r\n    }\r\n}\r\nexports.default = DayLightController;\r\n//#
+    sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiRGF5TGlnaHRDb250cm9sbGVyLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiRGF5TGlnaHRDb250cm9sbGVyLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7O0FBQ0EsaURBQXFEO0FBQ3JELG1EQUErQztBQUMvQyxnRUFBeUQ7QUFFekQsTUFBcUIsa0JBQW1CLFNBQVEscUNBQXFCO0lBQXJFOztRQUc4QixtQkFBYyxHQUFhLEVBQUUsQ0FBQztJQTJCNUQsQ0FBQztJQXRCVSxXQUFXO1FBQ2QsSUFBSSxDQUFDLGNBQWMsQ0FBQyxJQUFJLENBQUMsYUFBYSxFQUFFLENBQUMsQ0FBQztRQUMxQyxxRUFBcUU7UUFDckUsaUhBQWlIO1FBRWpILElBQUksQ0FBQyxVQUFVLENBQUMsT0FBTyxDQUFDLFdBQVcsQ0FBQyxHQUFHLEVBQUU7WUFDckMseUJBQWUsQ0FBQyxRQUFRLENBQUMsU0FBUyxDQUFDLENBQUMsSUFBSSxDQUFDLFFBQVEsQ0FBQyxDQUFDO1lBQ25ELElBQUksQ0FBQyxRQUFRLEdBQUcsQ0FBQyxJQUFJLENBQUMsUUFBUSxDQUFBO1lBQzlCLElBQUksQ0FBQyxVQUFVLENBQUMsWUFBWSxTQUFDLHNCQUFLLEdBQUksTUFBTSxHQUFHLElBQUksQ0FBQyxRQUFRLENBQUMsQ0FBQyxDQUFDLElBQUksQ0FBQyxjQUFjLENBQUMsQ0FBQyxDQUFDLENBQUMsQ0FBQyxDQUFDLElBQUksQ0FBQyxjQUFjLENBQUMsQ0FBQyxDQUFDLENBQUE7UUFDbEgsQ0FBQyxDQUFDLENBQUE7SUFDTixDQUFDO0lBRU8sQ0FBQyxhQUFhO1FBQ2xCLE9BQU8sSUFBSSxFQUFFO1lBQ1QsTUFBTSxJQUFJLENBQUM7WUFDWCxJQUFJLENBQUMseUJBQWUsQ0FBQyxRQUFRO2dCQUFFLE9BQU87WUFDdEMsSUFBSSxDQUFDLFFBQVEsR0FBRyx5QkFBZSxDQUFDLFFBQVEsQ0FBQyxnQkFBZ0IsRUFBRSxLQUFLLENBQUMsQ0FBQztZQUNsRSxJQUFJLENBQUMsVUFBVSxDQUFDLFlBQVksU0FBQyxzQkFBSyxHQUFJLE1BQU0sR0FBRyxJQUFJLENBQUMsUUFBUSxDQUFDLENBQUMsQ0FBQyxJQUFJLENBQUMsY0FBYyxDQUFDLENBQUMsQ0FBQyxDQUFDLENBQUMsQ0FBQyxJQUFJLENBQUMsY0FBYyxDQUFDLENBQUMsQ0FBQyxDQUFBO1lBQzlHLE1BQU07U0FDVDtJQUNMLENBQUM7Q0FFSjtBQTlCRCxxQ0E4QkMifQ==","assetPath":"Assets/Scripts/Controller/DayLightController.ts","manifest":{"properties":[{"assembly":"UnityEngine.UI","name":"dayLightUI","type":"UnityEngine.UI.Button","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"dayLightImages","type":"UnityEngine.Sprite[]","isArray":true,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]}],"name":"DayLightController","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: 647caf55c642da5b62d2a0e466d8561c
+  onlyWriteTrigger: 0

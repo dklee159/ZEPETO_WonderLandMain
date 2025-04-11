@@ -1,0 +1,98 @@
+fileFormatVersion: 2
+guid: 209181d10faf50c47b66409edc2b1b81
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
+    { value: true });\r\nconst ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nconst
+    ZEPETO_Character_Controller_1 = require(\"ZEPETO.Character.Controller\");\r\nconst
+    UnityEngine_1 = require(\"UnityEngine\");\r\nconst UIManager_1 = require(\"../Manager/UIManager\");\r\nconst
+    GameManager_1 = require(\"../GameManager\");\r\nconst HorrorZoneManager_1 = require(\"../Game/HorrorZone/HorrorZoneManager\");\r\nconst
+    TypeSyncHelper_1 = require(\"../../ZepetoScripts/SyncHelper/TypeSyncHelper\");\r\nconst
+    MultiplayManager_1 = require(\"../../ZepetoScripts/Multiplay/MultiplayManager\");\r\nconst
+    TransformSyncHelper_1 = require(\"../../ZepetoScripts/SyncHelper/TransformSyncHelper\");\r\nconst
+    SDManager_1 = require(\"../Manager/SDManager\");\r\nconst EquipManager_1 = require(\"../Manager/EquipManager\");\r\nclass
+    TeleportController extends ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n    TeleportPlayer(sessionId,
+    targetZone) {\r\n        const isLocal = MultiplayManager_1.default.instance.room.SessionId
+    === sessionId;\r\n        /* Get Player Datas */\r\n        const character =
+    ZEPETO_Character_Controller_1.ZepetoPlayers.instance.GetPlayer(sessionId).character;\r\n       
+    const transformSyncHelper = character.GetComponent($typeof(TransformSyncHelper_1.default));\r\n       
+    console.log(`[ZoneMoveManager] ${isLocal ? \"Local\" : \"Other\"} ${character}
+    teleport to ${TypeSyncHelper_1.ZoneType[targetZone]}....!`);\r\n        /* Teleport
+    */\r\n        if (targetZone == TypeSyncHelper_1.ZoneType.HorrorZoneEntrance)
+    {\r\n            if (isLocal)\r\n                this.StartCoroutine(this.Fading(targetZone));\r\n           
+    else\r\n                character.transform.position = this.jailZone.position;\r\n           
+    transformSyncHelper.SyncPosition = false;\r\n            transformSyncHelper.SyncRotation
+    = false;\r\n        }\r\n        else if (targetZone === TypeSyncHelper_1.ZoneType.HorrorZoneExit)
+    {\r\n            if (isLocal)\r\n                this.StartCoroutine(this.Fading(targetZone));\r\n           
+    transformSyncHelper.SyncPosition = true;\r\n            transformSyncHelper.SyncRotation
+    = true;\r\n            // switch (+targetZone) {\r\n            //     case ZoneType.Main:\r\n           
+    //         if(isLocal) GameManager.instance.ChangeCamOutdoor(true);\r\n           
+    //         if(isLocal) this.ZoneOjbectActivator(ZoneType.Main);\r\n           
+    //         character.Teleport(this.mainZone.position, this.mainZone.rotation);\r\n           
+    //         break;\r\n            //     case ZoneType.Main_Hall:\r\n           
+    //         if(isLocal) GameManager.instance.ChangeCamOutdoor(true);\r\n           
+    //         if(isLocal)this.ZoneOjbectActivator(ZoneType.Main);\r\n           
+    //         character.Teleport(this.mainZone_Hall.position, this.mainZone_Hall.rotation);\r\n           
+    //         if(isLocal) this.RotateCamera(90);\r\n            //         break;\r\n           
+    //     case ZoneType.BalloonZone:\r\n            //         character.Teleport(this.balloonZone.position,
+    this.balloonZone.rotation);\r\n            //         break;\r\n            //    
+    case ZoneType.PlayZone:\r\n            //         character.Teleport(this.playZone.position,
+    this.playZone.rotation);\r\n            //         break;\r\n            //    
+    case ZoneType.WonderHallZone:\r\n            //         if(isLocal) GameManager.instance.ChangeCamOutdoor(false);\r\n           
+    //         if(isLocal) this.ZoneOjbectActivator(ZoneType.WonderHallZone);\r\n           
+    //         character.Teleport(this.wonderHallZone.position, this.wonderHallZone.rotation);\r\n           
+    //         if(isLocal) this.RotateCamera(-90);\r\n            //         break;\r\n           
+    // }\r\n            // /* Controller ON */\r\n            // GameManager.instance.FinishTeleportZone(targetZone);\r\n           
+    // // if(isLocal) GameManager.instance.LocalPlayerControllerSet(true);\r\n       
+    }\r\n    }\r\n    /* Start Loading */\r\n    *Fading(targetZone) {\r\n       
+    const fadeUI = UIManager_1.default.Instance.GetScreenImage(TypeSyncHelper_1.ScreenCanvasType.Fade);\r\n       
+    fadeUI.GetComponent($typeof(UnityEngine_1.Animator)).SetTrigger(TypeSyncHelper_1.Anim.Active);\r\n       
+    // // Controller OFF\r\n        // GameManager.instance.LocalPlayerControllerSet(false);\r\n       
+    // const controller = ZepetoPlayers.instance.GetPlayer(this.room.SessionId).character.characterController;\r\n       
+    yield new UnityEngine_1.WaitForSeconds(1);\r\n        switch (+targetZone) {\r\n           
+    case TypeSyncHelper_1.ZoneType.HorrorZoneEntrance:\r\n                GameManager_1.default.Instance.HorrorZoneEnter();\r\n               
+    break;\r\n            case TypeSyncHelper_1.ZoneType.HorrorZoneExit:\r\n               
+    GameManager_1.default.Instance.HorrorZoneExit();\r\n                break;\r\n           
+    // case ZoneType.HorrorZone_Game:\r\n            //     GameManager.instance.ChangeHorrorCam(true);\r\n           
+    //     UIManager.instance.HorrorGamePanelVisibler(true);\r\n            //    
+    this.RotateCamera(90);\r\n            //     this.ZoneOjbectActivator(ZoneType.HorrorZone_Game);\r\n           
+    //     break;\r\n            // case ZoneType.WonderHallZone_Game_JG:\r\n           
+    //     MinigameJGManager.instance.onPostMove();\r\n            //     this.ZoneOjbectActivator(ZoneType.WonderHallZone_Game_JG);\r\n           
+    //     break;\r\n            // case ZoneType.WonderHallZone_Game_NT:\r\n           
+    //     MinigameNTManager.instance.onPostMove();\r\n            //     this.ZoneOjbectActivator(ZoneType.WonderHallZone_Game_NT);\r\n           
+    //     break;    \r\n        }\r\n        // // Teleport\r\n        const character
+    = ZEPETO_Character_Controller_1.ZepetoPlayers.instance.GetPlayer(MultiplayManager_1.default.instance.room.SessionId).character;\r\n       
+    switch (+targetZone) {\r\n            case TypeSyncHelper_1.ZoneType.HorrorZoneEntrance:\r\n               
+    character.Teleport(this.horrorZone_Game.position, this.horrorZone_Game.rotation);\r\n               
+    HorrorZoneManager_1.default.Instance.GameReady();\r\n                EquipManager_1.default.Instance.InvisibleAll();\r\n               
+    SDManager_1.default.Instance.Invisible();\r\n                break;\r\n           
+    case TypeSyncHelper_1.ZoneType.HorrorZoneExit:\r\n                character.Teleport(this.horrorZone_Exit.position,
+    this.horrorZone_Exit.rotation);\r\n                EquipManager_1.default.Instance.VisibleAll();\r\n               
+    SDManager_1.default.Instance.Visible();\r\n                break;\r\n           
+    // case ZoneType.HorrorZone_Game:\r\n            // character.Teleport(this.horrorZone.position,
+    this.horrorZone.rotation);\r\n            // break;\r\n            // case ZoneType.WonderHallZone_Game_JG:\r\n           
+    //     character.Teleport(this.wonderHallZone_GameJG.position, this.wonderHallZone_GameJG.rotation);\r\n           
+    //     break;\r\n            // case ZoneType.WonderHallZone_Game_NT:\r\n           
+    //     character.Teleport(this.wonderHallZone_GameNT.position, this.wonderHallZone_GameNT.rotation);\r\n           
+    //     break;    \r\n        }\r\n        fadeUI.GetComponent($typeof(UnityEngine_1.Animator)).SetTrigger(TypeSyncHelper_1.Anim.Blackout);\r\n       
+    yield new UnityEngine_1.WaitForSeconds(2);\r\n        fadeUI.GetComponent($typeof(UnityEngine_1.Animator)).SetTrigger(TypeSyncHelper_1.Anim.BackToIdle);\r\n       
+    // // Controller ON\r\n        // GameManager.instance.FinishTeleportZone(targetZone);\r\n   
+    }\r\n}\r\nexports.default = TeleportController;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiVGVsZXBvcnRDb250cm9sbGVyLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiVGVsZXBvcnRDb250cm9sbGVyLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7O0FBQUEsaURBQXFEO0FBQ3JELDZFQUE0RDtBQUM1RCw2Q0FBa0U7QUFDbEUsb0RBQTZDO0FBQzdDLGdEQUF5QztBQUN6Qyw0RUFBcUU7QUFDckUsa0ZBQWlHO0FBQ2pHLHFGQUE4RTtBQUM5RSw0RkFBcUY7QUFDckYsb0RBQTZDO0FBQzdDLDBEQUFtRDtBQUVuRCxNQUFxQixrQkFBbUIsU0FBUSxxQ0FBcUI7SUFRMUQsY0FBYyxDQUFDLFNBQWlCLEVBQUUsVUFBb0I7UUFDekQsTUFBTSxPQUFPLEdBQUcsMEJBQWdCLENBQUMsUUFBUSxDQUFDLElBQUksQ0FBQyxTQUFTLEtBQUssU0FBUyxDQUFDO1FBRXZFLHNCQUFzQjtRQUN0QixNQUFNLFNBQVMsR0FBRywyQ0FBYSxDQUFDLFFBQVEsQ0FBQyxTQUFTLENBQUMsU0FBUyxDQUFDLENBQUMsU0FBUyxDQUFDO1FBQ3hFLE1BQU0sbUJBQW1CLEdBQUcsU0FBUyxDQUFDLFlBQVksU0FBQyw2QkFBbUIsRUFBRyxDQUFDO1FBRTFFLE9BQU8sQ0FBQyxHQUFHLENBQUMscUJBQXFCLE9BQU8sQ0FBQyxDQUFDLENBQUMsT0FBTyxDQUFBLENBQUMsQ0FBQSxPQUFPLElBQUksU0FBUyxnQkFBZ0IseUJBQVEsQ0FBQyxVQUFVLENBQUMsT0FBTyxDQUFDLENBQUM7UUFFcEgsY0FBYztRQUNkLElBQUksVUFBVSxJQUFJLHlCQUFRLENBQUMsa0JBQWtCLEVBQUU7WUFDM0MsSUFBSSxPQUFPO2dCQUFFLElBQUksQ0FBQyxjQUFjLENBQUMsSUFBSSxDQUFDLE1BQU0sQ0FBQyxVQUFVLENBQUMsQ0FBQyxDQUFDOztnQkFDckQsU0FBUyxDQUFDLFNBQVMsQ0FBQyxRQUFRLEdBQUcsSUFBSSxDQUFDLFFBQVEsQ0FBQyxRQUFRLENBQUM7WUFFM0QsbUJBQW1CLENB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","assetPath":"Assets/Scripts/Controller/TeleportController.ts","manifest":{"properties":[{"assembly":"UnityEngine.CoreModule","name":"jailZone","type":"UnityEngine.Transform","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"Header","args":["\"Zones\""]},{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"horrorZone_Game","type":"UnityEngine.Transform","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"horrorZone_Exit","type":"UnityEngine.Transform","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]}],"name":"TeleportController","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: 76a1a22148c06acc9d5b1206fdecd765
+  onlyWriteTrigger: 0

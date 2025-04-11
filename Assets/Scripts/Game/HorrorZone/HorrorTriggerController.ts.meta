@@ -1,0 +1,81 @@
+fileFormatVersion: 2
+guid: 5b39db2bcc59cf745ab25fb4a661e011
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: "{\"source\":\"\\\"use strict\\\";\\r\\nObject.defineProperty(exports,
+    \\\"__esModule\\\", { value: true });\\r\\nexports.GhostType = exports.HorrorTriggerType
+    = void 0;\\r\\nconst __UnityEngine__ = require(\\\"UnityEngine\\\");\\r\\nconst
+    ZEPETO_Character_Controller_1 = require(\\\"ZEPETO.Character.Controller\\\");\\r\\nconst
+    ZEPETO_Script_1 = require(\\\"ZEPETO.Script\\\");\\r\\nconst HorrorZoneManager_1
+    = require(\\\"./HorrorZoneManager\\\");\\r\\nconst TypeSyncHelper_1 = require(\\\"../../../ZepetoScripts/SyncHelper/TypeSyncHelper\\\");\\r\\nclass
+    HorrorTriggerController extends ZEPETO_Script_1.ZepetoScriptBehaviour {\\r\\n   
+    constructor() {\\r\\n        super(...arguments);\\r\\n        /* Properties
+    */\\r\\n        this.triggerType = HorrorTriggerType.NONE;\\r\\n        this._ghostType
+    = GhostType.NONE;\\r\\n        this.isTargeted = false;\\r\\n    }\\r\\n    get
+    ghostType() { return this._ghostType; }\\r\\n    ;\\r\\n    get index() { return
+    this.animationIndex; }\\r\\n    ;\\r\\n    /* HorrorZoneManager */\\r\\n    RemoteStart()
+    {\\r\\n        if (this.triggerType == HorrorTriggerType.NONE)\\r\\n           
+    return console.error(TypeSyncHelper_1.ERROR.NOT_SELECTED_TYPE);\\r\\n    }\\r\\n   
+    OnEnable() {\\r\\n        this.isTargeted = false;\\r\\n        HorrorZoneManager_1.default.Instance.addMob(this);\\r\\n   
+    }\\r\\n    OnDisable() {\\r\\n        HorrorZoneManager_1.default.Instance.removeMob(this);\\r\\n   
+    }\\r\\n    onHitted() {\\r\\n        // \uD30C\uC774\uC5B4\uBCFC\\r\\n       
+    //collider.transform.parent.parent.gameObject.SetActive(false);        \\r\\n       
+    HorrorZoneManager_1.default.Instance.removeOnRange(this.gameObject.GetInstanceID());\\r\\n       
+    HorrorZoneManager_1.default.Instance.GhostBurn(this.gameObject);\\r\\n    }\\r\\n   
+    /* Branches Trigger Enter */\\r\\n    OnTriggerEnter(collider) {\\r\\n       
+    console.log(`OnTriggerEnter ${HorrorTriggerType[this.triggerType]} : ${collider.name}
+    : ${collider.gameObject.tag}`);\\r\\n        if (this.triggerType == HorrorTriggerType.NONE)\\r\\n           
+    return;\\r\\n        if (!ZEPETO_Character_Controller_1.ZepetoPlayers.instance.LocalPlayer)\\r\\n           
+    return console.error(TypeSyncHelper_1.ERROR.NOT_FOUND_LOCAL_PLAYER);\\r\\n       
+    switch (this.triggerType) {\\r\\n            case HorrorTriggerType.Ghost:\\r\\n               
+    this.OnGhostTrigger(collider);\\r\\n                break;\\r\\n            case
+    HorrorTriggerType.Item:\\r\\n                this.OnItemTrigger(collider);\\r\\n               
+    break;\\r\\n            case HorrorTriggerType.Finish:\\r\\n                this.OnFinishTrigger(collider);\\r\\n               
+    break;\\r\\n        }\\r\\n    }\\r\\n    OnGhostTrigger(collider) {\\r\\n       
+    const character = ZEPETO_Character_Controller_1.ZepetoPlayers.instance.LocalPlayer.zepetoPlayer.character.gameObject;\\r\\n       
+    if (__UnityEngine__.Object.op_Equality(collider.gameObject, character)) {\\r\\n           
+    HorrorZoneManager_1.default.Instance.Damage(this.gameObject);\\r\\n        }\\r\\n       
+    else if (collider.CompareTag(TypeSyncHelper_1.Tags.Weapon)) {\\r\\n           
+    // \uD30C\uC774\uC5B4\uBCFC\\r\\n            // collider.transform.parent.parent.gameObject.SetActive(false);\\r\\n           
+    // this.horrorZoneManager.GhostBurn(this.gameObject);\\r\\n        }\\r\\n   
+    }\\r\\n    OnItemTrigger(collider) {\\r\\n        const character = ZEPETO_Character_Controller_1.ZepetoPlayers.instance.LocalPlayer.zepetoPlayer.character.gameObject;\\r\\n       
+    if (__UnityEngine__.Object.op_Equality(collider.gameObject, character)) {\\r\\n           
+    HorrorZoneManager_1.default.Instance.AddItem(this.name);\\r\\n            this.gameObject.SetActive(false);\\r\\n       
+    }\\r\\n    }\\r\\n    // private OnTeleportTrigger(collider: Collider) {\\r\\n   
+    //     const character = ZepetoPlayers.instance.LocalPlayer.zepetoPlayer.character.gameObject;\\r\\n   
+    //     if(collider.gameObject == character) {\\r\\n    //         const target
+    = this.transform.GetChild(0);\\r\\n    //         this.horrorZoneManager.Teleport(target);\\r\\n   
+    //     }\\r\\n    // }\\r\\n    OnFinishTrigger(collider) {\\r\\n        const
+    character = ZEPETO_Character_Controller_1.ZepetoPlayers.instance.LocalPlayer.zepetoPlayer.character.gameObject;\\r\\n       
+    if (collider.gameObject === character) {\\r\\n            HorrorZoneManager_1.default.Instance.GameClear(collider);\\r\\n       
+    }\\r\\n    }\\r\\n}\\r\\nexports.default = HorrorTriggerController;\\r\\nvar
+    HorrorTriggerType;\\r\\n(function (HorrorTriggerType) {\\r\\n    HorrorTriggerType[HorrorTriggerType[\\\"NONE\\\"]
+    = -1] = \\\"NONE\\\";\\r\\n    HorrorTriggerType[HorrorTriggerType[\\\"Start\\\"]
+    = 0] = \\\"Start\\\";\\r\\n    HorrorTriggerType[HorrorTriggerType[\\\"Ghost\\\"]
+    = 10] = \\\"Ghost\\\";\\r\\n    HorrorTriggerType[HorrorTriggerType[\\\"Item\\\"]
+    = 20] = \\\"Item\\\";\\r\\n    HorrorTriggerType[HorrorTriggerType[\\\"Teleport\\\"]
+    = 40] = \\\"Teleport\\\";\\r\\n    HorrorTriggerType[HorrorTriggerType[\\\"Finish\\\"]
+    = 50] = \\\"Finish\\\";\\r\\n})(HorrorTriggerType = exports.HorrorTriggerType
+    || (exports.HorrorTriggerType = {}));\\r\\nvar GhostType;\\r\\n(function (GhostType)
+    {\\r\\n    GhostType[GhostType[\\\"NONE\\\"] = -1] = \\\"NONE\\\";\\r\\n    GhostType[GhostType[\\\"Cho\\\"]
+    = 0] = \\\"Cho\\\";\\r\\n    GhostType[GhostType[\\\"Doke\\\"] = 1] = \\\"Doke\\\";\\r\\n   
+    GhostType[GhostType[\\\"Reaper\\\"] = 2] = \\\"Reaper\\\";\\r\\n})(GhostType
+    = exports.GhostType || (exports.GhostType = {}));\\r\\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiSG9ycm9yVHJpZ2dlckNvbnRyb2xsZXIuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyJIb3Jyb3JUcmlnZ2VyQ29udHJvbGxlci50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7O0FBQ0EsNkVBQTREO0FBQzVELGlEQUFxRDtBQUNyRCwyREFBb0Q7QUFDcEQscUZBQStFO0FBRy9FLE1BQXFCLHVCQUF3QixTQUFRLHFDQUFxQjtJQUExRTs7UUFFSSxnQkFBZ0I7UUFDVSxnQkFBVyxHQUFzQixpQkFBaUIsQ0FBQyxJQUFJLENBQUM7UUFFeEQsZUFBVSxHQUFjLFNBQVMsQ0FBQyxJQUFJLENBQUM7UUFNMUQsZUFBVSxHQUFhLEtBQUssQ0FBQztJQW9GeEMsQ0FBQztJQXpGRyxJQUFXLFNBQVMsS0FBZ0IsT0FBTyxJQUFJLENBQUMsVUFBVSxDQUFDLENBQUMsQ0FBQztJQUFBLENBQUM7SUFHOUQsSUFBVyxLQUFLLEtBQWEsT0FBTyxJQUFJLENBQUMsY0FBYyxDQUFDLENBQUMsQ0FBQztJQUFBLENBQUM7SUFJM0QsdUJBQXVCO0lBQ2hCLFdBQVc7UUFDZCxJQUFJLElBQUksQ0FBQyxXQUFXLElBQUksaUJBQWlCLENBQUMsSUFBSTtZQUFFLE9BQU8sT0FBTyxDQUFDLEtBQUssQ0FBQyxzQkFBSyxDQUFDLGlCQUFpQixDQUFDLENBQUM7SUFDbEcsQ0FBQztJQUVELFFBQVE7UUFDSixJQUFJLENBQUMsVUFBVSxHQUFHLEtBQUssQ0FBQztRQUN4QiwyQkFBaUIsQ0FBQyxRQUFRLENBQUMsTUFBTSxDQUFDLElBQUksQ0FBQyxDQUFDO0lBQzVDLENBQUM7SUFFRCxTQUFTO1FBQ0wsMkJBQWlCLENBQUMsUUFBUSxDQUFDLFNBQVMsQ0FBQyxJQUFJLENBQUMsQ0FBQztJQUMvQyxDQUFDO0lBRU0sUUFBUTtRQUNYLE9BQU87UUFDUCx1RUFBdUU7UUFDdkUsMkJBQWlCLENBQUMsUUFBUSxDQUFDLGFBQWEsQ0FBQyxJQUFJLENBQUMsVUFBVSxDQUFDLGFBQWEsRUFB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\",\"assetPath\":\"Assets/Scripts/Game/HorrorZone/HorrorTriggerController.ts\",\"manifest\":{\"properties\":[{\"assembly\":\"\",\"name\":\"triggerType\",\"type\":\"HorrorTriggerType\",\"isArray\":false,\"initValue\":[\"NONE\"],\"enumKeys\":[\"NONE\",\"Start\",\"Ghost\",\"Item\",\"Teleport\",\"Finish\"],\"enumValues\":[\"-1\",\"0\",\"10\",\"20\",\"40\",\"50\"],\"attributes\":[{\"name\":\"SerializeField\",\"args\":[]}]},{\"assembly\":\"\",\"name\":\"_ghostType\",\"type\":\"GhostType\",\"isArray\":false,\"initValue\":[\"NONE\"],\"enumKeys\":[\"NONE\",\"Cho\",\"Doke\",\"Reaper\"],\"enumValues\":[\"-1\",\"0\",\"1\",\"2\"],\"attributes\":[{\"name\":\"SerializeField\",\"args\":[]}]},{\"assembly\":\"mscorlib\",\"name\":\"animationIndex\",\"type\":\"System.Single\",\"isArray\":false,\"initValue\":[],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[{\"name\":\"SerializeField\",\"args\":[]}]},{\"assembly\":\"mscorlib\",\"name\":\"isTargeted\",\"type\":\"System.Boolean\",\"isArray\":false,\"initValue\":[],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[]}],\"name\":\"HorrorTriggerController\",\"description\":\"\",\"hasAnimatorMove\":false},\"isCompiled\":true}"
+  typescriptHash: baa7f0e24451603f67d37df9279f078e
+  onlyWriteTrigger: 0

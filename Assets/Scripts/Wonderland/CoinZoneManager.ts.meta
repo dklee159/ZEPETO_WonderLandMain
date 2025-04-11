@@ -1,0 +1,72 @@
+fileFormatVersion: 2
+guid: b2f88cae3b3468f44a844f19b900d4f9
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: '{"source":"// import { Coroutine, Mathf, ParticleSystem, Random,
+    Transform, WaitForSeconds } from ''UnityEngine''\r\n// import { ZepetoScriptBehaviour
+    } from ''ZEPETO.Script''\r\n// // import GameManager from ''../Managers/GameManager'';\r\n//
+    import { CoinData, ERROR } from ''../Managers/TypeManager'';\r\n// import CoinController
+    from ''./CoinController'';\r\n// import DataManager from ''../../../Scripts/Manager/DataManager'';\r\n//
+    export default class CoinZoneManager extends ZepetoScriptBehaviour {\r\n//    
+    /* Properties */\r\n//     @SerializeField() private stayMin: number = 30;\r\n//    
+    @SerializeField() private stayMax: number = 45;\r\n//     private coinDatas:
+    CoinData[] = [];\r\n//     private locations: Transform[] = [];\r\n//     private
+    prevIndexs: number[] = [];\r\n//     private wait: WaitForSeconds;\r\n//    
+    private get stayTime(): number { return Mathf.Floor(Random.Range(this.stayMin,
+    this.stayMax)); }\r\n//     private get index() : number {\r\n//         const
+    index = Mathf.Floor(Random.Range(0, this.locations.length));\r\n//         let
+    found = false;\r\n//         for(let i=0; i<this.prevIndexs.length; i++) {\r\n//            
+    if(this.prevIndexs[i] < 0) {\r\n//                 this.prevIndexs[i] = index;\r\n//                
+    return index;\r\n//             } else if(this.prevIndexs[i] == index) {\r\n//                
+    found = true;\r\n//                 break;\r\n//             }\r\n//        
+    }\r\n//         if(!found) {\r\n//             this.prevIndexs.splice(0, 1);\r\n//            
+    this.prevIndexs.push(index);\r\n//             return index;\r\n//         }\r\n//        
+    return this.index;\r\n//     }\r\n//     /* GameManager */\r\n//     public RemoteStart()
+    {\r\n//         const positions = this.transform.GetChild(0);\r\n//         const
+    coinGroup = this.transform.GetChild(1);\r\n//         const effectGroup = this.transform.GetChild(2);\r\n//        
+    // Index System\r\n//         if(this.stayMax <= this.stayMin) this.stayMax =
+    this.stayMin +5;\r\n//         for(let i=0; i<coinGroup.childCount *2; i++) this.prevIndexs.push(-1);\r\n//        
+    // Location Processing\r\n//         for(let i=0; i<positions.childCount; i++)
+    {\r\n//             const location = positions.GetChild(i);\r\n//            
+    this.locations.push(location);\r\n//         }\r\n//         // Coin Processing\r\n//        
+    if(coinGroup.childCount != effectGroup.childCount) return console.error(ERROR.NOT_MATCHED);\r\n//        
+    for(let i=0; i<coinGroup.childCount; i++) {\r\n//             const coin = coinGroup.GetChild(i);\r\n//            
+    const effect = effectGroup.GetChild(i).GetComponent<ParticleSystem>();\r\n//            
+    const controller = coin.GetChild(0).GetComponent<CoinController>();\r\n//            
+    controller.RemoteStart(this, i);\r\n//             const data:CoinData = {\r\n//                
+    index: i,\r\n//                 locationIndex: -1,\r\n//                 coin:
+    coin,\r\n//                 controller: controller,\r\n//                 effect:
+    effect,\r\n//                 move: null,\r\n//             }\r\n//            
+    this.coinDatas.push(data);\r\n//             this.CoinRandomMove(i, data.move);\r\n//        
+    }\r\n//     }\r\n//     /* Local Player Get Coin  */\r\n//     public AddCoin(id:number)
+    {\r\n//         const data = this.coinDatas[id];\r\n//         if(data.index
+    != id) console.error(ERROR.NOT_MATCHED, data.index, id);\r\n//         DataManager.Instance.AddCoin();\r\n//        
+    data.effect.transform.position = data.coin.GetChild(0).position;\r\n//        
+    data.effect.Play();\r\n//         this.CoinRandomMove(id, data.move);\r\n//    
+    }\r\n//     private CoinRandomMove(index:number, waitMove:Coroutine) {\r\n//        
+    if(waitMove) this.StopCoroutine(waitMove);\r\n//         waitMove = this.StartCoroutine(this.WaitMove(index));\r\n//    
+    }\r\n//     /* Wait Random Teleport Time */\r\n//     private * WaitMove(index:number)
+    {\r\n//         // Locate\r\n//         const data = this.coinDatas[index];\r\n//        
+    data.coin.position = this.locations[this.index].position;\r\n//         // wait\r\n//        
+    if(!this.wait) this.wait = new WaitForSeconds(1);\r\n//         for(let i=0;
+    i<this.stayTime; i++) { yield this.wait; }\r\n//         // END\r\n//        
+    yield this.wait;\r\n//         this.CoinRandomMove(index, data.move);\r\n//    
+    }\r\n// }\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiQ29pblpvbmVNYW5hZ2VyLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiQ29pblpvbmVNYW5hZ2VyLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBLG9HQUFvRztBQUNwRyx3REFBd0Q7QUFDeEQsd0RBQXdEO0FBQ3hELDZEQUE2RDtBQUM3RCxpREFBaUQ7QUFDakQsa0VBQWtFO0FBRWxFLHVFQUF1RTtBQUV2RSx1QkFBdUI7QUFDdkIsc0RBQXNEO0FBQ3RELHNEQUFzRDtBQUN0RCwwQ0FBMEM7QUFDMUMsMkNBQTJDO0FBQzNDLHlDQUF5QztBQUN6QyxvQ0FBb0M7QUFFcEMsdUdBQXVHO0FBQ3ZHLHFDQUFxQztBQUNyQyw2RUFBNkU7QUFDN0UsNkJBQTZCO0FBQzdCLHdEQUF3RDtBQUN4RCwyQ0FBMkM7QUFDM0MsOENBQThDO0FBQzlDLGdDQUFnQztBQUVoQyx1REFBdUQ7QUFDdkQsZ0NBQWdDO0FBQ2hDLHlCQUF5QjtBQUN6QixnQkFBZ0I7QUFDaEIsWUFBWTtBQUVaLHVCQUF1QjtBQUN2Qiw0Q0FBNEM7QUFDNUMsMkNBQTJDO0FBQzNDLDRCQUE0QjtBQUM1QixZQUFZO0FBQ1osNkJBQTZCO0FBQzdCLFFBQVE7QUFHUix3QkFBd0I7QUFDeEIsNkJBQTZCO0FBQzdCLHdEQUF3RDtBQUN4RCx3REFBd0Q7QUFDeEQsMERBQTBEO0FBRTFELDBCQUEwQjtBQUMxQiwyRUFBMkU7QUFDM0UsaUZBQWlGO0FBRWpGLGlDQUFpQztBQUNqQyxzREFBc0Q7QUFDdEQsc0RBQXNEO0FBQ3RELDZDQUE2QztBQUM3QyxZQUFZO0FBRVosNkJBQTZCO0FBQzdCLHNHQUFzRztBQUN0RyxzREFBc0Q7QUFDdEQsa0RBQWtEO0FBQ2xELHFGQUFxRjtBQUNyRixrRkFBa0Y7QUFDbEYsK0NBQStDO0FBRS9DLHNDQUFzQztBQUN0Qyw0QkFBNEI7QUFDNUIscUNBQXFDO0FBQ3JDLDhCQUE4QjtBQUM5QiwwQ0FBMEM7QUFDMUMsa0NBQWtDO0FBQ2xDLDhCQUE4QjtBQUM5QixnQkFBZ0I7QUFFaEIseUNBQXlDO0FBQ3pDLGlEQUFpRDtBQUNqRCxZQUFZO0FBQ1osUUFBUTtBQUVSLG1DQUFtQztBQUNuQyxrQ0FBa0M7QUFDbEMsMkNBQTJDO0FBQzNDLGlGQUFpRjtBQUVqRiwwQ0FBMEM7QUFFMUMsMkVBQTJFO0FBQzNFLDhCQUE4QjtBQUU5Qiw4Q0FBOEM7QUFDOUMsUUFBUTtBQUVSLGlFQUFpRTtBQUNqRSxxREFBcUQ7QUFDckQsZ0VBQWdFO0FBQ2hFLFFBQVE7QUFFUixzQ0FBc0M7QUFDdEMseUNBQXlDO0FBRXpDLG9CQUFvQjtBQUNwQiw4Q0FBOEM7QUFDOUMsb0VBQW9FO0FBRXBFLGtCQUFrQjtBQUNsQiw0REFBNEQ7QUFDNUQsa0VBQWtFO0FBRWxFLGlCQUFpQjtBQUNqQiwyQkFBMkI7QUFDM0IsaURBQWlEO0FBQ2pELFFBQVE7QUFDUixJQUFJIn0=","assetPath":"Assets/Scripts/Wonderland/CoinZoneManager.ts","manifest":{"properties":[],"name":"CoinZoneManager","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: f8faba881ed770df1909ec34928594c3
+  onlyWriteTrigger: 0

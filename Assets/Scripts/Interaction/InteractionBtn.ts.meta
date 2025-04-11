@@ -1,0 +1,51 @@
+fileFormatVersion: 2
+guid: 991f414a619203741bbe3fc763293645
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
+    { value: true });\r\nconst UnityEngine_1 = require(\"UnityEngine\");\r\nconst
+    UnityEngine_UI_1 = require(\"UnityEngine.UI\");\r\nconst ZEPETO_Character_Controller_1
+    = require(\"ZEPETO.Character.Controller\");\r\nconst ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nclass
+    InteractionBtn extends ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n    constructor()
+    {\r\n        super(...arguments);\r\n        this.iconImage = null;\r\n       
+    this._isDoneFirstTrig = false;\r\n    }\r\n    // private _isIconActive: boolean
+    = false;\r\n    Update() {\r\n        if (this._isDoneFirstTrig && this._canvas?.gameObject.activeSelf)\r\n           
+    this.UpdateIconRotation();\r\n    }\r\n    OnTriggerEnter(coll) {\r\n       
+    if (coll !== (ZEPETO_Character_Controller_1.ZepetoPlayers.instance.LocalPlayer?.zepetoPlayer?.character.GetComponent)($typeof(UnityEngine_1.Collider)))\r\n           
+    return;\r\n        this.ShowIcon();\r\n        this.onTriggerEnterEvent?.Invoke();\r\n   
+    }\r\n    OnTriggerExit(coll) {\r\n        if (coll !== (ZEPETO_Character_Controller_1.ZepetoPlayers.instance.LocalPlayer?.zepetoPlayer?.character.GetComponent)($typeof(UnityEngine_1.Collider)))\r\n           
+    return;\r\n        this.HideIcon();\r\n        this.onTriggerExitEvent?.Invoke();\r\n   
+    }\r\n    ShowIcon() {\r\n        if (!this._isDoneFirstTrig) {\r\n           
+    this.CreateIcon();\r\n            this._isDoneFirstTrig = true;\r\n        }\r\n       
+    else\r\n            this._canvas.gameObject.SetActive(true);\r\n    }\r\n   
+    HideIcon() {\r\n        this._canvas?.gameObject.SetActive(false);\r\n    }\r\n   
+    CreateIcon() {\r\n        if (this._canvas === undefined) {\r\n            const
+    canvas = UnityEngine_1.GameObject.Instantiate(this.prefabIcon, this.iconPosition);\r\n           
+    this._canvas = canvas.GetComponent($typeof(UnityEngine_1.Canvas));\r\n           
+    this._button = canvas.GetComponentInChildren($typeof(UnityEngine_UI_1.Button));\r\n           
+    this._canvas.transform.position = this.iconPosition.position;\r\n           
+    if (this.iconImage)\r\n                canvas.GetComponentInChildren($typeof(UnityEngine_UI_1.Image)).sprite
+    = this.iconImage;\r\n        }\r\n        this._localPlayerCamera = ZEPETO_Character_Controller_1.ZepetoPlayers.instance.LocalPlayer.zepetoCamera.camera;\r\n       
+    this._canvas.worldCamera = this._localPlayerCamera;\r\n        this._button.onClick.AddListener(()
+    => {\r\n            this.OnClickIcon();\r\n        });\r\n    }\r\n    OnClickIcon()
+    {\r\n        this.onClickEvent?.Invoke();\r\n    }\r\n    UpdateIconRotation()
+    {\r\n        this._canvas.transform.LookAt(this._localPlayerCamera.transform);\r\n   
+    }\r\n}\r\nexports.default = InteractionBtn;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiSW50ZXJhY3Rpb25CdG4uanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyJJbnRlcmFjdGlvbkJ0bi50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOztBQUFBLDZDQUE2RztBQUU3RyxtREFBK0M7QUFDL0MsNkVBQTREO0FBQzVELGlEQUFxRDtBQUVyRCxNQUFxQixjQUFlLFNBQVEscUNBQXFCO0lBQWpFOztRQU04QixjQUFTLEdBQVcsSUFBSSxDQUFDO1FBVzNDLHFCQUFnQixHQUFZLEtBQUssQ0FBQztJQXdEOUMsQ0FBQztJQXZERywwQ0FBMEM7SUFFbEMsTUFBTTtRQUNWLElBQUksSUFBSSxDQUFDLGdCQUFnQixJQUFJLElBQUksQ0FBQyxPQUFPLEVBQUUsVUFBVSxDQUFDLFVBQVU7WUFBRSxJQUFJLENBQUMsa0JBQWtCLEVBQUUsQ0FBQztJQUNoRyxDQUFDO0lBRU8sY0FBYyxDQUFDLElBQWM7UUFDakMsSUFBSSxJQUFJLEtBQUssQ0FBQSwyQ0FBYSxDQUFDLFFBQVEsQ0FBQyxXQUFXLEVBQUUsWUFBWSxFQUFFLFNBQVMsQ0FBQyxZQUFZLENBQUEsU0FBQyxzQkFBUSxFQUFHO1lBQUUsT0FBTztRQUUxRyxJQUFJLENBQUMsUUFBUSxFQUFFLENBQUM7UUFDaEIsSUFBSSxDQUFDLG1CQUFtQixFQUFFLE1BQU0sRUFBRSxDQUFDO0lBQ3ZDLENBQUM7SUFFTyxhQUFhLENBQUMsSUFBYztRQUNoQyxJQUFJLElBQUksS0FBSyxDQUFBLDJDQUFhLENBQUMsUUFBUSxDQUFDLFdBQVcsRUFBRSxZQUFZLEVBQUUsU0FBUyxDQUFDLFlBQVksQ0FBQSxTQUFDLHNCQUFRLEVBQUc7WUFBRSxPQUFPO1FBRTFHLElBQUksQ0FBQyxRQUFRLEVBQUUsQ0FBQztRQUNoQixJQUFJLENBQUMsa0JBQWtCLEVBQUUsTUFBTSxFQUFFLENBQUM7SUFDdEMsQ0FBQztJQUVNLFFBQVE7UUFDWCxJQUFJLENBQUMsSUFBSSxDQUFDLGdCQUFnQixFQUFFO1lBQ3hCLElBQUksQ0FBQyxVQUFVLEVBQUUsQ0FBQztZQUNsQixJQUFJLENBQUMsZ0JBQWdCLEdBQUcsSUFBSSxDQUFDO1NBQ2hDOztZQUFNLElBQUksQ0FBQyxPQUFPLENBQUMsVUFBVSxDQUFDLFNBQVMsQ0FBQyxJQUFJLENBQUMsQ0FBQztJQUNuRCxDQUFDO0lBRU0sUUFBUTtRQUNYLElBQUksQ0FBQyxPQUFPLEVBQUUsVUFBVSxDQUFDLFNBQVMsQ0FBQyxLQUFLLENBQUMsQ0FBQztJQUM5QyxDQUFDO0lBRU8sVUFBVTtRQUNkLElBQUksSUFBSSxDQUFDLE9BQU8sS0FBSyxTQUFTLEVBQUU7WUFDNUIsTUFBTSxNQUFNLEdBQUcsd0JBQVUsQ0FBQyxXQUFXLENBQUMsSUFBSSxDQUFDLFVBQVUsRUFBRSxJQUFJLENBQUMsWUFBWSxDQUFlLENBQUM7WUFDeEYsSUFBSSxDQUFDLE9BQU8sR0FBRyxNQUFNLENBQUMsWUFBWSxTQUFDLG9CQUFNLEVBQUcsQ0FBQztZQUM3QyxJQUFJLENBQUMsT0FBTyxHQUFHLE1BQU0sQ0FBQyxzQkFBc0IsU0FBQyx1QkFBTSxFQUFHLENBQUM7WUFDdkQsSUFBSSxDQUFDLE9BQU8sQ0FBQyxTQUFTLENBQUMsUUFBUSxHQUFHLElBQUksQ0FBQyxZQUFZLENBQUMsUUFBUSxDQUFDO1lBRTdELElBQUksSUFBSSxDQUFDLFNBQVM7Z0JBQUUsTUFBTSxDQUFDLHNCQUFzQixTQUFDLHNCQUFLLEdBQUksTUFBTSxHQUFHLElBQUksQ0FBQyxTQUFTLENBQUM7U0FDdEY7UUFDRCxJQUFJLENBQUMsa0JBQWtCLEdBQUcsMkNBQWEsQ0FBQyxRQUFRLENBQUMsV0FBVyxDQUFDLFlBQVksQ0FBQyxNQUFNLENBQUM7UUFDakYsSUFBSSxDQUFDLE9BQU8sQ0FBQyxXQUFXLEdBQUcsSUFBSSxDQUFDLGtCQUFrQixDQUFDO1FBRW5ELElBQUksQ0FBQyxPQUFPLENBQUMsT0FBTyxDQUFDLFdBQVcsQ0FBQyxHQUFHLEVBQUU7WUFDbEMsSUFBSSxDQUFDLFdBQVcsRUFBRSxDQUFDO1FBQ3ZCLENBQUMsQ0FBQyxDQUFDO0lBQ1AsQ0FBQztJQUVPLFdBQVc7UUFDZixJQUFJLENBQUMsWUFBWSxFQUFFLE1BQU0sRUFBRSxDQUFDO0lBQ2hDLENBQUM7SUFFTyxrQkFBa0I7UUFDdEIsSUFBSSxDQUFDLE9BQU8sQ0FBQyxTQUFTLENBQUMsTUFBTSxDQUFDLElBQUksQ0FBQyxrQkFBa0IsQ0FBQyxTQUFTLENBQUMsQ0FBQztJQUNyRSxDQUFDO0NBQ0o7QUF6RUQsaUNBeUVDIn0=","assetPath":"Assets/Scripts/Interaction/InteractionBtn.ts","manifest":{"properties":[{"assembly":"UnityEngine.CoreModule","name":"prefabIcon","type":"UnityEngine.GameObject","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"Header","args":["\"Icon\""]},{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"iconPosition","type":"UnityEngine.Transform","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"iconImage","type":"UnityEngine.Sprite","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"onClickEvent","type":"UnityEngine.Events.UnityEvent","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]}],"name":"InteractionBtn","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: a701a261f857539d92aaeb4ca6bfe7f6
+  onlyWriteTrigger: 0

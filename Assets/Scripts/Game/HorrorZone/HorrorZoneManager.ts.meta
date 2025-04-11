@@ -1,0 +1,351 @@
+fileFormatVersion: 2
+guid: f1b564a2538cbfa41bcf240d29653cca
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: "{\"source\":\"\\\"use strict\\\";\\r\\nObject.defineProperty(exports,
+    \\\"__esModule\\\", { value: true });\\r\\nconst __UnityEngine__ = require(\\\"UnityEngine\\\");\\r\\nconst
+    UnityEngine_1 = require(\\\"UnityEngine\\\");\\r\\nconst ZEPETO_Multiplay_1 =
+    require(\\\"ZEPETO.Multiplay\\\");\\r\\nconst ZEPETO_Script_1 = require(\\\"ZEPETO.Script\\\");\\r\\nconst
+    TMPro_1 = require(\\\"TMPro\\\");\\r\\nconst UnityEngine_UI_1 = require(\\\"UnityEngine.UI\\\");\\r\\nconst
+    ZEPETO_Character_Controller_1 = require(\\\"ZEPETO.Character.Controller\\\");\\r\\nconst
+    HorrorTriggerController_1 = require(\\\"./HorrorTriggerController\\\");\\r\\nconst
+    ZTween_1 = require(\\\"../../ZTween/ZTween\\\");\\r\\nconst EaseManager_1 = require(\\\"../../ZTween/EaseManager\\\");\\r\\nconst
+    UIManager_1 = require(\\\"../../Manager/UIManager\\\");\\r\\nconst DataManager_1
+    = require(\\\"../../Manager/DataManager\\\");\\r\\nconst GameManager_1 = require(\\\"../../GameManager\\\");\\r\\nconst
+    TypeSyncHelper_1 = require(\\\"../../../ZepetoScripts/SyncHelper/TypeSyncHelper\\\");\\r\\nconst
+    MultiplayManager_1 = require(\\\"../../../ZepetoScripts/Multiplay/MultiplayManager\\\");\\r\\nconst
+    QuestManager_1 = require(\\\"../../Manager/QuestManager\\\");\\r\\nclass HorrorZoneManager
+    extends ZEPETO_Script_1.ZepetoScriptBehaviour {\\r\\n    constructor() {\\r\\n       
+    super(...arguments);\\r\\n        this.ghostDolls = [];\\r\\n        this.ghosts
+    = [];\\r\\n        this.fireBalls = [];\\r\\n        // @SerializeField() private
+    _finishController: Transform;\\r\\n        // private finishController: HorrorTriggerController;\\r\\n       
+    this.items = [];\\r\\n        this.burns = [];\\r\\n        this.fireBallSpeed
+    = 7;\\r\\n        this.coolTime = 4;\\r\\n        this.isWaitCoolTime = false;\\r\\n       
+    this._inRanges = [];\\r\\n        this.isPlay = false;\\r\\n        this.PoolCount
+    = 5;\\r\\n        this._mobs = {};\\r\\n        this.isFireBall = false;\\r\\n       
+    this.hp_heart = [];\\r\\n        this.timer = 0;\\r\\n        this.timeData =
+    TimerData.Stop;\\r\\n        this.isTimer = false;\\r\\n        /** Game Configs
+    */\\r\\n        this._hp = 0;\\r\\n        this.followCoroutine = null;\\r\\n   
+    }\\r\\n    static get Instance() {\\r\\n        if (!HorrorZoneManager._instance)
+    {\\r\\n            const managerObj = UnityEngine_1.GameObject.Find(\\\"HorrorZoneManager\\\");\\r\\n           
+    if (managerObj)\\r\\n                HorrorZoneManager._instance = managerObj.GetComponent($typeof(HorrorZoneManager));\\r\\n       
+    }\\r\\n        return HorrorZoneManager._instance;\\r\\n    }\\r\\n    GetFireBallSpeed()
+    { return this.fireBallSpeed; }\\r\\n    GetFireBallCoolTime() { return this.coolTime;
+    }\\r\\n    GetEffects() { return this.effects; }\\r\\n    get hp() { return this._hp;
+    }\\r\\n    set hp(value) { this._hp = UnityEngine_1.Mathf.Clamp(value, 0, this.maxHp);
+    }\\r\\n    get maxHp() { return this.hp_heart.length; }\\r\\n    ;\\r\\n    ///Object
+    Pool\\r\\n    get pool_Burn() {\\r\\n        if (!this.burns || this.burns.length
+    < this.PoolCount) {\\r\\n            const newClone = UnityEngine_1.GameObject.Instantiate(this.burn,
+    this.pool);\\r\\n            const anim = newClone.GetComponent($typeof(UnityEngine_1.Animator));\\r\\n           
+    this.burns.push(anim);\\r\\n            return anim;\\r\\n        }\\r\\n       
+    const burn = this.burns.splice(0, 1);\\r\\n        this.burns.push(burn[0]);\\r\\n       
+    return burn[0];\\r\\n    }\\r\\n    get pool_FireBall() {\\r\\n        if (!this.fireBalls
+    || this.fireBalls.length < this.PoolCount) {\\r\\n            const newClone
+    = UnityEngine_1.GameObject.Instantiate(this.fireBall, this.pool).transform;\\r\\n           
+    this.fireBalls.push(newClone);\\r\\n            return newClone;\\r\\n       
+    }\\r\\n        const fireBall = this.fireBalls.splice(0, 1);\\r\\n        this.fireBalls.push(fireBall[0]);\\r\\n       
+    return fireBall[0];\\r\\n    }\\r\\n    /* GameManager */\\r\\n    RemoteStart()
+    {\\r\\n        /* Set System */\\r\\n        this.SetItems();\\r\\n        this.SetGhosts();\\r\\n       
+    this.SetEffects();\\r\\n        // this.SetControllers(); // TODO \uC774\uAC70
+    \uC65C \uC788\uB294\uAC70\uC9C0??????\\r\\n        // this.SetTeleporters();\\r\\n       
+    /* Set UIs */\\r\\n        this.SetHorrorUIs();\\r\\n        /* Finish Start
+    */\\r\\n        this.InitHorrorZoneSystem();\\r\\n    }\\r\\n    Awake() {\\r\\n       
+    HorrorZoneManager._instance = this;\\r\\n    }\\r\\n    SetItems() {\\r\\n       
+    // Item\\r\\n        for (let i = 0; i < this.itemGroup.childCount; i++) {\\r\\n           
+    const controller = this.itemGroup.GetChild(i).GetComponent($typeof(HorrorTriggerController_1.default));\\r\\n           
+    if (controller) {\\r\\n                controller.RemoteStart();\\r\\n               
+    this.items.push(controller);\\r\\n            }\\r\\n        }\\r\\n    }\\r\\n   
+    SetGhosts() {\\r\\n        // Ghost\\r\\n        const Ghost_Reaper = \\\"Ghost_Reaper\\\";\\r\\n       
+    for (let i = 0; i < this.ghostsGroup.childCount; i++) {\\r\\n            const
+    ghost = this.ghostsGroup.GetChild(i);\\r\\n            const controller = ghost.GetChild(0).GetComponent($typeof(HorrorTriggerController_1.default));\\r\\n           
+    const moveAnim = ghost.GetComponent($typeof(UnityEngine_1.Animator));\\r\\n           
+    const ghostColliders = ghost.GetComponentsInChildren($typeof(UnityEngine_1.BoxCollider));\\r\\n           
+    const ghostModel = ghost.transform.GetChild(0).GetChild(0);\\r\\n           
+    const ghostModelAnim = ghostModel.GetComponent($typeof(UnityEngine_1.Animator));\\r\\n           
+    const ghostDatas = {\\r\\n                gameObject: ghost.gameObject,\\r\\n               
+    transform: ghost,\\r\\n                controller: controller,\\r\\n               
+    power: 1,\\r\\n                moveAnimator: moveAnim,\\r\\n                modelAnimator:
+    ghostModelAnim,\\r\\n                colliders: ghostColliders,\\r\\n               
+    effectTarget: ghost.transform.GetChild(0).GetChild(0).GetChild(0).GetChild(0),\\r\\n           
+    };\\r\\n            moveAnim.SetInteger(TypeSyncHelper_1.Anim.State, controller.index);\\r\\n           
+    if (ghost.name.includes(Ghost_Reaper))\\r\\n                ghostDatas.power
+    = 2;\\r\\n            // controller.RemoteStart(this);\\r\\n            this.ghosts.push(ghostDatas);\\r\\n       
+    }\\r\\n    }\\r\\n    SetEffects() {\\r\\n        // Effect\\r\\n        // this.lamp
+    = this.effects.GetChild(0);\\r\\n        this.burningHand = this.effects.GetChild(1);\\r\\n   
+    }\\r\\n    // private SetControllers() {\\r\\n    //     const finishController
+    = this._finishController.GetComponent<HorrorTriggerController>();\\r\\n    //    
+    this.finishController = finishController;\\r\\n    //     this._finishController
+    = null;\\r\\n    //     this.finishController.RemoteStart(this);\\r\\n    //
+    }\\r\\n    InitGame() {\\r\\n        this.TeleportPlayer();\\r\\n    }\\r\\n   
+    GameStart() {\\r\\n        if (this.isTimer || this.isPlay)\\r\\n           
+    return;\\r\\n        this.timer = 0;\\r\\n        this.isPlay = true;\\r\\n       
+    this.isTimer = true;\\r\\n        this.timeData = TimerData.Start;\\r\\n       
+    if (this.gameTimer)\\r\\n            this.StopCoroutine(this.gameTimer);\\r\\n       
+    this.gameTimer = this.StartCoroutine(this.GameTimer());\\r\\n    }\\r\\n    TeleportPlayer()
+    {\\r\\n        const data = new ZEPETO_Multiplay_1.RoomData();\\r\\n        data.Add(TypeSyncHelper_1.EVENT_MESSAGE.ZoneType,
+    TypeSyncHelper_1.ZoneType.HorrorZoneEntrance);\\r\\n        MultiplayManager_1.default.instance.room.Send(TypeSyncHelper_1.EVENT_MESSAGE.Teleport,
+    data.GetObject());\\r\\n    }\\r\\n    /* Set HP UI */\\r\\n    SetHorrorUIs()
+    {\\r\\n        const heartPointPanel = this.horrorGameUI.GetChild(0);\\r\\n       
+    // this.timerPanel = this.horrorGameUI.GetChild(1);\\r\\n        const itemPanel
+    = this.horrorGameUI.GetChild(2);\\r\\n        // HP\\r\\n        for (let i =
+    0; i < heartPointPanel.childCount; i++) {\\r\\n            const heart = heartPointPanel.GetChild(i).GetComponent($typeof(UnityEngine_UI_1.Image));\\r\\n           
+    heart.sprite = this.heartImage;\\r\\n            this.hp_heart.push(heart);\\r\\n       
+    }\\r\\n        // Timer\\r\\n        // Item\\r\\n        // const lampButton
+    = itemPanel.GetChild(0).GetComponent<Button>();\\r\\n        const fireButton
+    = itemPanel.GetChild(1).GetComponent($typeof(UnityEngine_UI_1.Button));\\r\\n       
+    this.fire_Lock = itemPanel.GetChild(2).gameObject;\\r\\n        // this.lampImage
+    = lampButton.transform.GetComponent<Image>();\\r\\n        this.fireImage = fireButton.transform.GetComponent($typeof(UnityEngine_UI_1.Image));\\r\\n       
+    this.fireButtonAnim = fireButton.transform.GetComponent($typeof(UnityEngine_1.Animator));\\r\\n       
+    // this.lampImage.enabled = false;\\r\\n        this.fireImage.enabled = false;\\r\\n       
+    // lampButton.onClick.AddListener(() => {\\r\\n        //     if(!this.lampImage.enabled)
+    return;\\r\\n        //     this.LampEquip(!this.isHoldLamp);\\r\\n        //    
+    this.isHoldLamp = !this.isHoldLamp;\\r\\n        // });\\r\\n        this.fireButton
+    = fireButton;\\r\\n        this.fireButton.interactable = true;\\r\\n       
+    fireButton.onClick.AddListener(() => {\\r\\n            if (!this.fireImage.enabled)\\r\\n               
+    return;\\r\\n            if (this.isWaitCoolTime)\\r\\n                return;\\r\\n           
+    if (this.isFireBall)\\r\\n                return;\\r\\n            this.StartCoroutine(this.FireBall());\\r\\n           
+    this.StartCoroutine(this.CoolTimeDisable());\\r\\n        });\\r\\n        itemPanel.gameObject.SetActive(true);\\r\\n       
+    this.fire_Lock.gameObject.SetActive(true);\\r\\n    }\\r\\n    /* Item Fire */\\r\\n   
+    *FireBall() {\\r\\n        if (this.isFireBall)\\r\\n            return;\\r\\n       
+    this.isFireBall = true;\\r\\n        /* Character Set */\\r\\n        // GameManager.instance.LocalPlayerControllerSet(false);\\r\\n       
+    DataManager_1.default.Instance.SetWonderState(TypeSyncHelper_1.WonderState.H_Attack,
+    true);\\r\\n        /* Button Animation */\\r\\n        this.fireButtonAnim.SetTrigger(TypeSyncHelper_1.Anim.Active);\\r\\n       
+    /* FireBall Shoot */\\r\\n        //const character = ZepetoPlayers.instance.LocalPlayer.zepetoPlayer.character.transform;\\r\\n       
+    // const fireBall = this.pool_FireBall;\\r\\n        // fireBall.position = character.position
+    + (Vector3.up *0.5) + character.forward;\\r\\n        // fireBall.rotation =
+    character.rotation;\\r\\n        // fireBall.gameObject.SetActive(true);\\r\\n       
+    // const target = fireBall.GetChild(0);\\r\\n        let timer = 0;\\r\\n       
+    const waitAnimation = UnityEngine_1.Mathf.Floor(this.fireBallAnimation.length);\\r\\n       
+    while (true) {\\r\\n            yield null;\\r\\n            timer += UnityEngine_1.Time.deltaTime;\\r\\n           
+    if (timer > waitAnimation)\\r\\n                break;\\r\\n        }\\r\\n       
+    /* Character Reset */\\r\\n        // GameManager.instance.LocalPlayerControllerSet(true);\\r\\n       
+    DataManager_1.default.Instance.SetWonderState(TypeSyncHelper_1.WonderState.H_Attack,
+    false);\\r\\n        /* Wait FireBall Move */\\r\\n        if (this._inRanges.length
+    > 0) {\\r\\n            this.StartCoroutine(this.fireFireballCoroutine(timer));\\r\\n       
+    }\\r\\n        else {\\r\\n            const character = ZEPETO_Character_Controller_1.ZepetoPlayers.instance.LocalPlayer.zepetoPlayer.character.transform;\\r\\n           
+    const fireBall = this.pool_FireBall;\\r\\n            fireBall.position = UnityEngine_1.Vector3.op_Addition(UnityEngine_1.Vector3.op_Addition(character.position,
+    UnityEngine_1.Vector3.op_Multiply(UnityEngine_1.Vector3.up, 0.5)), character.forward);\\r\\n           
+    fireBall.rotation = character.rotation;\\r\\n            fireBall.gameObject.SetActive(true);\\r\\n           
+    const target = fireBall.GetChild(0);\\r\\n            while (true) {\\r\\n               
+    yield null;\\r\\n                timer += UnityEngine_1.Time.deltaTime;\\r\\n               
+    fireBall.position = UnityEngine_1.Vector3.MoveTowards(fireBall.position, target.position,
+    UnityEngine_1.Time.deltaTime * this.fireBallSpeed);\\r\\n                if (timer
+    > this.coolTime)\\r\\n                    break;\\r\\n            }\\r\\n           
+    /* Finish */\\r\\n            fireBall.position = this.effects.position;\\r\\n           
+    fireBall.gameObject.SetActive(false);\\r\\n            this.isFireBall = false;\\r\\n       
+    }\\r\\n    }\\r\\n    *fireFireballCoroutine(timer) {\\r\\n        this.targetedMob
+    = null;\\r\\n        for (const item of this._inRanges) {\\r\\n            if
+    (ZEPETO_Script_1.ZepetoScriptBehaviour.op_Inequality(this._mobs[item], null))
+    {\\r\\n                if (this._mobs[item].isTargeted == false) {\\r\\n                   
+    this.targetedMob = this._mobs[item];\\r\\n                    break;\\r\\n               
+    }\\r\\n            }\\r\\n            // else\\r\\n            // {\\r\\n           
+    //   mgLog.error(`item not found ..${item}`);\\r\\n            // }\\r\\n       
+    }\\r\\n        const character = ZEPETO_Character_Controller_1.ZepetoPlayers.instance.LocalPlayer.zepetoPlayer.character.transform;\\r\\n       
+    const fireBall = this.pool_FireBall;\\r\\n        fireBall.position = UnityEngine_1.Vector3.op_Addition(UnityEngine_1.Vector3.op_Addition(character.position,
+    UnityEngine_1.Vector3.op_Multiply(UnityEngine_1.Vector3.up, 0.5)), character.forward);\\r\\n       
+    fireBall.rotation = character.rotation;\\r\\n        fireBall.gameObject.SetActive(true);\\r\\n       
+    if (ZEPETO_Script_1.ZepetoScriptBehaviour.op_Equality(this.targetedMob, null))
+    {\\r\\n            const target = fireBall.GetChild(0);\\r\\n            while
+    (true) {\\r\\n                yield null;\\r\\n                timer += UnityEngine_1.Time.deltaTime;\\r\\n               
+    fireBall.position = UnityEngine_1.Vector3.MoveTowards(fireBall.position, target.position,
+    UnityEngine_1.Time.deltaTime * this.GetFireBallSpeed());\\r\\n               
+    if (timer > this.GetFireBallCoolTime())\\r\\n                    break;\\r\\n           
+    }\\r\\n            /* Finish */\\r\\n            fireBall.position = this.GetEffects().position;\\r\\n           
+    fireBall.gameObject.SetActive(false);\\r\\n            HorrorZoneManager.Instance.isFireBall
+    = false;\\r\\n        }\\r\\n        else {\\r\\n            this.targetedMob.isTargeted
+    = true;\\r\\n            this.StartCoroutine(this.LaunchTween(fireBall));\\r\\n       
+    }\\r\\n    }\\r\\n    *CoolTimeDisable() {\\r\\n        this.fireButton.interactable
+    = false;\\r\\n        yield new UnityEngine_1.WaitForSeconds(this.coolTime);\\r\\n       
+    this.fireButton.interactable = true;\\r\\n    }\\r\\n    *LaunchTween(fireBall)
+    {\\r\\n        let targetPos = UnityEngine_1.Vector3.op_Addition(this.targetedMob.transform.position,
+    (UnityEngine_1.Vector3.op_Multiply(UnityEngine_1.Vector3.up, 0.5)));\\r\\n       
+    const dis = UnityEngine_1.Vector3.Distance(fireBall.position, targetPos);\\r\\n       
+    const ltime = UnityEngine_1.Mathf.LerpUnclamped(0.01, 0.05, dis);\\r\\n       
+    //let adjustTween = ZTween.VectorMoveTo(adjustPos, targetPos, ltime).SetEase(Ease.Linear);\\r\\n       
+    let tween = ZTween_1.default.TransfomMoveTo(fireBall, targetPos, ltime * this.slowSupporter).SetEase(EaseManager_1.Ease.Linear);\\r\\n       
+    tween.SetOnComplete(() => {\\r\\n            HorrorZoneManager.Instance.isFireBall
+    = false;\\r\\n            this.targetedMob.onHitted();\\r\\n            fireBall.gameObject.SetActive(false);\\r\\n       
+    });\\r\\n        const curve = 4;\\r\\n        for (let i = 1; i < curve + 1;
+    i++) {\\r\\n            yield new UnityEngine_1.WaitForSeconds(ltime * i / curve);\\r\\n           
+    targetPos = UnityEngine_1.Vector3.op_Addition(this.targetedMob.transform.position,
+    (UnityEngine_1.Vector3.op_Multiply(UnityEngine_1.Vector3.up, 0.5)));\\r\\n           
+    // old\\r\\n            tween.SetEndVal(targetPos);\\r\\n            // new\\r\\n           
+    // adjustTween.SetEndVal(targetPos); \\r\\n            // tween.SetEndVal(adjustPos); 
+    \\r\\n        }\\r\\n    }\\r\\n    GameReady() {\\r\\n        console.log(\\\"GAME
+    READY FOR HORRORZONE\\\");\\r\\n        this.InitHorrorZoneSystem();\\r\\n   
+    }\\r\\n    InitHorrorZoneSystem() {\\r\\n        // Ghost\\r\\n        for (const
+    ghost of this.ghosts) {\\r\\n            ghost.gameObject.SetActive(false);\\r\\n           
+    ghost.moveAnimator.SetBool(TypeSyncHelper_1.Anim.Active, false);\\r\\n           
+    for (const collider of ghost.colliders)\\r\\n                collider.enabled
+    = false;\\r\\n        }\\r\\n        // Item\\r\\n        for (const item of
+    this.items) {\\r\\n            item.gameObject.SetActive(false);\\r\\n       
+    }\\r\\n        // this.lampImage.enabled = false;\\r\\n        this.fireImage.enabled
+    = false;\\r\\n        this.fire_Lock.SetActive(true);\\r\\n        // Effect\\r\\n       
+    // this.lamp.SetParent(this.effects);\\r\\n        // this.lamp.position = this.effects.position;\\r\\n       
+    // this.lamp.gameObject.SetActive(false);\\r\\n        this.burningHand.SetParent(this.effects);\\r\\n       
+    this.burningHand.position = this.effects.position;\\r\\n        this.burningHand.localScale
+    = UnityEngine_1.Vector3.one;\\r\\n        this.burningHand.gameObject.SetActive(false);\\r\\n       
+    // Hp\\r\\n        this.hp = this.maxHp;\\r\\n        for (const heart of this.hp_heart)
+    {\\r\\n            heart.sprite = this.heartImage;\\r\\n        }\\r\\n       
+    // Stop Timer\\r\\n        this.StopCoroutine(this.GameTimer());\\r\\n       
+    if (this.gameTimer)\\r\\n            this.StopCoroutine(this.gameTimer);\\r\\n       
+    this.gameTimer = null;\\r\\n        // Stop Damage\\r\\n        if (this.damageCoroutine)\\r\\n           
+    this.StopCoroutine(this.damageCoroutine);\\r\\n        this.damageCoroutine =
+    null;\\r\\n        this.isWaitCoolTime = false;\\r\\n        // Timer\\r\\n       
+    this.timer = 0;\\r\\n        this.isPlay = false;\\r\\n        this.isTimer =
+    false;\\r\\n        this.timeData = TimerData.Stop;\\r\\n        this.SetText(this.timer);\\r\\n       
+    // Destory Items\\r\\n        for (let i = 0; i < this.destroyList.childCount;
+    i++) {\\r\\n            const item = this.destroyList.GetChild(i).gameObject;\\r\\n           
+    UnityEngine_1.GameObject.Destroy(item);\\r\\n        }\\r\\n        // BattleManager\\r\\n       
+    // this.OnGameLeave();\\r\\n    }\\r\\n    *GameTimer() {\\r\\n        const
+    wait = new UnityEngine_1.WaitForSeconds(2);\\r\\n        this.OnGameEnter();\\r\\n       
+    UIManager_1.default.Instance.TextAnimate(TypeSyncHelper_1.DATA_TYPE.READY);\\r\\n       
+    yield wait;\\r\\n        UIManager_1.default.Instance.TextAnimate(TypeSyncHelper_1.DATA_TYPE.START);\\r\\n       
+    yield wait;\\r\\n        UIManager_1.default.Instance.TextAnimationOFF();\\r\\n       
+    this.ReadyGameSystem();\\r\\n        // UIManager.Instance.LocalPlayerControllerSet(true);\\r\\n       
+    while (true) {\\r\\n            yield null;\\r\\n            if (!this.isTimer)\\r\\n               
+    break;\\r\\n            /* Update Timer Text */\\r\\n            switch (+this.timeData)
+    {\\r\\n                case TimerData.Start:\\r\\n                    this.timer
+    += UnityEngine_1.Time.deltaTime;\\r\\n                    this.SetText(this.timer);\\r\\n                   
+    break;\\r\\n                case TimerData.Pause:\\r\\n                    break;\\r\\n               
+    case TimerData.Stop:\\r\\n                    this.timer = 0;\\r\\n                   
+    break;\\r\\n                case TimerData.Reset:\\r\\n                    this.timer
+    = 0;\\r\\n                    this.SetText(this.timer);\\r\\n                   
+    this.timeData = TimerData.Start;\\r\\n                    break;\\r\\n           
+    }\\r\\n        }\\r\\n        this.StopCoroutine(this.GameTimer());\\r\\n       
+    if (this.gameTimer)\\r\\n            this.StopCoroutine(this.gameTimer);\\r\\n       
+    this.gameTimer = null;\\r\\n    }\\r\\n    OnGameEnter() {\\r\\n        this._equipedRidar
+    = UnityEngine_1.GameObject.Instantiate(this.ridar, this.ridarParent.transform);\\r\\n       
+    this.followCoroutine = this.StartCoroutine(this.FollowTargetRidar());\\r\\n   
+    }\\r\\n    *FollowTargetRidar() {\\r\\n        const _waitForFrame = new UnityEngine_1.WaitForEndOfFrame();\\r\\n       
+    const _srcCharacter = ZEPETO_Character_Controller_1.ZepetoPlayers.instance.LocalPlayer.zepetoPlayer.character.gameObject;\\r\\n       
+    while (true) {\\r\\n            this._equipedRidar.transform.position = _srcCharacter.transform.position;\\r\\n           
+    this._equipedRidar.transform.rotation = _srcCharacter.transform.rotation;\\r\\n           
+    yield _waitForFrame;\\r\\n        }\\r\\n    }\\r\\n    ReadyGameSystem() {\\r\\n       
+    // Ghost\\r\\n        for (const ghost of this.ghosts) {\\r\\n            ghost.gameObject.SetActive(true);\\r\\n           
+    ghost.moveAnimator.SetBool(TypeSyncHelper_1.Anim.Active, true);\\r\\n           
+    ghost.moveAnimator.SetInteger(TypeSyncHelper_1.Anim.State, ghost.controller.index);\\r\\n           
+    //console.log(` ${ghost.transform.name} : moveAnim ${ghost.moveAnimator.GetInteger(Anim.State)}
+    == ${ghost.controller.index}`);\\r\\n            for (const collider of ghost.colliders)\\r\\n               
+    collider.enabled = true;\\r\\n        }\\r\\n        // Item\\r\\n        for
+    (const item of this.items) {\\r\\n            item.gameObject.SetActive(true);\\r\\n       
+    }\\r\\n        // Effect\\r\\n        this.fireBall.SetActive(true);\\r\\n   
+    }\\r\\n    /* Time Text Update */\\r\\n    SetText(timer) {\\r\\n        const
+    minutes = UnityEngine_1.Mathf.Floor(timer / 60);\\r\\n        const seconds =
+    UnityEngine_1.Mathf.Floor(timer % 60);\\r\\n        const millSec = UnityEngine_1.Mathf.Floor((timer
+    * 100) % 100);\\r\\n        const formattedString = `${minutes.toString().padStart(2,
+    '0')}:${seconds.toString().padStart(2, '0')}:${millSec.toString().padStart(2,
+    '0')}`;\\r\\n        this.timerText.text = formattedString;\\r\\n        if (minutes
+    === 60)\\r\\n            this.timeData = TimerData.Stop;\\r\\n        return
+    formattedString;\\r\\n    }\\r\\n    OnGameLeave() {\\r\\n        if (this.followCoroutine
+    != null) {\\r\\n            this.StopCoroutine(this.followCoroutine);\\r\\n           
+    this.followCoroutine = null;\\r\\n        }\\r\\n        QuestManager_1.default.Instance.OnPlayGame();\\r\\n       
+    this._inRanges = [];\\r\\n        if (__UnityEngine__.Object.\\r\\n        //
+    GameManager.instance.LocalPlayerControllerSet(true);\\r\\n        op_Inequality(this._equipedRidar,
+    null)) {\\r\\n            UnityEngine_1.GameObject.Destroy(this._equipedRidar);\\r\\n       
+    }\\r\\n    }\\r\\n    OnDeath() {\\r\\n        this.StartCoroutine(this.StopGame(false));\\r\\n   
+    }\\r\\n    *StopGame(isComplete) {\\r\\n        this.OnGameLeave();\\r\\n       
+    if (!this.isTimer)\\r\\n            return;\\r\\n        this.timeData = TimerData.Pause;\\r\\n       
+    const time = +this.timer;\\r\\n        // Result\\r\\n        console.log(`Finished!
+    ${isComplete ? TypeSyncHelper_1.DATA_TYPE.CLEAR : TypeSyncHelper_1.DATA_TYPE.GAME_OVER}`);\\r\\n       
+    // GameManager.instance.LocalPlayerControllerSet(false);\\r\\n        // Text
+    Animation\\r\\n        UIManager_1.default.Instance.TextAnimate(isComplete ?
+    TypeSyncHelper_1.DATA_TYPE.CLEAR : TypeSyncHelper_1.DATA_TYPE.GAME_OVER);\\r\\n       
+    yield new UnityEngine_1.WaitForSeconds(2);\\r\\n        UIManager_1.default.Instance.TextAnimationOFF();\\r\\n       
+    // Teleport\\r\\n        GameManager_1.default.Instance.SendTeleportZone(TypeSyncHelper_1.ZoneType.HorrorZoneExit);\\r\\n       
+    // Result\\r\\n        yield new UnityEngine_1.WaitForSeconds(1);\\r\\n       
+    if (isComplete)\\r\\n            GameManager_1.default.Instance.Horror_SetLocalRankUI(time);\\r\\n       
+    // GameManager.instance.LocalPlayerControllerSet(true);\\r\\n        DataManager_1.default.Instance.SetWonderState(TypeSyncHelper_1.WonderState.H_Damaged,
+    false);\\r\\n        // Finish\\r\\n        this.InitHorrorZoneSystem();\\r\\n       
+    this.StopCoroutine(this.StopGame(isComplete));\\r\\n    }\\r\\n    /* Add Item
+    */\\r\\n    AddItem(itemName) {\\r\\n        if (itemName == HorrorItemType.Lamp)
+    {\\r\\n            // this.lampImage.enabled = true;\\r\\n            // this.isHoldLamp
+    = true;\\r\\n            // this.LampEquip(true);\\r\\n        }\\r\\n       
+    else if (itemName == HorrorItemType.Fire) {\\r\\n            this.fireImage.enabled
+    = true;\\r\\n            this.fire_Lock.SetActive(false);\\r\\n            this.BurningHandEquip(true);\\r\\n       
+    }\\r\\n    }\\r\\n    BurningHandEquip(isEquip) {\\r\\n        /* Find Character
+    Left Hand */\\r\\n        if (!ZEPETO_Character_Controller_1.ZepetoPlayers.instance.LocalPlayer)\\r\\n           
+    return console.error(TypeSyncHelper_1.ERROR.NOT_FOUND_LOCAL_PLAYER);\\r\\n       
+    const character = ZEPETO_Character_Controller_1.ZepetoPlayers.instance.LocalPlayer.zepetoPlayer.character;\\r\\n       
+    const anim = character.ZepetoAnimator;\\r\\n        const bone = anim.GetBoneTransform(UnityEngine_1.HumanBodyBones.RightHand);\\r\\n       
+    /* BH Tranformation */\\r\\n        if (isEquip) {\\r\\n            this.burningHand.gameObject.SetActive(true);\\r\\n           
+    this.burningHand.SetParent(bone);\\r\\n            this.burningHand.position
+    = bone.position;\\r\\n            this.burningHand.rotation = bone.rotation;\\r\\n       
+    }\\r\\n        else {\\r\\n            this.burningHand.SetParent(this.effects);\\r\\n           
+    this.burningHand.position = this.effects.position;\\r\\n            this.burningHand.rotation
+    = this.effects.rotation;\\r\\n            this.burningHand.localScale = UnityEngine_1.Vector3.one;\\r\\n           
+    this.burningHand.gameObject.SetActive(false);\\r\\n        }\\r\\n    }\\r\\n   
+    /* Game Clear */\\r\\n    GameClear(collider) {\\r\\n        this.StartCoroutine(this.StopGame(true));\\r\\n   
+    }\\r\\n    /// Game Function\\r\\n    /* Ghost Damaged */\\r\\n    Damage(ghost)
+    {\\r\\n        if (this.isWaitCoolTime)\\r\\n            return;\\r\\n       
+    this.isWaitCoolTime = true;\\r\\n        this.damageCoroutine = this.StartCoroutine(this.onDamaged(ghost));\\r\\n       
+    // Ghost Remove\\r\\n        this.GhostBurn(ghost);\\r\\n    }\\r\\n    *onDamaged(ghost)
+    {\\r\\n        /* Character Set */\\r\\n        // GameManager.instance.LocalPlayerControllerSet(false);\\r\\n       
+    DataManager_1.default.Instance.SetWonderState(TypeSyncHelper_1.WonderState.H_Damaged,
+    true);\\r\\n        /* Find Ghost */\\r\\n        let index = -1;\\r\\n       
+    for (let i = 0; i < this.ghosts.length; i++) {\\r\\n            if (this.ghosts[i].gameObject.name
+    == ghost.transform.parent.name) {\\r\\n                index = i;\\r\\n               
+    break;\\r\\n            }\\r\\n        }\\r\\n        if (index < 0)\\r\\n           
+    return console.error(TypeSyncHelper_1.ERROR.NOT_FOUND_ITEM);\\r\\n        /*
+    HP Damaged */\\r\\n        const ghostData = this.ghosts[index];\\r\\n       
+    for (let i = 0; i < ghostData.power; i++) {\\r\\n            this.hp--;\\r\\n           
+    if (this.hp >= 0)\\r\\n                this.hp_heart[this.hp].sprite = this.breakImage;\\r\\n           
+    if (this.hp <= 0) {\\r\\n                this.OnDeath();\\r\\n               
+    break;\\r\\n            }\\r\\n        }\\r\\n        /* End onDamaged */\\r\\n       
+    if (!this.damageWaitCoolTime)\\r\\n            this.damageWaitCoolTime = new
+    UnityEngine_1.WaitForSeconds(this.coolTime);\\r\\n        yield this.damageWaitCoolTime;\\r\\n       
+    this.isWaitCoolTime = false;\\r\\n        /* Character Set */\\r\\n        //
+    GameManager.instance.LocalPlayerControllerSet(true);\\r\\n        DataManager_1.default.Instance.SetWonderState(TypeSyncHelper_1.WonderState.H_Damaged,
+    false);\\r\\n    }\\r\\n    addOnRange(intanceId) {\\r\\n        this._inRanges.push(intanceId);\\r\\n   
+    }\\r\\n    removeOnRange(intanceId) {\\r\\n        const indexToDelete = this._inRanges.indexOf(intanceId);\\r\\n       
+    if (indexToDelete !== -1) {\\r\\n            this._inRanges.splice(indexToDelete,
+    1);\\r\\n        }\\r\\n    }\\r\\n    GhostBurn(ghost) {\\r\\n        this.StartCoroutine(this.GhostDead(ghost));\\r\\n   
+    }\\r\\n    *GhostDead(ghost) {\\r\\n        this.fireBall.gameObject.SetActive(false);\\r\\n       
+    const wait = new UnityEngine_1.WaitForSeconds(1);\\r\\n        /* Find Ghost
+    */\\r\\n        let index = -1;\\r\\n        for (let i = 0; i < this.ghosts.length;
+    i++) {\\r\\n            if (this.ghosts[i].gameObject.name == ghost.transform.parent.name)
+    {\\r\\n                index = i;\\r\\n                break;\\r\\n           
+    }\\r\\n        }\\r\\n        if (index < 0)\\r\\n            return console.error(TypeSyncHelper_1.ERROR.NOT_FOUND_ITEM);\\r\\n       
+    const ghostData = this.ghosts[index];\\r\\n        ghostData.moveAnimator.SetBool(TypeSyncHelper_1.Anim.Active,
+    false);\\r\\n        ghostData.gameObject.SetActive(false);\\r\\n        for
+    (const collider of ghostData.colliders)\\r\\n            collider.enabled = false;\\r\\n       
+    /* Effect Location */\\r\\n        const burn = this.pool_Burn;\\r\\n       
+    burn.transform.position = ghostData.effectTarget.position;\\r\\n        burn.gameObject.SetActive(true);\\r\\n       
+    burn.SetTrigger(TypeSyncHelper_1.Anim.Active);\\r\\n        yield new UnityEngine_1.WaitForSeconds(1);\\r\\n       
+    const targetDoll = this.ghostDolls[ghostData.controller.ghostType];\\r\\n       
+    const doll = UnityEngine_1.GameObject.Instantiate(targetDoll, this.destroyList);\\r\\n       
+    doll.transform.position = UnityEngine_1.Vector3.op_Addition(burn.transform.position,
+    (UnityEngine_1.Vector3.op_Multiply(UnityEngine_1.Vector3.up, 0.5)));\\r\\n       
+    doll.transform.GetChild(0).localScale = UnityEngine_1.Vector3.zero;\\r\\n       
+    yield new UnityEngine_1.WaitForSeconds(3);\\r\\n        burn.gameObject.SetActive(false);\\r\\n   
+    }\\r\\n    addMob(horrorTriggerController) {\\r\\n        this._mobs[horrorTriggerController.gameObject.GetInstanceID()]
+    = horrorTriggerController;\\r\\n    }\\r\\n    removeMob(horrorTriggerController)
+    {\\r\\n        delete this._mobs[horrorTriggerController.gameObject.GetInstanceID()];\\r\\n   
+    }\\r\\n}\\r\\nexports.default = HorrorZoneManager;\\r\\nvar TimerData;\\r\\n(function
+    (TimerData) {\\r\\n    TimerData[TimerData[\\\"Start\\\"] = 0] = \\\"Start\\\";\\r\\n   
+    TimerData[TimerData[\\\"Pause\\\"] = 1] = \\\"Pause\\\";\\r\\n    TimerData[TimerData[\\\"Stop\\\"]
+    = 2] = \\\"Stop\\\";\\r\\n    TimerData[TimerData[\\\"Reset\\\"] = 3] = \\\"Reset\\\";\\r\\n})(TimerData
+    || (TimerData = {}));\\r\\nvar HorrorItemType;\\r\\n(function (HorrorItemType)
+    {\\r\\n    HorrorItemType[\\\"Lamp\\\"] = \\\"Lamp\\\";\\r\\n    HorrorItemType[\\\"Fire\\\"]
+    = \\\"Fire\\\";\\r\\n})(HorrorItemType || (HorrorItemType = {}));\\r\\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiSG9ycm9yWm9uZU1hbmFnZXIuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyJIb3Jyb3Jab25lTWFuYWdlci50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7QUFBQSw2Q0FBZ007QUFDaE0sdURBQTRDO0FBQzVDLGlEQUFxRDtBQUNyRCxpQ0FBd0M7QUFDeEMsbURBQStDO0FBQy9DLDZFQUE0RDtBQUM1RCx1RUFBZ0U7QUFDaEUsZ0RBQXlDO0FBQ3pDLDBEQUFnRDtBQUNoRCx1REFBZ0Q7QUFDaEQsMkRBQW9EO0FBQ3BELG1EQUE0QztBQUM1QyxxRkFBZ0k7QUFDaEksd0ZBQWlGO0FBQ2pGLDZEQUFzRDtBQUV0RCxNQUFxQixpQkFBa0IsU0FBUSxxQ0FBcUI7SUFBcEU7O1FBb0I4QixlQUFVLEdBQWlCLEVBQUUsQ0FBQztRQUNoRCxXQUFNLEdBQWlCLEVBQUUsQ0FBQztRQUMxQixjQUFTLEdBQWdCLEVBQUUsQ0FBQztRQUNwQywwREFBMEQ7UUFDMUQscURBQXFEO1FBQzdDLFVBQUssR0FBOEIsRUFBRSxDQUFDO1FBR3RDLFVBQUssR0FBZSxFQUFFLENBQUM7UUFTTCxrQkFBYSxHQUFXLENBQUMsQ0FBQztRQUMxQixhQUFRLEdBQVcsQ0FBQyxDQUFDO1FBQ3ZDLG1CQUFjLEdBQVksS0FBSyxDQUFDO1FBUWhDLGNBQVMsR0FBYSxFQUFFLENBQUM7UUFFekIsV0FBTSxHQUFZLEtBQUssQ0FBQztRQUVmLGNBQVMsR0FBVyxDQUFDLENBQUM7UUFDL0IsVUFBSyxHQUErQyxFQUFFLENBQUM7UUFFckMsZUFBVSxHQUFZLEtBQUssQ0FBQztRQU85QyxhQUFRLEdBQVksRUFBRSxDQUFDO1FBT3ZCLFVBQUssR0FBVyxDQUFDLENBQUM7UUFDbEIsYUFBUSxHQUFjLFNBQVMsQ0FBQyxJQUFJLENBQUM7UUFDckMsWUFBTyxHQUFZLEtBQUssQ0FBQztRQUlqQyxtQkFBbUI7UUFDWCxRQUFHLEdBQVcsQ0FBQyxDQUFDO1FBS2hCLG9CQUFlLEdBQWMsSUFBSSxDQUFD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\",\"assetPath\":\"Assets/Scripts/Game/HorrorZone/HorrorZoneManager.ts\",\"manifest\":{\"properties\":[{\"assembly\":\"UnityEngine.CoreModule\",\"name\":\"ghostsGroup\",\"type\":\"UnityEngine.Transform\",\"isArray\":false,\"initValue\":[],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[{\"name\":\"Header\",\"args\":[\"\\\"Horror
+    Game\\\"\"]},{\"name\":\"SerializeField\",\"args\":[]}]},{\"assembly\":\"UnityEngine.CoreModule\",\"name\":\"itemGroup\",\"type\":\"UnityEngine.Transform\",\"isArray\":false,\"initValue\":[],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[{\"name\":\"SerializeField\",\"args\":[]}]},{\"assembly\":\"UnityEngine.CoreModule\",\"name\":\"effects\",\"type\":\"UnityEngine.Transform\",\"isArray\":false,\"initValue\":[],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[{\"name\":\"SerializeField\",\"args\":[]}]},{\"assembly\":\"UnityEngine.CoreModule\",\"name\":\"fireBall\",\"type\":\"UnityEngine.GameObject\",\"isArray\":false,\"initValue\":[],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[{\"name\":\"SerializeField\",\"args\":[]}]},{\"assembly\":\"UnityEngine.CoreModule\",\"name\":\"destroyList\",\"type\":\"UnityEngine.Transform\",\"isArray\":false,\"initValue\":[],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[{\"name\":\"SerializeField\",\"args\":[]}]},{\"assembly\":\"UnityEngine.CoreModule\",\"name\":\"pool\",\"type\":\"UnityEngine.Transform\",\"isArray\":false,\"initValue\":[],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[{\"name\":\"SerializeField\",\"args\":[]}]},{\"assembly\":\"UnityEngine.CoreModule\",\"name\":\"burn\",\"type\":\"UnityEngine.GameObject\",\"isArray\":false,\"initValue\":[],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[{\"name\":\"SerializeField\",\"args\":[]}]},{\"assembly\":\"UnityEngine.CoreModule\",\"name\":\"ghostDolls\",\"type\":\"UnityEngine.GameObject[]\",\"isArray\":true,\"initValue\":[],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[{\"name\":\"SerializeField\",\"args\":[]}]},{\"assembly\":\"UnityEngine.AnimationModule\",\"name\":\"fireBallAnimation\",\"type\":\"UnityEngine.AnimationClip\",\"isArray\":false,\"initValue\":[],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[{\"name\":\"SerializeField\",\"args\":[]}]},{\"assembly\":\"mscorlib\",\"name\":\"fireBallSpeed\",\"type\":\"System.Single\",\"isArray\":false,\"initValue\":[\"7\"],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[{\"name\":\"SerializeField\",\"args\":[]}]},{\"assembly\":\"mscorlib\",\"name\":\"coolTime\",\"type\":\"System.Single\",\"isArray\":false,\"initValue\":[\"4\"],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[{\"name\":\"SerializeField\",\"args\":[]}]},{\"assembly\":\"UnityEngine.CoreModule\",\"name\":\"ridarParent\",\"type\":\"UnityEngine.GameObject\",\"isArray\":false,\"initValue\":[],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[{\"name\":\"Header\",\"args\":[\"\\\"Horror
+    Battle\\\"\"]},{\"name\":\"SerializeField\",\"args\":[]}]},{\"assembly\":\"UnityEngine.CoreModule\",\"name\":\"ridar\",\"type\":\"UnityEngine.GameObject\",\"isArray\":false,\"initValue\":[],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[{\"name\":\"SerializeField\",\"args\":[]}]},{\"assembly\":\"mscorlib\",\"name\":\"slowSupporter\",\"type\":\"System.Single\",\"isArray\":false,\"initValue\":[],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[{\"name\":\"SerializeField\",\"args\":[]}]},{\"assembly\":\"mscorlib\",\"name\":\"isFireBall\",\"type\":\"System.Boolean\",\"isArray\":false,\"initValue\":[],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[{\"name\":\"HideInInspector\",\"args\":[]}]},{\"assembly\":\"UnityEngine.CoreModule\",\"name\":\"horrorGameUI\",\"type\":\"UnityEngine.Transform\",\"isArray\":false,\"initValue\":[],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[{\"name\":\"Header\",\"args\":[\"\\\"*
+    Horror Game UIs\\\"\"]},{\"name\":\"SerializeField\",\"args\":[]}]},{\"assembly\":\"UnityEngine.CoreModule\",\"name\":\"heartImage\",\"type\":\"UnityEngine.Sprite\",\"isArray\":false,\"initValue\":[],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[{\"name\":\"SerializeField\",\"args\":[]}]},{\"assembly\":\"UnityEngine.CoreModule\",\"name\":\"breakImage\",\"type\":\"UnityEngine.Sprite\",\"isArray\":false,\"initValue\":[],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[{\"name\":\"SerializeField\",\"args\":[]}]},{\"assembly\":\"Unity.TextMeshPro\",\"name\":\"timerText\",\"type\":\"TMPro.TextMeshProUGUI\",\"isArray\":false,\"initValue\":[],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[{\"name\":\"SerializeField\",\"args\":[]}]}],\"name\":\"HorrorZoneManager\",\"description\":\"\",\"hasAnimatorMove\":false},\"isCompiled\":true}"
+  typescriptHash: ccbe787e327de4d05c41affd3e9a3ac0
+  onlyWriteTrigger: 0

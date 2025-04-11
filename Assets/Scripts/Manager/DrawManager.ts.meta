@@ -1,0 +1,34 @@
+fileFormatVersion: 2
+guid: 7e534760b3ef41c4b8c24d0141457bbc
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
+    { value: true });\r\nconst UnityEngine_1 = require(\"UnityEngine\");\r\nconst
+    ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nconst DataManager_1 = require(\"./DataManager\");\r\nconst
+    DrawController_1 = require(\"../Game/Draw/DrawController\");\r\nclass DrawManager
+    extends ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n    static get Instance()
+    {\r\n        if (!DrawManager._instance) {\r\n            const managerObj =
+    UnityEngine_1.GameObject.Find(\"DrawManager\");\r\n            if (managerObj)\r\n               
+    DrawManager._instance = managerObj.GetComponent($typeof(DrawManager));\r\n       
+    }\r\n        return DrawManager._instance;\r\n    }\r\n    RemoteStart() {\r\n       
+    this.drawController = this._drawController.GetComponent($typeof(DrawController_1.default));\r\n       
+    this.drawController.InitPlayerDrawData(DataManager_1.default.Instance.PlayerDB.wonderDraw);\r\n   
+    }\r\n}\r\nexports.default = DrawManager;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiRHJhd01hbmFnZXIuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyJEcmF3TWFuYWdlci50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOztBQUFBLDZDQUF5QztBQUN6QyxpREFBcUQ7QUFDckQsK0NBQXdDO0FBQ3hDLGdFQUF5RDtBQUV6RCxNQUFxQixXQUFZLFNBQVEscUNBQXFCO0lBSW5ELE1BQU0sS0FBSyxRQUFRO1FBQ3RCLElBQUksQ0FBQyxXQUFXLENBQUMsU0FBUyxFQUFFO1lBQ3hCLE1BQU0sVUFBVSxHQUFHLHdCQUFVLENBQUMsSUFBSSxDQUFDLGFBQWEsQ0FBQyxDQUFDO1lBQ2xELElBQUksVUFBVTtnQkFBRSxXQUFXLENBQUMsU0FBUyxHQUFHLFVBQVUsQ0FBQyxZQUFZLFNBQUMsV0FBVyxFQUFHLENBQUM7U0FDbEY7UUFDRCxPQUFPLFdBQVcsQ0FBQyxTQUFTLENBQUM7SUFDakMsQ0FBQztJQUtNLFdBQVc7UUFDZCxJQUFJLENBQUMsY0FBYyxHQUFHLElBQUksQ0FBQyxlQUFlLENBQUMsWUFBWSxTQUFDLHdCQUFjLEVBQUcsQ0FBQztRQUMxRSxJQUFJLENBQUMsY0FBYyxDQUFDLGtCQUFrQixDQUFDLHFCQUFXLENBQUMsUUFBUSxDQUFDLFFBQVEsQ0FBQyxVQUFVLENBQUMsQ0FBQztJQUNyRixDQUFDO0NBRUo7QUFwQkQsOEJBb0JDIn0=","assetPath":"Assets/Scripts/Manager/DrawManager.ts","manifest":{"properties":[{"assembly":"UnityEngine.CoreModule","name":"_drawController","type":"UnityEngine.GameObject","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]}],"name":"DrawManager","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: 8034fdf71d0fc29589006f5ffc8c04e7
+  onlyWriteTrigger: 0

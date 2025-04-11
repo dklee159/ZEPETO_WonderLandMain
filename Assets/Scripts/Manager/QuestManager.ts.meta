@@ -1,0 +1,223 @@
+fileFormatVersion: 2
+guid: e0e177f1552d842448bd7bc4af8f8053
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: "{\"source\":\"\\\"use strict\\\";\\r\\nObject.defineProperty(exports,
+    \\\"__esModule\\\", { value: true });\\r\\nconst UnityEngine_1 = require(\\\"UnityEngine\\\");\\r\\nconst
+    UnityEngine_UI_1 = require(\\\"UnityEngine.UI\\\");\\r\\nconst ZEPETO_Script_1
+    = require(\\\"ZEPETO.Script\\\");\\r\\nconst ZEPETO_World_1 = require(\\\"ZEPETO.World\\\");\\r\\nconst
+    TypeSyncHelper_1 = require(\\\"../../ZepetoScripts/SyncHelper/TypeSyncHelper\\\");\\r\\nconst
+    DataManager_1 = require(\\\"./DataManager\\\");\\r\\nclass QuestManager extends
+    ZEPETO_Script_1.ZepetoScriptBehaviour {\\r\\n    constructor() {\\r\\n       
+    super(...arguments);\\r\\n        this.currentMenu = TypeSyncHelper_1.QuestMenu.Daily;\\r\\n       
+    this.questMapping = new Map();\\r\\n    }\\r\\n    static get Instance() {\\r\\n       
+    if (!QuestManager._instance) {\\r\\n            const managerObj = UnityEngine_1.GameObject.Find(\\\"QuestManager\\\");\\r\\n           
+    if (managerObj)\\r\\n                QuestManager._instance = managerObj.GetComponent($typeof(QuestManager));\\r\\n       
+    }\\r\\n        return QuestManager._instance;\\r\\n    }\\r\\n    Awake() {\\r\\n       
+    QuestManager._instance = this;\\r\\n    }\\r\\n    Start() {\\r\\n        this.dailyBtn.onClick.AddListener(()
+    => {\\r\\n            this.OnClickMenu(TypeSyncHelper_1.QuestMenu.Daily);\\r\\n       
+    });\\r\\n        this.weeklyBtn.onClick.AddListener(() => {\\r\\n           
+    this.OnClickMenu(TypeSyncHelper_1.QuestMenu.Weekly);\\r\\n        });\\r\\n       
+    this.monthlyBtn.onClick.AddListener(() => {\\r\\n            this.OnClickMenu(TypeSyncHelper_1.QuestMenu.Monthly);\\r\\n       
+    });\\r\\n        this.questBtn.onClick.AddListener(() => {\\r\\n            this.questUI.SetActive(true);\\r\\n       
+    });\\r\\n        this.closeBtn.onClick.AddListener(() => {\\r\\n            this.questUI.SetActive(false);\\r\\n       
+    });\\r\\n    }\\r\\n    FormatDate(date) {\\r\\n        return `${date.getDate()}_${date.getMonth()
+    + 1}_${date.getFullYear()}`;\\r\\n    }\\r\\n    GetWeek(year, month, day) {\\r\\n       
+    const now = new Date(year, month - 1, day);\\r\\n        const startOfYear =
+    new Date(now.getFullYear(), 0, 1);\\r\\n        const startDayOfWeek = startOfYear.getDay();\\r\\n       
+    const firstMonday = startDayOfWeek <= 1 ? startOfYear : new Date(startOfYear.setDate(startOfYear.getDate()
+    + (8 - startDayOfWeek)));\\r\\n        // \uD604\uC7AC \uB0A0\uC9DC\uC640 \uCCAB
+    \uBC88\uC9F8 \uC6D4\uC694\uC77C \uAC04\uC758 \uCC28\uC774 \uACC4\uC0B0\\r\\n       
+    const pastDaysOfYear = (now.getTime() - firstMonday.getTime()) / (1000 * 60 *
+    60 * 24);\\r\\n        // \uBA87 \uC8FC\uAC00 \uACBD\uACFC\uD588\uB294\uC9C0
+    \uACC4\uC0B0 (1\uC8FC\uC77C\uC740 7\uC77C)\\r\\n        const currentWeek = Math.ceil((pastDaysOfYear
+    + firstMonday.getDay()) / 7);\\r\\n        return currentWeek;\\r\\n    }\\r\\n   
+    InitData(playerDB, debugDate) {\\r\\n        this.lastDate = playerDB.attend.lastDate;\\r\\n       
+    const date = new Date();\\r\\n        this.today = this.FormatDate(date);\\r\\n       
+    // \uB514\uBC84\uAE45\uC6A9 \uB0A0\uC9DC \uC784\uC758 \uC138\uD305 //\\r\\n       
+    if (debugDate)\\r\\n            this.today = debugDate;\\r\\n        const lastSplit
+    = this.lastDate.split(\\\"_\\\");\\r\\n        const lastYear = +lastSplit[2];\\r\\n       
+    const lastMonth = +lastSplit[1];\\r\\n        const lastDay = +lastSplit[0];\\r\\n       
+    const lastWeek = this.GetWeek(lastYear, lastMonth, lastDay);\\r\\n        const
+    todaySplit = this.today.split(\\\"_\\\");\\r\\n        const todayYear = +todaySplit[2];\\r\\n       
+    const todayMonth = +todaySplit[1];\\r\\n        const todayDay = +todaySplit[0];\\r\\n       
+    const todayWeek = this.GetWeek(todayYear, todayMonth, todayDay);\\r\\n       
+    const isDailyInit = !(lastYear == todayYear && lastMonth == todayMonth && lastDay
+    == todayDay);\\r\\n        const isWeeklyInit = !(lastYear == todayYear && lastWeek
+    == todayWeek);\\r\\n        const isMonthlyInit = !(lastYear == todayYear &&
+    lastMonth == todayMonth);\\r\\n        console.log(`${lastYear},${lastMonth},${lastDay},${lastWeek},${todayYear},${todayMonth},${todayDay},${todayWeek}`);\\r\\n       
+    console.log(`${isDailyInit}, ${isWeeklyInit}, ${isMonthlyInit}`);\\r\\n       
+    const daily = playerDB.dailyQuest;\\r\\n        const weekly = playerDB.weeklyQuest;\\r\\n       
+    const monthly = playerDB.monthlyQuest;\\r\\n        const dailyArr = [daily.Visit_wonderland,
+    daily.Visit_stage, daily.Visit_studio, daily.PlayGame_wonderland, daily.PlayGame_stage,
+    daily.PlayGame_studio, daily.PostFeed_1];\\r\\n        const weeklyArr = [weekly.Visit_world_3,
+    weekly.HangangRace_777, weekly.DailyQuest_3, weekly.Visit_continuous_3, weekly.Visit_continuous_5,
+    weekly.PlayGame_10, weekly.PostFeed_3];\\r\\n        const monthlyArr = [monthly.Visit_world_ten,
+    monthly.Move_wonderAwards, monthly.Visit_continous_7, monthly.WeeklyQuest_2,
+    monthly.GatherCoin_5000, monthly.PlayGame_30, monthly.PostFeed_10];\\r\\n       
+    let dailyInfoArr = [];\\r\\n        let weeklyInfoArr = [];\\r\\n        let
+    monthlyInfoArr = [];\\r\\n        dailyArr.forEach((info, index) => {\\r\\n           
+    if (isDailyInit) {\\r\\n                info.QuestAmount = 0;\\r\\n               
+    info.IsSuccess = false;\\r\\n            }\\r\\n            dailyInfoArr[info.Index]
+    = { Info: info, UI: this.dailyQuestMenu.transform.GetChild(index) };\\r\\n       
+    });\\r\\n        weeklyArr.forEach((info, index) => {\\r\\n            if (isWeeklyInit)
+    {\\r\\n                if (info.Index == 0) {\\r\\n                    const
+    initInfo = info;\\r\\n                    initInfo.Visit_Wonder = 0;\\r\\n                   
+    initInfo.Visit_Stage = 0;\\r\\n                    initInfo.Visit_Studio = 0;\\r\\n                   
+    info = initInfo;\\r\\n                }\\r\\n                info.QuestAmount
+    = 0;\\r\\n                info.IsSuccess = false;\\r\\n            }\\r\\n           
+    weeklyInfoArr[info.Index] = { Info: info, UI: this.weeklyQuestMenu.transform.GetChild(index)
+    };\\r\\n        });\\r\\n        monthlyArr.forEach((info, index) => {\\r\\n           
+    if (isMonthlyInit) {\\r\\n                if (info.Index == 0) {\\r\\n                   
+    const initInfo = info;\\r\\n                    initInfo.Visit_Wonder = 0;\\r\\n                   
+    initInfo.Visit_Stage = 0;\\r\\n                    initInfo.Visit_Studio = 0;\\r\\n                   
+    info = initInfo;\\r\\n                }\\r\\n                info.QuestAmount
+    = 0;\\r\\n                info.IsSuccess = false;\\r\\n            }\\r\\n           
+    monthlyInfoArr[info.Index] = { Info: info, UI: this.monthlyQuestMenu.transform.GetChild(index)
+    };\\r\\n        });\\r\\n        this.questMapping.set(TypeSyncHelper_1.QuestMenu.Daily,
+    dailyInfoArr);\\r\\n        this.questMapping.set(TypeSyncHelper_1.QuestMenu.Weekly,
+    weeklyInfoArr);\\r\\n        this.questMapping.set(TypeSyncHelper_1.QuestMenu.Monthly,
+    monthlyInfoArr);\\r\\n        dailyArr.forEach((info, index) => {\\r\\n           
+    this.UpdateData(TypeSyncHelper_1.QuestMenu.Daily, info.Index, info.QuestAmount,
+    true);\\r\\n            this.dailyQuestMenu.transform.GetChild(info.Index).GetChild(1).GetChild(0).GetComponent($typeof(UnityEngine_UI_1.Text)).text
+    = `+${info.CoinAmount}`;\\r\\n        });\\r\\n        weeklyArr.forEach((info,
+    index) => {\\r\\n            this.UpdateData(TypeSyncHelper_1.QuestMenu.Weekly,
+    info.Index, info.QuestAmount, true);\\r\\n            this.weeklyQuestMenu.transform.GetChild(info.Index).GetChild(1).GetChild(0).GetComponent($typeof(UnityEngine_UI_1.Text)).text
+    = `+${info.CoinAmount}`;\\r\\n        });\\r\\n        monthlyArr.forEach((info,
+    index) => {\\r\\n            this.UpdateData(TypeSyncHelper_1.QuestMenu.Monthly,
+    info.Index, info.QuestAmount, true);\\r\\n            this.monthlyQuestMenu.transform.GetChild(info.Index).GetChild(1).GetChild(0).GetComponent($typeof(UnityEngine_UI_1.Text)).text
+    = `+${info.CoinAmount}`;\\r\\n        });\\r\\n        console.log(`last date
+    : ${this.lastDate}`);\\r\\n        this.OnVisitWorld();\\r\\n    }\\r\\n    GetData(questMenu,
+    index) {\\r\\n        return this.questMapping.get(questMenu)[index];\\r\\n   
+    }\\r\\n    UpdateData(questMenu, index, value, isInit = false) {\\r\\n       
+    const data = this.GetData(questMenu, index);\\r\\n        const info = data.Info;\\r\\n       
+    const ui = data.UI;\\r\\n        // \uC774\uBBF8 \uC131\uACF5\uD588\uB2E4\uBA74
+    \uAC12 \uCD94\uAC00\uD558\uC9C0 \uC54A\uC74C\\r\\n        if (info.IsSuccess
+    && !isInit)\\r\\n            return;\\r\\n        if (info.QuestAcceptAmount
+    <= value && !info.IsSuccess && !isInit) {\\r\\n            // \uD018\uC2A4\uD2B8
+    \uC131\uACF5, \uCF54\uC778 \uD68D\uB4DD\\r\\n            info.IsSuccess = true;\\r\\n           
+    DataManager_1.default.Instance.AddCoin(info.CoinAmount, true);\\r\\n           
+    info.QuestAmount = info.QuestAcceptAmount;\\r\\n        }\\r\\n        else {\\r\\n           
+    info.QuestAmount = value;\\r\\n        }\\r\\n        DataManager_1.default.Instance.PlayerDB[questMenu][info.Name][\\\"QuestAmount\\\"]
+    = info.QuestAmount;\\r\\n        this.UpdateUI(ui, info.QuestAmount, info.QuestAcceptAmount,
+    info.IsSuccess);\\r\\n        // \uC8FC\uAC04\uD018\uC2A4\uD2B8\uC5D0 \uBAA8\uB4E0
+    \uC77C\uC77C \uD018\uC2A4\uD2B8 \uC644\uB8CC \uD588\uB294\uC9C0 \uCCB4\uD06C\\r\\n       
+    if (questMenu == TypeSyncHelper_1.QuestMenu.Daily) {\\r\\n            for (const
+    questInfo of this.questMapping.get(TypeSyncHelper_1.QuestMenu.Daily)) {\\r\\n               
+    if (!questInfo.Info.IsSuccess)\\r\\n                    return;\\r\\n           
+    }\\r\\n            this.AddData(TypeSyncHelper_1.QuestMenu.Weekly, 2, 1);\\r\\n       
+    }\\r\\n        // \uC6D4\uAC04 \uD018\uC2A4\uD2B8\uC5D0 \uBAA8\uB4E0 \uC8FC\uAC04
+    \uD018\uC2A4\uD2B8 \uC644\uB8CC \uD588\uB294\uC9C0 \uCCB4\uD06C\\r\\n       
+    else if (questMenu == TypeSyncHelper_1.QuestMenu.Weekly) {\\r\\n            for
+    (const questInfo of this.questMapping.get(TypeSyncHelper_1.QuestMenu.Weekly))
+    {\\r\\n                if (!questInfo.Info.IsSuccess)\\r\\n                   
+    return;\\r\\n            }\\r\\n            this.AddData(TypeSyncHelper_1.QuestMenu.Monthly,
+    3, 1);\\r\\n        }\\r\\n    }\\r\\n    AddData(questMenu, index, value) {\\r\\n       
+    const data = this.GetData(questMenu, index);\\r\\n        const info = data.Info;\\r\\n       
+    const oldValue = info.QuestAmount;\\r\\n        const updateValue = oldValue
+    + value;\\r\\n        if (!info.IsSuccess)\\r\\n            this.UpdateData(questMenu,
+    index, updateValue);\\r\\n    }\\r\\n    UpdateUI(ui, value, acceptValue, isSuccess)
+    {\\r\\n        ui.GetChild(0).GetChild(1).GetComponent($typeof(UnityEngine_UI_1.Text)).text
+    = value.toString();\\r\\n        const success = ui.GetChild(1).GetChild(1);\\r\\n       
+    success.gameObject.SetActive(isSuccess);\\r\\n    }\\r\\n    OnClickMenu(questMenu)
+    {\\r\\n        if (this.currentMenu == questMenu)\\r\\n            return;\\r\\n       
+    this.currentMenu = questMenu;\\r\\n        switch (questMenu) {\\r\\n           
+    case TypeSyncHelper_1.QuestMenu.Daily:\\r\\n                this.dailyQuestMenu.transform.parent.parent.gameObject.SetActive(true);\\r\\n               
+    this.weeklyQuestMenu.transform.parent.parent.gameObject.SetActive(false);\\r\\n               
+    this.monthlyQuestMenu.transform.parent.parent.gameObject.SetActive(false);\\r\\n               
+    this.dailyBtn.GetComponent($typeof(UnityEngine_UI_1.Image)).sprite = this.selectedSprite;\\r\\n               
+    this.weeklyBtn.GetComponent($typeof(UnityEngine_UI_1.Image)).sprite = this.deselectedSprite;\\r\\n               
+    this.monthlyBtn.GetComponent($typeof(UnityEngine_UI_1.Image)).sprite = this.deselectedSprite;\\r\\n               
+    break;\\r\\n            case TypeSyncHelper_1.QuestMenu.Weekly:\\r\\n               
+    this.dailyQuestMenu.transform.parent.parent.gameObject.SetActive(false);\\r\\n               
+    this.weeklyQuestMenu.transform.parent.parent.gameObject.SetActive(true);\\r\\n               
+    this.monthlyQuestMenu.transform.parent.parent.gameObject.SetActive(false);\\r\\n               
+    this.dailyBtn.GetComponent($typeof(UnityEngine_UI_1.Image)).sprite = this.deselectedSprite;\\r\\n               
+    this.weeklyBtn.GetComponent($typeof(UnityEngine_UI_1.Image)).sprite = this.selectedSprite;\\r\\n               
+    this.monthlyBtn.GetComponent($typeof(UnityEngine_UI_1.Image)).sprite = this.deselectedSprite;\\r\\n               
+    break;\\r\\n            case TypeSyncHelper_1.QuestMenu.Monthly:\\r\\n               
+    this.dailyQuestMenu.transform.parent.parent.gameObject.SetActive(false);\\r\\n               
+    this.weeklyQuestMenu.transform.parent.parent.gameObject.SetActive(false);\\r\\n               
+    this.monthlyQuestMenu.transform.parent.parent.gameObject.SetActive(true);\\r\\n               
+    this.dailyBtn.GetComponent($typeof(UnityEngine_UI_1.Image)).sprite = this.deselectedSprite;\\r\\n               
+    this.weeklyBtn.GetComponent($typeof(UnityEngine_UI_1.Image)).sprite = this.deselectedSprite;\\r\\n               
+    this.monthlyBtn.GetComponent($typeof(UnityEngine_UI_1.Image)).sprite = this.selectedSprite;\\r\\n               
+    break;\\r\\n            default:\\r\\n                break;\\r\\n        }\\r\\n   
+    }\\r\\n    /* \uD018\uC2A4\uD2B8 \uC2DC\uADF8\uB110 \uD568\uC218 */\\r\\n   
+    // \uC6D4\uB4DC \uC785\uC7A5 \uC2DC\\r\\n    OnVisitWorld(worldId) {\\r\\n       
+    const visit_weekly = this.GetData(TypeSyncHelper_1.QuestMenu.Weekly, 0).Info;\\r\\n       
+    const wonder_month = this.GetData(TypeSyncHelper_1.QuestMenu.Monthly, 0).Info;\\r\\n       
+    let id = ZEPETO_World_1.WorldService.worldId;\\r\\n        // \uB514\uBC84\uAE45\uC6A9\\r\\n       
+    if (worldId)\\r\\n            id = worldId;\\r\\n        console.log(id);\\r\\n       
+    switch (id) {\\r\\n            case TypeSyncHelper_1.WorldId.WorldId_Land:\\r\\n               
+    visit_weekly.Visit_Wonder++;\\r\\n                wonder_month.Visit_Wonder++;\\r\\n               
+    if (visit_weekly.Visit_Wonder == visit_weekly.Visit_Count)\\r\\n                   
+    this.AddData(TypeSyncHelper_1.QuestMenu.Weekly, 0, 1);\\r\\n                if
+    (wonder_month.Visit_Wonder == wonder_month.Visit_Count)\\r\\n                   
+    this.AddData(TypeSyncHelper_1.QuestMenu.Monthly, 0, 1);\\r\\n               
+    this.UpdateData(TypeSyncHelper_1.QuestMenu.Daily, 0, 1);\\r\\n               
+    break;\\r\\n            case TypeSyncHelper_1.WorldId.WorldId_Stage:\\r\\n               
+    visit_weekly.Visit_Stage++;\\r\\n                wonder_month.Visit_Stage++;\\r\\n               
+    if (visit_weekly.Visit_Stage == visit_weekly.Visit_Count)\\r\\n                   
+    this.AddData(TypeSyncHelper_1.QuestMenu.Weekly, 0, 1);\\r\\n                if
+    (wonder_month.Visit_Stage == wonder_month.Visit_Count)\\r\\n                   
+    this.AddData(TypeSyncHelper_1.QuestMenu.Monthly, 0, 1);\\r\\n               
+    this.UpdateData(TypeSyncHelper_1.QuestMenu.Daily, 1, 1);\\r\\n               
+    break;\\r\\n            case TypeSyncHelper_1.WorldId.WorldId_Studio:\\r\\n               
+    visit_weekly.Visit_Studio++;\\r\\n                wonder_month.Visit_Studio++;\\r\\n               
+    if (visit_weekly.Visit_Studio == visit_weekly.Visit_Count)\\r\\n                   
+    this.AddData(TypeSyncHelper_1.QuestMenu.Weekly, 0, 1);\\r\\n                if
+    (wonder_month.Visit_Studio == wonder_month.Visit_Count)\\r\\n                   
+    this.AddData(TypeSyncHelper_1.QuestMenu.Monthly, 0, 1);\\r\\n               
+    this.UpdateData(TypeSyncHelper_1.QuestMenu.Daily, 2, 1);\\r\\n               
+    break;\\r\\n            default:\\r\\n                break;\\r\\n        }\\r\\n       
+    const todaySplit = this.today.split(\\\"_\\\");\\r\\n        const lastSplit
+    = this.lastDate.split(\\\"_\\\");\\r\\n        const todayDay = +todaySplit[0];\\r\\n       
+    const todayMonth = +todaySplit[1];\\r\\n        const todayYear = +todaySplit[2];\\r\\n       
+    const lastDay = +lastSplit[0];\\r\\n        const lastMonth = +lastSplit[1];\\r\\n       
+    const lastYear = +lastSplit[2];\\r\\n        const diff = new Date(todayYear,
+    todayMonth, todayDay).getTime() - new Date(lastYear, lastMonth, lastDay).getTime();\\r\\n       
+    const diffNum = diff / (1000 * 60 * 60 * 24);\\r\\n        if (diffNum == 1)
+    {\\r\\n            this.AddData(TypeSyncHelper_1.QuestMenu.Weekly, 3, 1);\\r\\n           
+    this.AddData(TypeSyncHelper_1.QuestMenu.Weekly, 4, 1);\\r\\n            this.AddData(TypeSyncHelper_1.QuestMenu.Monthly,
+    2, 1);\\r\\n        }\\r\\n        else {\\r\\n            this.UpdateData(TypeSyncHelper_1.QuestMenu.Weekly,
+    3, 1);\\r\\n            this.UpdateData(TypeSyncHelper_1.QuestMenu.Weekly, 4,
+    1);\\r\\n            this.UpdateData(TypeSyncHelper_1.QuestMenu.Monthly, 2, 1);\\r\\n       
+    }\\r\\n    }\\r\\n    // \uAC8C\uC784\uD50C\uB808\uC774\\r\\n    OnPlayGame(hangangValue)
+    {\\r\\n        switch (ZEPETO_World_1.WorldService.worldId) {\\r\\n           
+    case TypeSyncHelper_1.WorldId.WorldId_Land:\\r\\n                this.UpdateData(TypeSyncHelper_1.QuestMenu.Daily,
+    3, 1);\\r\\n                break;\\r\\n            case TypeSyncHelper_1.WorldId.WorldId_Stage:\\r\\n               
+    this.UpdateData(TypeSyncHelper_1.QuestMenu.Daily, 4, 1);\\r\\n               
+    break;\\r\\n            case TypeSyncHelper_1.WorldId.WorldId_Studio:\\r\\n               
+    this.UpdateData(TypeSyncHelper_1.QuestMenu.Daily, 5, 1);\\r\\n               
+    break;\\r\\n            default:\\r\\n                break;\\r\\n        }\\r\\n       
+    this.AddData(TypeSyncHelper_1.QuestMenu.Weekly, 5, 1);\\r\\n        this.AddData(TypeSyncHelper_1.QuestMenu.Monthly,
+    5, 1);\\r\\n        if (hangangValue) {\\r\\n            const old = this.GetData(TypeSyncHelper_1.QuestMenu.Weekly,
+    1).Info.QuestAmount;\\r\\n            if (old < hangangValue)\\r\\n               
+    this.UpdateData(TypeSyncHelper_1.QuestMenu.Weekly, 1, hangangValue);\\r\\n       
+    }\\r\\n    }\\r\\n    // \uAC8C\uC2DC\uBB3C \uAC8C\uC2DC\\r\\n    OnPostFeed()
+    {\\r\\n        this.AddData(TypeSyncHelper_1.QuestMenu.Daily, 6, 1);\\r\\n       
+    this.AddData(TypeSyncHelper_1.QuestMenu.Weekly, 6, 1);\\r\\n        this.AddData(TypeSyncHelper_1.QuestMenu.Monthly,
+    6, 1);\\r\\n    }\\r\\n    // \uCF54\uC778 \uC5BB\uC744\uC2DC\\r\\n    OnGetCoin(amount)
+    {\\r\\n        this.AddData(TypeSyncHelper_1.QuestMenu.Monthly, 4, amount);\\r\\n   
+    }\\r\\n    // \uC5B8\uB354\uC5B4\uC6CC\uC988 \uC6D4\uB4DC \uC2DC\uC0C1\uC2DD\uC7A5
+    \uC774\uB3D9\\r\\n    OnWonderAwards() {\\r\\n        this.UpdateData(TypeSyncHelper_1.QuestMenu.Monthly,
+    1, 1);\\r\\n    }\\r\\n}\\r\\nexports.default = QuestManager;\\r\\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiUXVlc3RNYW5hZ2VyLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiUXVlc3RNYW5hZ2VyLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7O0FBQUEsNkNBQTREO0FBQzVELG1EQUFxRDtBQUNyRCxpREFBcUQ7QUFDckQsK0NBQTRDO0FBQzVDLGtGQUE4SDtBQUM5SCwrQ0FBd0M7QUFHeEMsTUFBcUIsWUFBYSxTQUFRLHFDQUFxQjtJQUEvRDs7UUEyQlksZ0JBQVcsR0FBZSwwQkFBUyxDQUFDLEtBQUssQ0FBQztRQUMxQyxpQkFBWSxHQUFrQyxJQUFJLEdBQUcsRUFBMkIsQ0FBQztJQW1WN0YsQ0FBQztJQTVXVSxNQUFNLEtBQUssUUFBUTtRQUN0QixJQUFJLENBQUMsWUFBWSxDQUFDLFNBQVMsRUFBRTtZQUN6QixNQUFNLFVBQVUsR0FBRyx3QkFBVSxDQUFDLElBQUksQ0FBQyxjQUFjLENBQUMsQ0FBQztZQUNuRCxJQUFJLFVBQVU7Z0JBQUUsWUFBWSxDQUFDLFNBQVMsR0FBRyxVQUFVLENBQUMsWUFBWSxTQUFDLFlBQVksRUFBRyxDQUFDO1NBQ3BGO1FBQ0QsT0FBTyxZQUFZLENBQUMsU0FBUyxDQUFDO0lBQ2xDLENBQUM7SUF1QkQsS0FBSztRQUNELFlBQVksQ0FBQyxTQUFTLEdBQUcsSUFBSSxDQUFDO0lBQ2xDLENBQUM7SUFFRCxLQUFLO1FBQ0QsSUFBSSxDQUFDLFFBQVEsQ0FBQyxPQUFPLENBQUMsV0FBVyxDQUFDLEdBQUcsRUFBRTtZQUNuQyxJQUFJLENBQUMsV0FBVyxDQUFDLDBCQUFTLENBQUMsS0FBSyxDQUFDLENBQUM7UUFDdEMsQ0FBQyxDQUFDLENBQUM7UUFFSCxJQUFJLENBQUMsU0FBUyxDQUFDLE9BQU8sQ0FBQyxXQUFXLENBQUMsR0FBRyxFQUFFO1lBQ3BDLElBQUksQ0FBQyxXQUFXLENBQUMsMEJBQVMsQ0FBQyxNQUFNLENBQUMsQ0FBQztRQUN2QyxDQUFDLENBQUMsQ0FBQztRQUVILElBQUksQ0FBQyxVQUFVLENBQUMsT0FB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\",\"assetPath\":\"Assets/Scripts/Manager/QuestManager.ts\",\"manifest\":{\"properties\":[{\"assembly\":\"UnityEngine.CoreModule\",\"name\":\"questUI\",\"type\":\"UnityEngine.GameObject\",\"isArray\":false,\"initValue\":[],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[{\"name\":\"Header\",\"args\":[\"\\\"UI\\\"\"]},{\"name\":\"SerializeField\",\"args\":[]}]},{\"assembly\":\"UnityEngine.CoreModule\",\"name\":\"dailyQuestMenu\",\"type\":\"UnityEngine.GameObject\",\"isArray\":false,\"initValue\":[],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[{\"name\":\"SerializeField\",\"args\":[]}]},{\"assembly\":\"UnityEngine.CoreModule\",\"name\":\"weeklyQuestMenu\",\"type\":\"UnityEngine.GameObject\",\"isArray\":false,\"initValue\":[],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[{\"name\":\"SerializeField\",\"args\":[]}]},{\"assembly\":\"UnityEngine.CoreModule\",\"name\":\"monthlyQuestMenu\",\"type\":\"UnityEngine.GameObject\",\"isArray\":false,\"initValue\":[],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[{\"name\":\"SerializeField\",\"args\":[]}]},{\"assembly\":\"UnityEngine.UI\",\"name\":\"questBtn\",\"type\":\"UnityEngine.UI.Button\",\"isArray\":false,\"initValue\":[],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[{\"name\":\"SerializeField\",\"args\":[]}]},{\"assembly\":\"UnityEngine.UI\",\"name\":\"closeBtn\",\"type\":\"UnityEngine.UI.Button\",\"isArray\":false,\"initValue\":[],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[{\"name\":\"SerializeField\",\"args\":[]}]},{\"assembly\":\"UnityEngine.UI\",\"name\":\"dailyBtn\",\"type\":\"UnityEngine.UI.Button\",\"isArray\":false,\"initValue\":[],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[{\"name\":\"SerializeField\",\"args\":[]}]},{\"assembly\":\"UnityEngine.UI\",\"name\":\"weeklyBtn\",\"type\":\"UnityEngine.UI.Button\",\"isArray\":false,\"initValue\":[],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[{\"name\":\"SerializeField\",\"args\":[]}]},{\"assembly\":\"UnityEngine.UI\",\"name\":\"monthlyBtn\",\"type\":\"UnityEngine.UI.Button\",\"isArray\":false,\"initValue\":[],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[{\"name\":\"SerializeField\",\"args\":[]}]},{\"assembly\":\"UnityEngine.CoreModule\",\"name\":\"selectedSprite\",\"type\":\"UnityEngine.Sprite\",\"isArray\":false,\"initValue\":[],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[{\"name\":\"Header\",\"args\":[\"\\\"Source\\\"\"]},{\"name\":\"SerializeField\",\"args\":[]}]},{\"assembly\":\"UnityEngine.CoreModule\",\"name\":\"deselectedSprite\",\"type\":\"UnityEngine.Sprite\",\"isArray\":false,\"initValue\":[],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[{\"name\":\"SerializeField\",\"args\":[]}]}],\"name\":\"QuestManager\",\"description\":\"\",\"hasAnimatorMove\":false},\"isCompiled\":true}"
+  typescriptHash: c094505188d3cbacc530cac04d754bb1
+  onlyWriteTrigger: 0

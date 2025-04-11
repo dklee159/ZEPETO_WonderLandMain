@@ -1,0 +1,62 @@
+fileFormatVersion: 2
+guid: e67ccb4664f1c73438e694734774eaf9
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
+    { value: true });\r\nconst TMPro_1 = require(\"TMPro\");\r\nconst UnityEngine_1
+    = require(\"UnityEngine\");\r\nconst UnityEngine_UI_1 = require(\"UnityEngine.UI\");\r\nconst
+    ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nconst LocalizationController_1
+    = require(\"../../../ZepetoScripts/Localize/LocalizationController\");\r\nconst
+    EquipManager_1 = require(\"../../Manager/EquipManager\");\r\nconst GameManager_1
+    = require(\"../../GameManager\");\r\nclass BalloonShopController extends ZEPETO_Script_1.ZepetoScriptBehaviour
+    {\r\n    constructor() {\r\n        super(...arguments);\r\n        this.textIndex
+    = 0;\r\n        this.equipBalloon = -1;\r\n    }\r\n    Start() {\r\n       
+    this.closeButton.onClick.AddListener(() => {\r\n            this.balloonShopUI.SetActive(false);\r\n           
+    this.textIndex = 0;\r\n            this.SetText();\r\n            this.SetNextButton(this.textIndex);\r\n       
+    });\r\n        this.nextButton.onClick.AddListener(() => {\r\n            this.textIndex
+    = UnityEngine_1.Mathf.Clamp(this.textIndex + 1, 0, 1);\r\n            this.SetText();\r\n           
+    this.SetNextButton(this.textIndex);\r\n        });\r\n        this.detachButton.onClick.AddListener(()
+    => {\r\n            this.UnequipBalloon();\r\n        });\r\n        EquipManager_1.default.Instance.onUnequipRightHand.AddListener(()
+    => {\r\n            this.detachButton.gameObject.SetActive(false);\r\n       
+    });\r\n        EquipManager_1.default.Instance.onEquipBalloon.AddListener(()
+    => {\r\n            this.detachButton.gameObject.SetActive(true);\r\n       
+    });\r\n        this._localizationController = this.contentText.gameObject.GetComponent($typeof(LocalizationController_1.default));\r\n   
+    }\r\n    SetText() {\r\n        let nextText = this._localizationController.textList[this.textIndex];\r\n       
+    this.contentText.text = nextText;\r\n    }\r\n    SetNextButton(page) {\r\n       
+    if (page === 1)\r\n            this.nextButton.gameObject.SetActive(false);\r\n       
+    else\r\n            this.nextButton.gameObject.SetActive(true);\r\n    }\r\n   
+    OpenUI() {\r\n        this.balloonShopUI.SetActive(true);\r\n        // this.detachButton.gameObject.SetActive(true);\r\n       
+    this.GiveBalloon();\r\n    }\r\n    GiveBalloon() {\r\n        this.equipBalloon
+    = EquipManager_1.default.Instance.EquipRandomBalloon();\r\n        // const randomNumber:
+    number = Mathf.Floor(Random.Range(0, EquipManager.Instance.balloons.length));\r\n       
+    // this._equipBalloon = EquipManager.Instance.balloons[randomNumber].name\r\n       
+    // const data = new RoomData();\r\n        // data.Add(EVENT_MESSAGE.Name, this._equipBalloon);\r\n       
+    // data.Add(EVENT_MESSAGE.Attach, HumanBodyBones.RightHand);\r\n        // data.Add(Anim.WonderState,
+    WonderState.Hold_RightHand_Side);\r\n        // GameManager.Instance.ReceiveEquipSignal(data,
+    true);\r\n    }\r\n    TakeOffBalloon() {\r\n        if (this.equipBalloon !==
+    -1) {\r\n            EquipManager_1.default.Instance.UnequipItem(this.equipBalloon);\r\n           
+    this.equipBalloon = -1;\r\n        }\r\n        // const data = new RoomData();\r\n       
+    // data.Add(EVENT_MESSAGE.Name, this._equipBalloon);\r\n        // data.Add(EVENT_MESSAGE.Attach,
+    HumanBodyBones.RightHand);      \r\n        // data.Add(Anim.WonderState, WonderState.NONE);\r\n       
+    // GameManager.Instance.ReceiveEquipSignal(data, false);\r\n        // this._equipBalloon
+    = \"\";\r\n    }\r\n    UnequipBalloon() {\r\n        this.detachButton.gameObject.SetActive(false);\r\n       
+    this.TakeOffBalloon();\r\n    }\r\n}\r\nexports.default = BalloonShopController;\r\n//#
+    sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiQmFsbG9vblNob3BDb250cm9sbGVyLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiQmFsbG9vblNob3BDb250cm9sbGVyLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7O0FBQUEsaUNBQXdDO0FBQ3hDLDZDQUF3RTtBQUN4RSxtREFBd0M7QUFFeEMsaURBQXFEO0FBRXJELG1HQUE0RjtBQUM1Riw2REFBc0Q7QUFDdEQsbURBQTRDO0FBRTVDLE1BQXFCLHFCQUFzQixTQUFRLHFDQUFxQjtJQUF4RTs7UUFRWSxjQUFTLEdBQVcsQ0FBQyxDQUFDO1FBS3RCLGlCQUFZLEdBQVksQ0FBQyxDQUFDLENBQUM7SUE2RXZDLENBQUM7SUEzRVcsS0FBSztRQUNULElBQUksQ0FBQyxXQUFXLENBQUMsT0FBTyxDQUFDLFdBQVcsQ0FBQyxHQUFHLEVBQUU7WUFDdEMsSUFBSSxDQUFDLGFBQWEsQ0FBQyxTQUFTLENBQUMsS0FBSyxDQUFDLENBQUM7WUFDcEMsSUFBSSxDQUFDLFNBQVMsR0FBRyxDQUFDLENBQUM7WUFDbkIsSUFBSSxDQUFDLE9BQU8sRUFBRSxDQUFDO1lBQ2YsSUFBSSxDQUFDLGFBQWEsQ0FBQyxJQUFJLENBQUMsU0FBUyxDQUFDLENBQUM7UUFDdkMsQ0FBQyxDQUFDLENBQUE7UUFFRixJQUFJLENBQUMsVUFBVSxDQUFDLE9BQU8sQ0FBQyxXQUFXLENBQUMsR0FBRyxFQUFFO1lBQ3JDLElBQUksQ0FBQyxTQUFTLEdBQUcsbUJBQUssQ0FBQyxLQUFLLENBQUMsSUFBSSxDQUFDLFNBQVMsR0FBRyxDQUFDLEVBQUUsQ0FBQyxFQUFFLENBQUMsQ0FBQyxDQUFDO1lBQ3ZELElBQUksQ0FBQyxPQUFPLEVBQUUsQ0FBQztZQUNmLElBQUksQ0FBQyxhQUFhLENBQUMsSUFBSSxDQUFDLFNBQVMsQ0FBQyxDQUFDO1FBQ3ZDLENBQUMsQ0FBQyxDQUFBO1FBRUYsSUFBSSxDQUFDLFlBQVksQ0FBQyxPQUFPLENBQUMsV0FBVyxDQUFDLEdBQUcsRUFBRTtZQUN2QyxJQUFJLENBQUMsY0FBYyxFQUFFLENBQUM7UUFDMUIsQ0FBQyxDQUFDLENBQUE7UUFFRixzQkFBWSxDQUFDLFFBQVEsQ0FBQyxrQkFBa0IsQ0FBQyxXQUFXLENBQUMsR0FBRyxFQUFFO1lBQ3RELElBQUksQ0FBQyxZQUFZLENBQUMsVUFBVSxDQUFDLFNBQVMsQ0FBQyxLQUFLLENBQUMsQ0FBQztRQUNsRCxDQUFDLENBQUMsQ0FBQztRQUVILHNCQUFZLENBQUMsUUFBUSxDQUFDLGNBQWMsQ0FBQyxXQUFXLENBQUMsR0FBRyxFQUFFO1lBQ2xELElBQUksQ0FBQyxZQUFZLENBQUMsVUFBVSxDQUFDLFNBQVMsQ0FBQyxJQUFJLENBQUMsQ0FBQztRQUNqRCxDQUFDLENBQUMsQ0FBQztRQUVILElBQUksQ0FBQyx1QkFBdUIsR0FBRyxJQUFJLENBQUMsV0FBVyxDQUFDLFVBQVUsQ0FBQyxZQUFZLFNBQUMsZ0NBQXNCLEVBQUcsQ0FBQztJQUN0RyxDQUFDO0lBRU8sT0FBTztRQUNYLElBQUksUUFBUSxHQUFHLElBQUksQ0FBQyx1QkFBdUIsQ0FBQyxRQUFRLENBQUMsSUFBSSxDQUFDLFNBQVMsQ0FBQyxDQUFDO1FBQ3JFLElBQUksQ0FBQyxXQUFXLENBQUMsSUFBSSxHQUFHLFFBQVEsQ0FBQztJQUNyQyxDQUFDO0lBRU8sYUFBYSxDQUFDLElBQVk7UUFDOUIsSUFBSSxJQUFJLEtBQUssQ0FBQztZQUFFLElBQUksQ0FBQyxVQUFVLENBQUMsVUFBVSxDQUFDLFNBQVMsQ0FBQyxLQUFLLENBQUMsQ0FBQzs7WUFDdkQsSUFBSSxDQUFDLFVBQVUsQ0FBQyxVQUFVLENBQUMsU0FBUyxDQUFDLElBQUksQ0FBQyxDQUFDO0lBQ3BELENBQUM7SUFFTSxNQUFNO1FBQ1QsSUFBSSxDQUFDLGFBQWEsQ0FBQyxTQUFTLENBQUMsSUFBSSxDQUFDLENBQUM7UUFDbkMsZ0RBQWdEO1FBQ2hELElBQUksQ0FBQyxXQUFXLEVBQUUsQ0FBQTtJQUN0QixDQUFDO0lBRU8sV0FBVztRQUNmLElBQUksQ0FBQyxZQUFZLEdBQUcsc0JBQVksQ0FBQyxRQUFRLENBQUMsa0JBQWtCLEVBQUUsQ0FBQztRQUMvRCxvR0FBb0c7UUFDcEcseUVBQXlFO1FBRXpFLCtCQUErQjtRQUMvQixvREFBb0Q7UUFDcEQsNERBQTREO1FBQzVELCtEQUErRDtRQUMvRCx1REFBdUQ7SUFDM0QsQ0FBQztJQUVPLGNBQWM7UUFDbEIsSUFBRyxJQUFJLENBQUMsWUFBWSxLQUFLLENBQUMsQ0FBQyxFQUFFO1lBQ3pCLHNCQUFZLENBQUMsUUFBUSxDQUFDLFdBQVcsQ0FBQyxJQUFJLENBQUMsWUFBWSxDQUFDLENBQUM7WUFDckQsSUFBSSxDQUFDLFlBQVksR0FBRyxDQUFDLENBQUMsQ0FBQztTQUMxQjtRQUNELCtCQUErQjtRQUMvQixvREFBb0Q7UUFDcEQsa0VBQWtFO1FBQ2xFLGdEQUFnRDtRQUNoRCx3REFBd0Q7UUFFeEQsMkJBQTJCO0lBQy9CLENBQUM7SUFFTSxjQUFjO1FBQ2pCLElBQUksQ0FBQyxZQUFZLENBQUMsVUFBVSxDQUFDLFNBQVMsQ0FBQyxLQUFLLENBQUMsQ0FBQztRQUM5QyxJQUFJLENBQUMsY0FBYyxFQUFFLENBQUM7SUFDMUIsQ0FBQztDQUNKO0FBMUZELHdDQTBGQyJ9","assetPath":"Assets/Scripts/Game/BalloonShop/BalloonShopController.ts","manifest":{"properties":[{"assembly":"UnityEngine.CoreModule","name":"balloonShopUI","type":"UnityEngine.GameObject","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.UI","name":"closeButton","type":"UnityEngine.UI.Button","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.UI","name":"nextButton","type":"UnityEngine.UI.Button","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"Unity.TextMeshPro","name":"contentText","type":"TMPro.TextMeshProUGUI","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.UI","name":"detachButton","type":"UnityEngine.UI.Button","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]}],"name":"BalloonShopController","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: 8a9fd958089ab7f4143f2adac74ad9c0
+  onlyWriteTrigger: 0

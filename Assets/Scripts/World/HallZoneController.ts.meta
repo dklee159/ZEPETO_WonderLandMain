@@ -1,0 +1,33 @@
+fileFormatVersion: 2
+guid: 91f97cb260b3fe1458e75e1c6a423e69
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
+    { value: true });\r\nconst UnityEngine_1 = require(\"UnityEngine\");\r\nconst
+    ZEPETO_Character_Controller_1 = require(\"ZEPETO.Character.Controller\");\r\nconst
+    ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nconst WonderHallController_1
+    = require(\"./WonderHallController\");\r\nclass HallZoneController extends ZEPETO_Script_1.ZepetoScriptBehaviour
+    {\r\n    constructor() {\r\n        super(...arguments);\r\n        this.isTrigger
+    = false;\r\n    }\r\n    Start() {\r\n        this._wonderHallController = this.wonderHallController.GetComponent($typeof(WonderHallController_1.default));\r\n   
+    }\r\n    OnTriggerEnter(coll) {\r\n        if (coll !== (ZEPETO_Character_Controller_1.ZepetoPlayers.instance.LocalPlayer?.zepetoPlayer?.character.GetComponent)($typeof(UnityEngine_1.Collider)))\r\n           
+    return;\r\n        if (!this.isTrigger) {\r\n            this.isTrigger = true;\r\n           
+    this._wonderHallController.OpenUI();\r\n        }\r\n    }\r\n}\r\nexports.default
+    = HallZoneController;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiSGFsbFpvbmVDb250cm9sbGVyLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiSGFsbFpvbmVDb250cm9sbGVyLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7O0FBQUEsNkNBQWtEO0FBQ2xELDZFQUE0RDtBQUM1RCxpREFBcUQ7QUFDckQsaUVBQTBEO0FBRTFELE1BQXFCLGtCQUFtQixTQUFRLHFDQUFxQjtJQUFyRTs7UUFJWSxjQUFTLEdBQUcsS0FBSyxDQUFBO0lBYTdCLENBQUM7SUFYVyxLQUFLO1FBQ1QsSUFBSSxDQUFDLHFCQUFxQixHQUFHLElBQUksQ0FBQyxvQkFBb0IsQ0FBQyxZQUFZLFNBQUMsOEJBQW9CLEVBQUcsQ0FBQztJQUNoRyxDQUFDO0lBRU8sY0FBYyxDQUFFLElBQWM7UUFDbEMsSUFBSSxJQUFJLEtBQUssQ0FBQSwyQ0FBYSxDQUFDLFFBQVEsQ0FBQyxXQUFXLEVBQUUsWUFBWSxFQUFFLFNBQVMsQ0FBQyxZQUFZLENBQUEsU0FBQyxzQkFBUSxFQUFHO1lBQUUsT0FBTztRQUMxRyxJQUFJLENBQUMsSUFBSSxDQUFDLFNBQVMsRUFBRTtZQUNqQixJQUFJLENBQUMsU0FBUyxHQUFHLElBQUksQ0FBQztZQUN0QixJQUFJLENBQUMscUJBQXFCLENBQUMsTUFBTSxFQUFFLENBQUM7U0FDdkM7SUFDTCxDQUFDO0NBQ0o7QUFqQkQscUNBaUJDIn0=","assetPath":"Assets/Scripts/World/HallZoneController.ts","manifest":{"properties":[{"assembly":"UnityEngine.CoreModule","name":"wonderHallController","type":"UnityEngine.GameObject","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]}],"name":"HallZoneController","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: f4e46ebbe4a474e6d8d8543622cc6531
+  onlyWriteTrigger: 0

@@ -1,0 +1,57 @@
+fileFormatVersion: 2
+guid: 63b12a85890ae754983526f8c26d20ba
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
+    { value: true });\r\nconst UnityEngine_1 = require(\"UnityEngine\");\r\nconst
+    ZTweenComponent_1 = require(\"./ZTweenComponent\");\r\nconst ZTweenManager_1
+    = require(\"./ZTweenManager\");\r\nconst ZTweener_1 = require(\"./ZTweener\");\r\nclass
+    ZTween {\r\n    static Init() {\r\n        if (ZTween.initialized)\r\n           
+    return;\r\n        ZTween.initialized = true;\r\n        ZTweenComponent_1.default.Create();\r\n   
+    }\r\n    static InitCheck() {\r\n        if (ZTween.initialized)\r\n           
+    return;\r\n        ZTween.Init();\r\n    }\r\n    static To(getter, setter, endValue,
+    duration) {\r\n        ZTween.InitCheck();\r\n        const t = ZTweenManager_1.default.GetTweener();\r\n       
+    t.SetUp(getter, setter, endValue, duration);\r\n        return t;\r\n    }\r\n   
+    static TransfomMoveTo(transform, endValue, duration) {\r\n        return ZTween.To(()
+    => transform.position, (v) => {\r\n            transform.position = v;\r\n       
+    }, endValue, duration);\r\n    }\r\n    static VectorMoveTo(pos, endValue, duration)
+    {\r\n        return ZTween.To(() => pos, (v) => {\r\n            pos = v;\r\n       
+    }, endValue, duration);\r\n    }\r\n    static TransfomLocalMoveTo(transform,
+    endValue, duration) {\r\n        return ZTween.To(() => transform.localPosition,
+    (v) => {\r\n            transform.localPosition = v;\r\n        }, endValue,
+    duration);\r\n    }\r\n    static TransfomLocalScaleTo(transform, endValue, duration)
+    {\r\n        return ZTween.To(() => transform.localScale, (v) => {\r\n           
+    transform.localScale = v;\r\n        }, endValue, duration);\r\n    }\r\n   
+    static ScrollRectHorizontalNormalizedPositionTo(scrollRect, endValue, duration)
+    {\r\n        return ZTween.To(() => scrollRect.horizontalNormalizedPosition,
+    (v) => {\r\n            scrollRect.horizontalNormalizedPosition = v;\r\n       
+    }, endValue, duration);\r\n    }\r\n    static ScrollRectVerticalNormalizedPositionTo(scrollRect,
+    endValue, duration) {\r\n        return ZTween.To(() => scrollRect.verticalNormalizedPosition,
+    (v) => {\r\n            scrollRect.verticalNormalizedPosition = v;\r\n       
+    }, endValue, duration);\r\n    }\r\n    static MaterialColorTo(material, endValue,
+    duration) {\r\n        return ZTween.To(() => material.color, (v) => {\r\n           
+    material.color = v;\r\n        }, endValue, duration);\r\n    }\r\n    static
+    ImageColorTo(image, endValue, duration) {\r\n        return ZTween.To(() => image.color,
+    (v) => {\r\n            image.color = v;\r\n        }, endValue, duration);\r\n   
+    }\r\n    static CanvasGroupAlphaTo(canvasGroup, endValue, duration) {\r\n       
+    return ZTween.To(() => canvasGroup.alpha, (v) => {\r\n            canvasGroup.alpha
+    = v;\r\n        }, endValue, duration);\r\n    }\r\n}\r\nexports.default = ZTween;\r\nZTween.instance
+    = null;\r\nZTween.initialized = false;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiWlR3ZWVuLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiWlR3ZWVuLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7O0FBQUEsNkNBQStFO0FBRS9FLHVEQUFnRDtBQUNoRCxtREFBNEM7QUFDNUMseUNBQWtDO0FBRWxDLE1BQXFCLE1BQU07SUFJaEIsTUFBTSxDQUFDLElBQUk7UUFDZCxJQUFJLE1BQU0sQ0FBQyxXQUFXO1lBQUUsT0FBTztRQUUvQixNQUFNLENBQUMsV0FBVyxHQUFHLElBQUksQ0FBQztRQUMxQix5QkFBZSxDQUFDLE1BQU0sRUFBRSxDQUFDO0lBQzdCLENBQUM7SUFFTyxNQUFNLENBQUMsU0FBUztRQUNwQixJQUFJLE1BQU0sQ0FBQyxXQUFXO1lBQUUsT0FBTztRQUUvQixNQUFNLENBQUMsSUFBSSxFQUFFLENBQUM7SUFDbEIsQ0FBQztJQUVNLE1BQU0sQ0FBQyxFQUFFLENBQUksTUFBYyxFQUFFLE1BQW9CLEVBQUUsUUFBVSxFQUFFLFFBQWdCO1FBQ2xGLE1BQU0sQ0FBQyxTQUFTLEVBQUUsQ0FBQztRQUNuQixNQUFNLENBQUMsR0FBRyx1QkFBYSxDQUFDLFVBQVUsRUFBRSxDQUFDO1FBQ3JDLENBQUMsQ0FBQyxLQUFLLENBQUMsTUFBTSxFQUFFLE1BQU0sRUFBRSxRQUFRLEVBQUUsUUFBUSxDQUFDLENBQUM7UUFDNUMsT0FBTyxDQUFDLENBQUM7SUFDYixDQUFDO0lBRU0sTUFBTSxDQUFDLGNBQWMsQ0FBQyxTQUFvQixFQUFFLFFBQWlCLEVBQUUsUUFBZ0I7UUFDbEYsT0FBTyxNQUFNLENBQUMsRUFBRSxDQUNaLEdBQUcsRUFBRSxDQUFDLFNBQVMsQ0FBQyxRQUFRLEVBQ3hCLENBQUMsQ0FBVSxFQUFFLEVBQUU7WUFDWCxTQUFTLENBQUMsUUFBUSxHQUFHLENBQUMsQ0FBQztRQUMzQixDQUFDLEVBQ0QsUUFBUSxFQUFFLFFBQVEsQ0FBQyxDQUFDO0lBQzVCLENBQUM7SUFFTSxNQUFNLENBQUMsWUFBWSxDQUFDLEdBQVksRUFB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","assetPath":"Assets/Scripts/ZTween/ZTween.ts","manifest":{"properties":[],"name":"ZTween","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: 49ef260b493a866584c4baef11c2ccd5
+  onlyWriteTrigger: 0

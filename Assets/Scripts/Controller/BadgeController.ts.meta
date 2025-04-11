@@ -1,0 +1,45 @@
+fileFormatVersion: 2
+guid: 6402c93ff64e96f4a98e16787da498a4
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
+    { value: true });\r\nconst UnityEngine_1 = require(\"UnityEngine\");\r\nconst
+    UnityEngine_UI_1 = require(\"UnityEngine.UI\");\r\nconst ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nconst
+    TypeSyncHelper_1 = require(\"../../ZepetoScripts/SyncHelper/TypeSyncHelper\");\r\nconst
+    DataManager_1 = require(\"../Manager/DataManager\");\r\nclass BadgeController
+    extends ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n    RemoteStart() {\r\n       
+    this.badgeButton.onClick.AddListener(() => {\r\n            this.badgeUI.SetActive(!this.badgeUI.activeSelf);\r\n       
+    });\r\n        this.badgeCloseButton.onClick.AddListener(() => {\r\n           
+    this.badgeUI.SetActive(!this.badgeUI.activeSelf);\r\n        });\r\n    }\r\n   
+    UpdateBadgeUI() {\r\n        const wonderCollections = DataManager_1.default.Instance.PlayerDB.wonderCollection;\r\n       
+    for (const badge of wonderCollections) {\r\n            console.log(`${badge.id}
+    has ${badge.has}`);\r\n            if (badge.id == TypeSyncHelper_1.WonderCollectionList.Wonder_Badge_Hall)
+    {\r\n                this.wonderLandBadge.SetActive(badge.has);\r\n           
+    }\r\n            else if (badge.id == TypeSyncHelper_1.WonderCollectionList.Wonder_Badge_Stage)
+    {\r\n                this.wonderStageBadge.SetActive(badge.has);\r\n           
+    }\r\n            else if (badge.id == TypeSyncHelper_1.WonderCollectionList.Wonder_Badge_Studio)
+    {\r\n                this.wonderStudioBadge.SetActive(badge.has);\r\n           
+    }\r\n        }\r\n        // if (badgeNum >= 3) {\r\n        //     this.wonderHiddenItems.SetActive(true);   
+    \r\n        //     for (const item of badgeCollections) {\r\n        //        
+    if (item.id != WonderCollectionList.Hiddle_Collection) continue;\r\n        //        
+    item.has = true;\r\n        //     }    \r\n        //     return true;\r\n       
+    // }\r\n        // return false;     \r\n    }\r\n}\r\nexports.default = BadgeController;\r\n//#
+    sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiQmFkZ2VDb250cm9sbGVyLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiQmFkZ2VDb250cm9sbGVyLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7O0FBQUEsNkNBQXlDO0FBQ3pDLG1EQUF1QztBQUN2QyxpREFBcUQ7QUFDckQsa0ZBQXVHO0FBQ3ZHLHdEQUFpRDtBQUVqRCxNQUFxQixlQUFnQixTQUFRLHFDQUFxQjtJQVV2RCxXQUFXO1FBQ2QsSUFBSSxDQUFDLFdBQVcsQ0FBQyxPQUFPLENBQUMsV0FBVyxDQUFDLEdBQUcsRUFBRTtZQUN0QyxJQUFJLENBQUMsT0FBTyxDQUFDLFNBQVMsQ0FBQyxDQUFDLElBQUksQ0FBQyxPQUFPLENBQUMsVUFBVSxDQUFDLENBQUM7UUFDckQsQ0FBQyxDQUFDLENBQUE7UUFFRixJQUFJLENBQUMsZ0JBQWdCLENBQUMsT0FBTyxDQUFDLFdBQVcsQ0FBQyxHQUFHLEVBQUU7WUFDM0MsSUFBSSxDQUFDLE9BQU8sQ0FBQyxTQUFTLENBQUMsQ0FBQyxJQUFJLENBQUMsT0FBTyxDQUFDLFVBQVUsQ0FBQyxDQUFDO1FBQ3JELENBQUMsQ0FBQyxDQUFBO0lBQ04sQ0FBQztJQUVNLGFBQWE7UUFDaEIsTUFBTSxpQkFBaUIsR0FBRyxxQkFBVyxDQUFDLFFBQVEsQ0FBQyxRQUFRLENBQUMsZ0JBQWdCLENBQUM7UUFFekUsS0FBSyxNQUFNLEtBQUssSUFBSSxpQkFBaUIsRUFBRTtZQUNuQyxPQUFPLENBQUMsR0FBRyxDQUFDLEdBQUcsS0FBSyxDQUFDLEVBQUUsUUFBUSxLQUFLLENBQUMsR0FBRyxFQUFFLENBQUMsQ0FBQztZQUM1QyxJQUFJLEtBQUssQ0FBQyxFQUFFLElBQUkscUNBQW9CLENBQUMsaUJBQWlCLEVBQUU7Z0JBQ3BELElBQUksQ0FBQyxlQUFlLENBQUMsU0FBUyxDQUFDLEtBQUssQ0FBQyxHQUFHLENBQUMsQ0FBQzthQUM3QztpQkFBTSxJQUFHLEtBQUssQ0FBQyxFQUFFLElBQUkscUNBQW9CLENBQUMsa0JBQWtCLEVBQUU7Z0JBQzNELElBQUksQ0FBQyxnQkFBZ0IsQ0FBQyxTQUFTLENBQUMsS0FBSyxDQUFDLEdBQUcsQ0FBQyxDQUFDO2FBQzlDO2lCQUFNLElBQUcsS0FBSyxDQUFDLEVBQUUsSUFBSSxxQ0FBb0IsQ0FBQyxtQkFBbUIsRUFBRTtnQkFDNUQsSUFBSSxDQUFDLGlCQUFpQixDQUFDLFNBQVMsQ0FBQyxLQUFLLENBQUMsR0FBRyxDQUFDLENBQUM7YUFDL0M7U0FDSjtRQUVELHVCQUF1QjtRQUN2QixrREFBa0Q7UUFDbEQsNkNBQTZDO1FBQzdDLDJFQUEyRTtRQUMzRSwyQkFBMkI7UUFDM0IsWUFBWTtRQUNaLG1CQUFtQjtRQUNuQixJQUFJO1FBQ0oscUJBQXFCO0lBQ3pCLENBQUM7Q0FDSjtBQTVDRCxrQ0E0Q0MifQ==","assetPath":"Assets/Scripts/Controller/BadgeController.ts","manifest":{"properties":[{"assembly":"UnityEngine.UI","name":"badgeButton","type":"UnityEngine.UI.Button","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"badgeUI","type":"UnityEngine.GameObject","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.UI","name":"badgeCloseButton","type":"UnityEngine.UI.Button","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"wonderLandBadge","type":"UnityEngine.GameObject","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"wonderStageBadge","type":"UnityEngine.GameObject","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"wonderStudioBadge","type":"UnityEngine.GameObject","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]}],"name":"BadgeController","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: 937fa3a120df63d8e9f05ca47be2f503
+  onlyWriteTrigger: 0

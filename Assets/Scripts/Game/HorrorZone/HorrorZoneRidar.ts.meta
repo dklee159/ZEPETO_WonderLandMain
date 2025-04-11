@@ -1,0 +1,33 @@
+fileFormatVersion: 2
+guid: e844b32d229ecae4aabf91b2592d1e8a
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
+    { value: true });\r\nconst UnityEngine_1 = require(\"UnityEngine\");\r\nconst
+    ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nconst HorrorZoneManager_1 =
+    require(\"./HorrorZoneManager\");\r\nconst TypeSyncHelper_1 = require(\"../../../ZepetoScripts/SyncHelper/TypeSyncHelper\");\r\nclass
+    HorrorZoneRidar extends ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n    OnTriggerEnter(collider)
+    {\r\n        const isTarget = collider.gameObject.tag == TypeSyncHelper_1.Tags.ShootTarget;\r\n       
+    if (!isTarget)\r\n            return;\r\n        HorrorZoneManager_1.default.Instance.addOnRange(collider.gameObject.GetInstanceID());\r\n   
+    }\r\n    OnTriggerExit(collider) {\r\n        const isTarget = collider.gameObject.tag
+    == TypeSyncHelper_1.Tags.ShootTarget;\r\n        if (!isTarget)\r\n           
+    return;\r\n        HorrorZoneManager_1.default.Instance.removeOnRange(collider.gameObject.GetInstanceID());\r\n   
+    }\r\n}\r\nexports.default = HorrorZoneRidar;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiSG9ycm9yWm9uZVJpZGFyLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiSG9ycm9yWm9uZVJpZGFyLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7O0FBQUEsNkNBQXVDO0FBQ3ZDLGlEQUFxRDtBQUNyRCwyREFBb0Q7QUFDcEQscUZBQXdFO0FBRXhFLE1BQXFCLGVBQWdCLFNBQVEscUNBQXFCO0lBRWhFLGNBQWMsQ0FBQyxRQUFrQjtRQUMvQixNQUFNLFFBQVEsR0FBRyxRQUFRLENBQUMsVUFBVSxDQUFDLEdBQUcsSUFBSSxxQkFBSSxDQUFDLFdBQVcsQ0FBQztRQUM3RCxJQUFHLENBQUMsUUFBUTtZQUFFLE9BQU87UUFDckIsMkJBQWlCLENBQUMsUUFBUSxDQUFDLFVBQVUsQ0FBRSxRQUFRLENBQUMsVUFBVSxDQUFDLGFBQWEsRUFBRSxDQUFFLENBQUM7SUFDL0UsQ0FBQztJQUVELGFBQWEsQ0FBQyxRQUFrQjtRQUM5QixNQUFNLFFBQVEsR0FBRyxRQUFRLENBQUMsVUFBVSxDQUFDLEdBQUcsSUFBSSxxQkFBSSxDQUFDLFdBQVcsQ0FBQztRQUM3RCxJQUFHLENBQUMsUUFBUTtZQUFFLE9BQU87UUFDckIsMkJBQWlCLENBQUMsUUFBUSxDQUFDLGFBQWEsQ0FBRSxRQUFRLENBQUMsVUFBVSxDQUFDLGFBQWEsRUFBRSxDQUFFLENBQUM7SUFDbEYsQ0FBQztDQUNGO0FBYkQsa0NBYUMifQ==","assetPath":"Assets/Scripts/Game/HorrorZone/HorrorZoneRidar.ts","manifest":{"properties":[],"name":"HorrorZoneRidar","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: 67f0170a5e0c910ff5aca22ffcd607d1
+  onlyWriteTrigger: 0

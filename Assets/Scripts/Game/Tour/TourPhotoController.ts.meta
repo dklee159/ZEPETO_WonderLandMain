@@ -1,0 +1,30 @@
+fileFormatVersion: 2
+guid: 2529b8a941fd60b4197692d8f248c928
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
+    { value: true });\r\nconst UnityEngine_1 = require(\"UnityEngine\");\r\nconst
+    ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nconst ZEPETO_Character_Controller_1
+    = require(\"ZEPETO.Character.Controller\");\r\nconst TourManager_1 = require(\"./TourManager\");\r\nclass
+    TourPhotoController extends ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n    OnTriggerEnter(coll)
+    {\r\n        if (coll !== (ZEPETO_Character_Controller_1.ZepetoPlayers.instance.LocalPlayer?.zepetoPlayer?.character.GetComponent)($typeof(UnityEngine_1.Collider)))\r\n           
+    return;\r\n        TourManager_1.default.Instance.TakeBalloonPhoto();\r\n   
+    }\r\n}\r\nexports.default = TourPhotoController;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiVG91clBob3RvQ29udHJvbGxlci5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIlRvdXJQaG90b0NvbnRyb2xsZXIudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7QUFBQSw2Q0FBdUM7QUFDdkMsaURBQXFEO0FBQ3JELDZFQUE0RDtBQUM1RCwrQ0FBd0M7QUFFeEMsTUFBcUIsbUJBQW9CLFNBQVEscUNBQXFCO0lBRTFELGNBQWMsQ0FBQyxJQUFjO1FBQ2pDLElBQUksSUFBSSxLQUFLLENBQUEsMkNBQWEsQ0FBQyxRQUFRLENBQUMsV0FBVyxFQUFFLFlBQVksRUFBRSxTQUFTLENBQUMsWUFBWSxDQUFBLFNBQUMsc0JBQVEsRUFBRztZQUFFLE9BQU87UUFFMUcscUJBQVcsQ0FBQyxRQUFRLENBQUMsZ0JBQWdCLEVBQUUsQ0FBQztJQUM1QyxDQUFDO0NBRUo7QUFSRCxzQ0FRQyJ9","assetPath":"Assets/Scripts/Game/Tour/TourPhotoController.ts","manifest":{"properties":[],"name":"TourPhotoController","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: 09f0a67a65707589fbcd6908a34c769f
+  onlyWriteTrigger: 0

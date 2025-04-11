@@ -1,0 +1,36 @@
+fileFormatVersion: 2
+guid: 24b7d226b049842418bbec4c98fe2c80
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: '{"source":"// import { Collider } from ''UnityEngine'';\r\n//
+    import { ZepetoPlayers } from ''ZEPETO.Character.Controller'';\r\n// import {
+    ZepetoScriptBehaviour } from ''ZEPETO.Script''\r\n// import { ERROR } from ''../Managers/TypeManager'';\r\n//
+    import CoinZoneManager from ''./CoinZoneManager'';\r\n// export default class
+    CoinController extends ZepetoScriptBehaviour {\r\n//     /* Properties */\r\n//    
+    private manager: CoinZoneManager;\r\n//     private id: number;\r\n//     /*
+    CoinZoneManager */\r\n//     public RemoteStart(manager:CoinZoneManager, id:number)
+    {\r\n//         this.manager = manager;\r\n//         this.id = id;\r\n//    
+    }\r\n//     OnTriggerEnter(collider : Collider) {\r\n//         if(!ZepetoPlayers.instance.LocalPlayer)
+    return console.error(ERROR.NOT_FOUND_LOCAL_PLAYER);\r\n//         const character
+    = ZepetoPlayers.instance.LocalPlayer.zepetoPlayer.character.gameObject;\r\n//        
+    if(collider.gameObject != character) return;\r\n//         if(!this.manager)
+    return;\r\n//         this.manager.AddCoin(this.id);\r\n//     }\r\n// }\r\n//#
+    sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiQ29pbkNvbnRyb2xsZXIuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyJDb2luQ29udHJvbGxlci50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQSwwQ0FBMEM7QUFDMUMsK0RBQStEO0FBQy9ELHdEQUF3RDtBQUN4RCxtREFBbUQ7QUFDbkQsbURBQW1EO0FBRW5ELHNFQUFzRTtBQUV0RSx1QkFBdUI7QUFDdkIsd0NBQXdDO0FBQ3hDLDBCQUEwQjtBQUUxQiw0QkFBNEI7QUFDNUIsK0RBQStEO0FBQy9ELGtDQUFrQztBQUNsQyx3QkFBd0I7QUFDeEIsUUFBUTtBQUVSLDRDQUE0QztBQUM1QyxzR0FBc0c7QUFDdEcsa0dBQWtHO0FBQ2xHLHVEQUF1RDtBQUN2RCxvQ0FBb0M7QUFFcEMseUNBQXlDO0FBQ3pDLFFBQVE7QUFFUixJQUFJIn0=","assetPath":"Assets/Scripts/Wonderland/CoinController.ts","manifest":{"properties":[],"name":"CoinController","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: 2166ffa76760b69d48bc5f6a785ac959
+  onlyWriteTrigger: 0

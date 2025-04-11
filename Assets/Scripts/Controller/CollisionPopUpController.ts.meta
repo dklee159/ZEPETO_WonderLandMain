@@ -1,0 +1,33 @@
+fileFormatVersion: 2
+guid: 3e7db2fa7d54bee45be2d949ae9d45ba
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
+    { value: true });\r\nconst ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nconst
+    LocalizationController_1 = require(\"../../ZepetoScripts/Localize/LocalizationController\");\r\nclass
+    CollisionPopUpController extends ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n   
+    constructor() {\r\n        super(...arguments);\r\n        this._isFirstTrig
+    = false;\r\n    }\r\n    Start() {\r\n        const dialogueText = this.dialogueUI.transform.GetChild(0).GetChild(4);\r\n       
+    this.localizationController = dialogueText.GetComponent($typeof(LocalizationController_1.default));\r\n   
+    }\r\n    OnTriggerEnter(coll) {\r\n        if (!coll.CompareTag(\"LocalPlayer\"))\r\n           
+    return;\r\n        if (this._isFirstTrig)\r\n            return;\r\n        this._isFirstTrig
+    = true;\r\n        this.dialogueUI.SetActive(true);\r\n        this.localizationController.TranslateText(this.pageNum);\r\n   
+    }\r\n}\r\nexports.default = CollisionPopUpController;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiQ29sbGlzaW9uUG9wVXBDb250cm9sbGVyLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiQ29sbGlzaW9uUG9wVXBDb250cm9sbGVyLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7O0FBQ0EsaURBQXFEO0FBQ3JELGdHQUF5RjtBQUV6RixNQUFxQix3QkFBeUIsU0FBUSxxQ0FBcUI7SUFBM0U7O1FBS1ksaUJBQVksR0FBWSxLQUFLLENBQUE7SUFnQnpDLENBQUM7SUFiRyxLQUFLO1FBQ0QsTUFBTSxZQUFZLEdBQUcsSUFBSSxDQUFDLFVBQVUsQ0FBQyxTQUFTLENBQUMsUUFBUSxDQUFDLENBQUMsQ0FBQyxDQUFDLFFBQVEsQ0FBQyxDQUFDLENBQUMsQ0FBQTtRQUN0RSxJQUFJLENBQUMsc0JBQXNCLEdBQUcsWUFBWSxDQUFDLFlBQVksU0FBQyxnQ0FBc0IsRUFBRyxDQUFDO0lBQ3RGLENBQUM7SUFFTyxjQUFjLENBQUMsSUFBYztRQUNqQyxJQUFJLENBQUMsSUFBSSxDQUFDLFVBQVUsQ0FBQyxhQUFhLENBQUM7WUFBRSxPQUFPO1FBQzVDLElBQUksSUFBSSxDQUFDLFlBQVk7WUFBRSxPQUFPO1FBQzlCLElBQUksQ0FBQyxZQUFZLEdBQUcsSUFBSSxDQUFDO1FBRXpCLElBQUksQ0FBQyxVQUFVLENBQUMsU0FBUyxDQUFDLElBQUksQ0FBQyxDQUFDO1FBQ2hDLElBQUksQ0FBQyxzQkFBc0IsQ0FBQyxhQUFhLENBQUMsSUFBSSxDQUFDLE9BQU8sQ0FBQyxDQUFDO0lBQzVELENBQUM7Q0FDSjtBQXJCRCwyQ0FxQkMifQ==","assetPath":"Assets/Scripts/Controller/CollisionPopUpController.ts","manifest":{"properties":[{"assembly":"UnityEngine.CoreModule","name":"dialogueUI","type":"UnityEngine.GameObject","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"mscorlib","name":"pageNum","type":"System.Single","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]}],"name":"CollisionPopUpController","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: 1e9ad30627d378c88d43d2e31efb0513
+  onlyWriteTrigger: 0

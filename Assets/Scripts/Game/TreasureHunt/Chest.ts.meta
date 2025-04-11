@@ -1,0 +1,34 @@
+fileFormatVersion: 2
+guid: eedc72846456c224d8a31f579647ebac
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
+    { value: true });\r\nconst UnityEngine_1 = require(\"UnityEngine\");\r\nconst
+    ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nconst ZEPETO_Character_Controller_1
+    = require(\"ZEPETO.Character.Controller\");\r\nconst UnityEngine_Events_1 = require(\"UnityEngine.Events\");\r\nclass
+    Chest extends ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n    constructor() {\r\n       
+    super(...arguments);\r\n        this.onTrigger = new UnityEngine_Events_1.UnityEvent();\r\n       
+    this.isOn = false;\r\n    }\r\n    On() {\r\n        this.isOn = true;\r\n       
+    this.gameObject.SetActive(true);\r\n    }\r\n    Off() {\r\n        this.isOn
+    = false;\r\n        this.gameObject.SetActive(false);\r\n    }\r\n    OnTriggerEnter(coll)
+    {\r\n        if (!this.isOn)\r\n            return;\r\n        if (coll !== ZEPETO_Character_Controller_1.ZepetoPlayers.instance.LocalPlayer?.zepetoPlayer?.character.GetComponent($typeof(UnityEngine_1.Collider)))\r\n           
+    return;\r\n        this.onTrigger.Invoke();\r\n    }\r\n}\r\nexports.default
+    = Chest;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiQ2hlc3QuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyJDaGVzdC50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOztBQUFBLDZDQUF1QztBQUN2QyxpREFBcUQ7QUFDckQsNkVBQTJGO0FBQzNGLDJEQUFnRDtBQUVoRCxNQUFxQixLQUFNLFNBQVEscUNBQXFCO0lBQXhEOztRQUNXLGNBQVMsR0FBZSxJQUFJLCtCQUFVLEVBQUUsQ0FBQztRQUN4QyxTQUFJLEdBQVksS0FBSyxDQUFDO0lBa0JsQyxDQUFDO0lBaEJVLEVBQUU7UUFDTCxJQUFJLENBQUMsSUFBSSxHQUFHLElBQUksQ0FBQztRQUNqQixJQUFJLENBQUMsVUFBVSxDQUFDLFNBQVMsQ0FBQyxJQUFJLENBQUMsQ0FBQztJQUNwQyxDQUFDO0lBRU0sR0FBRztRQUNOLElBQUksQ0FBQyxJQUFJLEdBQUcsS0FBSyxDQUFDO1FBQ2xCLElBQUksQ0FBQyxVQUFVLENBQUMsU0FBUyxDQUFDLEtBQUssQ0FBQyxDQUFDO0lBQ3JDLENBQUM7SUFFRCxjQUFjLENBQUMsSUFBYztRQUN6QixJQUFJLENBQUMsSUFBSSxDQUFDLElBQUk7WUFBRSxPQUFPO1FBRXZCLElBQUksSUFBSSxLQUFLLDJDQUFhLENBQUMsUUFBUSxDQUFDLFdBQVcsRUFBRSxZQUFZLEVBQUUsU0FBUyxDQUFDLFlBQVksU0FBQyxzQkFBUSxFQUFHO1lBQUUsT0FBTztRQUMxRyxJQUFJLENBQUMsU0FBUyxDQUFDLE1BQU0sRUFBRSxDQUFDO0lBQzVCLENBQUM7Q0FDSjtBQXBCRCx3QkFvQkMifQ==","assetPath":"Assets/Scripts/Game/TreasureHunt/Chest.ts","manifest":{"properties":[{"assembly":"UnityEngine.CoreModule","name":"onTrigger","type":"UnityEngine.Events.UnityEvent","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]}],"name":"Chest","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: 5ecd9524f45de50c82cc6950a587cfab
+  onlyWriteTrigger: 0

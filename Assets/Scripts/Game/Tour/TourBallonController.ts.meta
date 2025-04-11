@@ -1,0 +1,59 @@
+fileFormatVersion: 2
+guid: 0b38ffd6e6f71d74aa26ab93934e1c6c
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
+    { value: true });\r\nconst UnityEngine_1 = require(\"UnityEngine\");\r\nconst
+    ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nconst TourManager_1 = require(\"./TourManager\");\r\nconst
+    GameManager_1 = require(\"../../GameManager\");\r\nconst TypeSyncHelper_1 = require(\"../../../ZepetoScripts/SyncHelper/TypeSyncHelper\");\r\nconst
+    CameraController_1 = require(\"../../Controller/CameraController\");\r\nconst
+    UIController_1 = require(\"../../../ZepetoScripts/ScreenShotScripts/UIController\");\r\nconst
+    UIManager_1 = require(\"../../Manager/UIManager\");\r\nconst SyncIndexManager_1
+    = require(\"../../../ZepetoScripts/SyncIndexManager\");\r\nclass TourBallonController
+    extends ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n    Start() {\r\n        this.cameraController
+    = this._cameraController.GetComponent($typeof(CameraController_1.default));\r\n       
+    this.entranceYes.onClick.AddListener(() => {\r\n            if (SyncIndexManager_1.default.TourBalloonIsPlay)
+    {\r\n                UIManager_1.default.Instance.SystemNoticed(TypeSyncHelper_1.DATA_TYPE.AlreadyPlay);\r\n           
+    }\r\n            else {\r\n                GameManager_1.default.Instance.ReceiveTourBalloonSignal(true);\r\n               
+    this.tourNotice.SetActive(true);\r\n            }\r\n            this.tourEntrance.SetActive(false);\r\n       
+    });\r\n        this.entranceNo.onClick.AddListener(() => {\r\n            this.tourEntrance.SetActive(false);\r\n       
+    });\r\n        this.entranceClose.onClick.AddListener(() => {\r\n           
+    this.tourEntrance.SetActive(false);\r\n        });\r\n        this.noticeConfirmButton.onClick.AddListener(()
+    => {\r\n            this.tourNotice.SetActive(false);\r\n        });\r\n       
+    this.tutorialCloseButton.onClick.AddListener(() => {\r\n            this.tourTutorial.SetActive(false);\r\n       
+    });\r\n        this.tutorialConfirmButton.onClick.AddListener(() => {\r\n           
+    this.tourTutorial.SetActive(false);\r\n        });\r\n        this.airCamButton.onClick.AddListener(()
+    => {\r\n            this.cameraController.ChangeBalloonCam(TypeSyncHelper_1.CameraView.Air);\r\n       
+    });\r\n        this.defaultButton.onClick.AddListener(() => {\r\n           
+    this.cameraController.ChangeBalloonCam(TypeSyncHelper_1.CameraView.Default);\r\n       
+    });\r\n        this.changeViewButton.onClick.AddListener(() => {\r\n           
+    this.cameraController.ChangeBalloonCam(TypeSyncHelper_1.CameraView.FPS);\r\n       
+    });\r\n        this.photoUploadButton.onClick.AddListener(() => {\r\n           
+    TourManager_1.default.Instance.UploadTourPhoto();\r\n            UIManager_1.default.Instance.Toast(UIController_1.TOAST_MESSAGE.feedUploading);\r\n       
+    });\r\n        this.photoCloseButton.onClick.AddListener(() => {\r\n           
+    this.screenShotPanel.SetActive(false);\r\n        });\r\n        this.exitButton.onClick.AddListener(()
+    => {\r\n            GameManager_1.default.Instance.ReceiveTourBalloonSignal(false);\r\n       
+    });\r\n    }\r\n    OpenUI() {\r\n        if (!this.tourEntrance.activeSelf)\r\n           
+    this.tourEntrance.SetActive(true);\r\n    }\r\n    SetTourDefaultUI(isOn) {\r\n       
+    if (isOn) {\r\n            this.tourNotice.SetActive(true);\r\n        }\r\n       
+    this.cameraPanel.SetActive(isOn);\r\n        UIManager_1.default.Instance.ControlDefaultUI(!isOn);\r\n   
+    }\r\n    PhotoResultOpen() {\r\n        this.screenShotPanel.SetActive(true);\r\n   
+    }\r\n}\r\nexports.default = TourBallonController;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiVG91ckJhbGxvbkNvbnRyb2xsZXIuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyJUb3VyQmFsbG9uQ29udHJvbGxlci50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOztBQUFBLDZDQUF3QztBQUV4QyxpREFBcUQ7QUFDckQsK0NBQXdDO0FBQ3hDLG1EQUE0QztBQUM1QyxxRkFBeUY7QUFDekYsd0VBQWlFO0FBQ2pFLHdGQUFzRjtBQUN0Rix1REFBZ0Q7QUFDaEQsOEVBQXVFO0FBRXZFLE1BQXFCLG9CQUFxQixTQUFRLHFDQUFxQjtJQStCbkUsS0FBSztRQUNELElBQUksQ0FBQyxnQkFBZ0IsR0FBRyxJQUFJLENBQUMsaUJBQWlCLENBQUMsWUFBWSxTQUFDLDBCQUFnQixFQUFHLENBQUM7UUFFaEYsSUFBSSxDQUFDLFdBQVcsQ0FBQyxPQUFPLENBQUMsV0FBVyxDQUFDLEdBQUcsRUFBRTtZQUN0QyxJQUFJLDBCQUFnQixDQUFDLGlCQUFpQixFQUFFO2dCQUNwQyxtQkFBUyxDQUFDLFFBQVEsQ0FBQyxhQUFhLENBQUMsMEJBQVMsQ0FBQyxXQUFXLENBQUMsQ0FBQzthQUMzRDtpQkFBTTtnQkFDSCxxQkFBVyxDQUFDLFFBQVEsQ0FBQyx3QkFBd0IsQ0FBQyxJQUFJLENBQUMsQ0FBQztnQkFDcEQsSUFBSSxDQUFDLFVBQVUsQ0FBQyxTQUFTLENBQUMsSUFBSSxDQUFDLENBQUM7YUFDbkM7WUFDRCxJQUFJLENBQUMsWUFBWSxDQUFDLFNBQVMsQ0FBQyxLQUFLLENBQUMsQ0FBQztRQUN2QyxDQUFDLENBQUMsQ0FBQTtRQUVGLElBQUksQ0FBQyxVQUFVLENBQUMsT0FBTyxDQUFDLFdBQVcsQ0FBQyxHQUFHLEVBQUU7WUFDckMsSUFBSSxDQUFDLFlBQVksQ0FBQyxTQUFTLENBQUMsS0FBSyxDQUFDLENBQUM7UUFDdkMsQ0FBQyxDQUFDLENBQUE7UUFFRixJQUFJLENBQUMsYUFBYSxDQUFDLE9BQU8sQ0FBQyxXQUFXLENBQUMsR0FBRyxFQUFFO1lBQ3hDLElB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","assetPath":"Assets/Scripts/Game/Tour/TourBallonController.ts","manifest":{"properties":[{"assembly":"UnityEngine.CoreModule","name":"tourEntrance","type":"UnityEngine.GameObject","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"tourNotice","type":"UnityEngine.GameObject","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"tourTutorial","type":"UnityEngine.GameObject","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.UI","name":"entranceYes","type":"UnityEngine.UI.Button","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.UI","name":"entranceNo","type":"UnityEngine.UI.Button","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.UI","name":"entranceClose","type":"UnityEngine.UI.Button","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.UI","name":"noticeConfirmButton","type":"UnityEngine.UI.Button","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.UI","name":"tutorialCloseButton","type":"UnityEngine.UI.Button","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.UI","name":"tutorialConfirmButton","type":"UnityEngine.UI.Button","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.UI","name":"photoUploadButton","type":"UnityEngine.UI.Button","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.UI","name":"photoCloseButton","type":"UnityEngine.UI.Button","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"cameraPanel","type":"UnityEngine.GameObject","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"screenShotPanel","type":"UnityEngine.GameObject","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.UI","name":"exitButton","type":"UnityEngine.UI.Button","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.UI","name":"airCamButton","type":"UnityEngine.UI.Button","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.UI","name":"defaultButton","type":"UnityEngine.UI.Button","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.UI","name":"changeViewButton","type":"UnityEngine.UI.Button","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"_cameraController","type":"UnityEngine.GameObject","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]}],"name":"TourBallonController","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: 2a2634fc0d7ed4319cb8c98778ab613f
+  onlyWriteTrigger: 0

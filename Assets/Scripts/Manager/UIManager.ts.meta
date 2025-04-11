@@ -1,0 +1,119 @@
+fileFormatVersion: 2
+guid: b0c837061ff92424ba7411e6222b4c89
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
+    { value: true });\r\nconst UnityEngine_1 = require(\"UnityEngine\");\r\nconst
+    UnityEngine_UI_1 = require(\"UnityEngine.UI\");\r\nconst ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nconst
+    DataManager_1 = require(\"./DataManager\");\r\nconst HorrorZoneController_1 =
+    require(\"../Game/HorrorZone/HorrorZoneController\");\r\nconst AttendController_1
+    = require(\"../Controller/AttendController\");\r\nconst DayLightController_1
+    = require(\"../Controller/DayLightController\");\r\nconst CustomPoseController_1
+    = require(\"../Controller/CustomPoseController\");\r\nconst BadgeController_1
+    = require(\"../Controller/BadgeController\");\r\nconst GiftController_1 = require(\"../Controller/GiftController\");\r\nconst
+    VisitController_1 = require(\"../Controller/VisitController\");\r\nconst EntryTicketController_1
+    = require(\"../Controller/EntryTicketController\");\r\nconst TypeSyncHelper_1
+    = require(\"../../ZepetoScripts/SyncHelper/TypeSyncHelper\");\r\nconst TourBallonController_1
+    = require(\"../Game/Tour/TourBallonController\");\r\nconst ToastController_1
+    = require(\"../../ZepetoScripts/ScreenShotScripts/ToastController\");\r\nclass
+    UIManager extends ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n    static get Instance()
+    {\r\n        if (!UIManager._instance) {\r\n            const managerObj = UnityEngine_1.GameObject.Find(\"UIManager\");\r\n           
+    if (managerObj)\r\n                UIManager._instance = managerObj.GetComponent($typeof(UIManager));\r\n       
+    }\r\n        return UIManager._instance;\r\n    }\r\n    get openUI() { return
+    this._openUI; }\r\n    set openUI(value) {\r\n        if (!this._openUI) {\r\n           
+    this._openUI = value;\r\n            this._openUI.SetActive(true);\r\n       
+    }\r\n        else {\r\n            console.error(TypeSyncHelper_1.ERROR.ALREADY_OPENED);\r\n       
+    }\r\n    }\r\n    Awake() {\r\n        UIManager._instance = this;\r\n    }\r\n   
+    Start() {\r\n        this.alreadyPlayUI.GetComponentInChildren($typeof(UnityEngine_UI_1.Button)).onClick.AddListener(()
+    => {\r\n            this.alreadyPlayUI.SetActive(false);\r\n        });\r\n   
+    }\r\n    RemoteStart() {\r\n        /*** Http Data Connection Service ***/\r\n       
+    this.SetPosePanel();\r\n        this.SetBadgeUI();\r\n        this.SetGiftUI();\r\n       
+    this.SetDayLightSkyBox();\r\n        this.CheckAttendance();\r\n        this.SetUiToaster();\r\n       
+    this.SetController();\r\n        this.SetVisit();\r\n        this.UpdatePlayerDB();\r\n   
+    }\r\n    UpdatePlayerDB() {\r\n        this.UpdateCoinUI();\r\n        this.UpdateBadgeUI();\r\n       
+    this.UpdateGiftUI();\r\n    }\r\n    SetPosePanel() {\r\n        if (!this.customPoseController)\r\n           
+    this.customPoseController = this._customPoseController.GetComponent($typeof(CustomPoseController_1.default));\r\n       
+    this.customPoseController.RemoteStart();\r\n        console.log(`[UIManager]
+    CustomPoseController loaded success`);\r\n    }\r\n    SetGiftUI() {\r\n       
+    if (!this.giftController)\r\n            this.giftController = this._giftController.GetComponent($typeof(GiftController_1.default));\r\n       
+    this.giftController.RemoteStart();\r\n        console.log(`[UIManager] GiftController
+    loaded success`);\r\n    }\r\n    SetBadgeUI() {\r\n        if (!this.badgeController)\r\n           
+    this.badgeController = this._badgeController.GetComponent($typeof(BadgeController_1.default));\r\n       
+    this.badgeController.RemoteStart();\r\n        console.log(`[UIManager] BadgeController
+    loaded success`);\r\n    }\r\n    /* Update Coin Count */\r\n    UpdateCoinUI()
+    {\r\n        const coin = +DataManager_1.default.Instance.PlayerDB.wonderCoin;\r\n       
+    this.wonderCoinUI.text = this.FormatNumber(coin);\r\n    }\r\n    FormatNumber(num)
+    {\r\n        return num.toString().replace(/\\B(?=(\\d{3})+(?!\\d))/g, \",\");\r\n   
+    }\r\n    /* Update Badge Has */\r\n    UpdateBadgeUI() {\r\n        if (!this.badgeController)\r\n           
+    this.badgeController = this._badgeController.GetComponent($typeof(BadgeController_1.default));\r\n       
+    this.badgeController.UpdateBadgeUI();\r\n        // if (this.badgeController)
+    {\r\n        //     const wonderCollection = DataManager.Instance.PlayerDB.wonderCollection;\r\n       
+    //     const allClear = this.badgeController.UpdateBadgeUI(wonderCollection);\r\n       
+    //     this.customPoseController.UpdateAwardPose(allClear);\r\n        // }\r\n   
+    }\r\n    UpdateGiftUI() {\r\n        const hasHidden = this.giftController.UpdateGiftUI();\r\n       
+    this.customPoseController.UpdateAwardPose(hasHidden);\r\n    }\r\n    SetDayLightSkyBox()
+    {\r\n        if (!this.dayLightController)\r\n            this.dayLightController
+    = this._dayLightController.GetComponent($typeof(DayLightController_1.default));\r\n       
+    this.dayLightController.RemoteStart();\r\n        console.log(`[UIManager] DayLightController
+    loaded success`);\r\n    }\r\n    CheckAttendance() {\r\n        if (!this.attendController)\r\n           
+    this.attendController = this._attendController.GetComponent($typeof(AttendController_1.default));\r\n       
+    this.attendController.RemoteStart();\r\n        console.log(`[UIManager] AttendController
+    loaded success`);\r\n        this.attendController.UpdateAttendData(DataManager_1.default.Instance.PlayerDB.attend);\r\n   
+    }\r\n    SetUiToaster() {\r\n        if (!this.toastController)\r\n           
+    this.toastController = this._toastController.GetComponent($typeof(ToastController_1.default));\r\n       
+    console.log(`[UIManager] ToastController loaded success`);\r\n    }\r\n    SetController()
+    {\r\n        if (!this.tourBalloonController)\r\n            this.tourBalloonController
+    = this._tourBalloonController.GetComponent($typeof(TourBallonController_1.default));\r\n       
+    console.log(`[UIManager] TourBalloonController loaded success`);\r\n        if
+    (!this.horrorZoneController)\r\n            this.horrorZoneController = this._horrorZoneController.GetComponent($typeof(HorrorZoneController_1.default));\r\n       
+    console.log(`[UIManager] HorrorZoneController loaded success`);\r\n    }\r\n   
+    SetVisit() {\r\n        if (!this.visitController)\r\n            this.visitController
+    = this._visitController.GetComponent($typeof(VisitController_1.default));\r\n       
+    console.log(`[UIManager] VisitController loaded success`);\r\n        this.visitController.RemoteStart();\r\n   
+    }\r\n    OpenEntryTicket(amount) {\r\n        if (!this.entryTicketController)\r\n           
+    this.entryTicketController = this._entryTicketController.GetComponent($typeof(EntryTicketController_1.default));\r\n       
+    this.entryTicketController.GetEntryTicket(amount);\r\n    }\r\n    SystemNoticed(noticeName)
+    {\r\n        if (noticeName == \"AlreadyPlay\") {\r\n            this.alreadyPlayUI.SetActive(true);\r\n       
+    }\r\n    }\r\n    ControlDefaultUI(isOn) {\r\n        this.attendUI.SetActive(isOn);\r\n       
+    this.badgeUI.SetActive(isOn);\r\n        this.giftUI.SetActive(isOn);\r\n       
+    this.wonderCoinUI.transform.parent.gameObject.SetActive(isOn);\r\n    }\r\n   
+    UpdatePlayItemLockPanel(score) {\r\n        // const gamePanel = this.zonePlayUI.GetChild(1);\r\n       
+    // const lockPanel = gamePanel.GetChild(1);\r\n        // const lock_add_Time
+    = lockPanel.GetChild(2);\r\n        // const lock_add_Star = lockPanel.GetChild(3);\r\n       
+    // if(PlayItemConditions.Item_Time < score) lock_add_Time.gameObject.SetActive(false);\r\n       
+    // if(PlayItemConditions.Item_Star < score) lock_add_Star.gameObject.SetActive(false);\r\n   
+    }\r\n    OpenTourPhoto() {\r\n        this.tourBalloonController.PhotoResultOpen();\r\n   
+    }\r\n    /** Game Functions */\r\n    HorrorGamePanelVisibler(isVisible) {\r\n       
+    this.horrorZoneController.HorrorGamePanelVisibler(isVisible);\r\n        this.defaultUI.SetActive(!isVisible);\r\n       
+    this.gestureCanvas.SetActive(!isVisible);\r\n        this.screenshotCanvas.SetActive(!isVisible);\r\n   
+    }\r\n    /*UTILS */\r\n    GetScreenImage(screenCanvas) {\r\n        switch (screenCanvas)
+    {\r\n            case TypeSyncHelper_1.ScreenCanvasType.Load:\r\n               
+    return this.loadingUI;\r\n            case TypeSyncHelper_1.ScreenCanvasType.Fade:\r\n               
+    return this.fadeUI;\r\n            default:\r\n                return null;\r\n       
+    }\r\n    }\r\n    Toast(text) {\r\n        this.toastController.Toast(text);\r\n   
+    }\r\n    TextAnimate(text) { this.toastController.TextAnimate(text); }\r\n   
+    TextAnimationOFF() { this.toastController.TextAnimationOFF(); }\r\n    TextAnimate_OneSec(text)
+    { this.toastController.TextAnimate_OneSec(text); }\r\n    TextAnimationOFF_OneSec()
+    { this.toastController.TextAnimationOFF_OneSec(); }\r\n    Open_Horror_ResultUI()
+    {\r\n        this.horrorZoneController.OpenHorrorZoneResult();\r\n    }\r\n}\r\nexports.default
+    = UIManager;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiVUlNYW5hZ2VyLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiVUlNYW5hZ2VyLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7O0FBQUEsNkNBQWlEO0FBQ2pELG1EQUF3QztBQUN4QyxpREFBcUQ7QUFFckQsK0NBQXdDO0FBQ3hDLGtGQUEyRTtBQUMzRSxxRUFBOEQ7QUFDOUQseUVBQWtFO0FBQ2xFLDZFQUFzRTtBQUN0RSxtRUFBNEQ7QUFDNUQsaUVBQTBEO0FBQzFELG1FQUE0RDtBQUM1RCwrRUFBd0U7QUFDeEUsa0ZBQXdGO0FBQ3hGLDRFQUFxRTtBQUNyRSwyRkFBb0Y7QUFFcEYsTUFBcUIsU0FBVSxTQUFRLHFDQUFxQjtJQUVqRCxNQUFNLEtBQUssUUFBUTtRQUN0QixJQUFJLENBQUMsU0FBUyxDQUFDLFNBQVMsRUFBRTtZQUN0QixNQUFNLFVBQVUsR0FBRyx3QkFBVSxDQUFDLElBQUksQ0FBQyxXQUFXLENBQUMsQ0FBQztZQUNoRCxJQUFJLFVBQVU7Z0JBQUUsU0FBUyxDQUFDLFNBQVMsR0FBRyxVQUFVLENBQUMsWUFBWSxTQUFDLFNBQVMsRUFBRyxDQUFDO1NBQzlFO1FBQ0QsT0FBTyxTQUFTLENBQUMsU0FBUyxDQUFDO0lBQy9CLENBQUM7SUE2Q0QsSUFBVyxNQUFNLEtBQWlCLE9BQU8sSUFBSSxDQUFDLE9BQU8sQ0FBQyxDQUFDLENBQUM7SUFDeEQsSUFBVyxNQUFNLENBQUMsS0FBaUI7UUFDL0IsSUFBRyxDQUFDLElBQUksQ0FBQyxPQUFPLEVBQUU7WUFDZCxJQUFJLENBQUMsT0FBTyxHQUFHLEtBQUssQ0FBQztZQUNyQixJQUFJLENBQUMsT0FBTyxDQUFDLFNBQVMsQ0FBQyxJQUFJLENBQUMsQ0FBQztTQUNoQzthQUFNO1lBQ0gsT0FBTyxDQUFDLEtBQUssQ0FBQyxzQkFBSyxDQUFDLGNBQWMsQ0FBQyxDQUFDO1NBQ3ZDO0lBQ0wsQ0FBQztJQUVPLEtBQUs7UUFDVCxTQUFTLENBQUMsU0FBUyxHQUFHLElBQUksQ0FBQztJQUMvQixD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","assetPath":"Assets/Scripts/Manager/UIManager.ts","manifest":{"properties":[{"assembly":"UnityEngine.CoreModule","name":"loadingUI","type":"UnityEngine.GameObject","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"Header","args":["\"ScreenUI\""]},{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"fadeUI","type":"UnityEngine.GameObject","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"attendUI","type":"UnityEngine.GameObject","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"Header","args":["\"In
+    Game UI\""]},{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"badgeUI","type":"UnityEngine.GameObject","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"giftUI","type":"UnityEngine.GameObject","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"Unity.TextMeshPro","name":"wonderCoinUI","type":"TMPro.TextMeshProUGUI","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"defaultUI","type":"UnityEngine.GameObject","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"gestureCanvas","type":"UnityEngine.GameObject","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"screenshotCanvas","type":"UnityEngine.GameObject","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"_attendController","type":"UnityEngine.GameObject","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"_badgeController","type":"UnityEngine.GameObject","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"_giftController","type":"UnityEngine.GameObject","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"_dayLightController","type":"UnityEngine.GameObject","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"_customPoseController","type":"UnityEngine.GameObject","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"_visitController","type":"UnityEngine.GameObject","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"_entryTicketController","type":"UnityEngine.GameObject","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"_horrorZoneController","type":"UnityEngine.GameObject","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"Header","args":["\"Game
+    UI\""]},{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"_tourBalloonController","type":"UnityEngine.GameObject","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"_toastController","type":"UnityEngine.GameObject","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"alreadyPlayUI","type":"UnityEngine.GameObject","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]}],"name":"UIManager","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: 26191fbd2ea5ac1112878f4588dbfd17
+  onlyWriteTrigger: 0

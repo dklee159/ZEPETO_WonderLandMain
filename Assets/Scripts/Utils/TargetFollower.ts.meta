@@ -1,0 +1,40 @@
+fileFormatVersion: 2
+guid: 7da2043c49890ec48b9334d17bc35b79
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
+    { value: true });\r\nconst ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nconst
+    UnityEngine_1 = require(\"UnityEngine\");\r\nclass TargetFollower extends ZEPETO_Script_1.ZepetoScriptBehaviour
+    {\r\n    constructor() {\r\n        super(...arguments);\r\n        this.teleportDistance
+    = 10;\r\n        this.alpha = 0.1;\r\n    }\r\n    FixedUpdate() {\r\n       
+    if (this.followOn && this.target) {\r\n            const distance = UnityEngine_1.Vector3.Distance(this.transform.position,
+    this.target.transform.position);\r\n            if (distance < this.teleportDistance)
+    {\r\n                this.transform.position = UnityEngine_1.Vector3.Lerp(this.transform.position,
+    this.target.transform.position, this.alpha);\r\n                this.transform.rotation
+    = UnityEngine_1.Quaternion.Lerp(this.transform.rotation, this.target.transform.rotation,
+    this.alpha);\r\n            }\r\n            else {\r\n                this.transform.position
+    = this.target.transform.position;\r\n                this.transform.rotation
+    = this.target.transform.rotation;\r\n            }\r\n        }\r\n    }\r\n   
+    SetTarget(target) {\r\n        this.target = target;\r\n    }\r\n    FollowOn()
+    {\r\n        this.followOn = true;\r\n        this.transform.position = this.target.transform.position;\r\n       
+    this.transform.rotation = this.target.transform.rotation;\r\n        this.gameObject.SetActive(true);\r\n   
+    }\r\n    FollowOff() {\r\n        this.followOn = false;\r\n        this.gameObject.SetActive(false);\r\n   
+    }\r\n}\r\nexports.default = TargetFollower;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiVGFyZ2V0Rm9sbG93ZXIuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyJUYXJnZXRGb2xsb3dlci50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOztBQUFBLGlEQUFxRDtBQUNyRCw2Q0FBNkQ7QUFFN0QsTUFBcUIsY0FBZSxTQUFRLHFDQUFxQjtJQUFqRTs7UUFJOEIscUJBQWdCLEdBQVksRUFBRSxDQUFDO1FBQy9CLFVBQUssR0FBWSxHQUFHLENBQUM7SUFnQ25ELENBQUM7SUE5QkcsV0FBVztRQUNQLElBQUcsSUFBSSxDQUFDLFFBQVEsSUFBSSxJQUFJLENBQUMsTUFBTSxFQUFFO1lBQzdCLE1BQU0sUUFBUSxHQUFHLHFCQUFPLENBQUMsUUFBUSxDQUFDLElBQUksQ0FBQyxTQUFTLENBQUMsUUFBUSxFQUFFLElBQUksQ0FBQyxNQUFNLENBQUMsU0FBUyxDQUFDLFFBQVEsQ0FBQyxDQUFDO1lBRTNGLElBQUcsUUFBUSxHQUFHLElBQUksQ0FBQyxnQkFBZ0IsRUFBRTtnQkFDakMsSUFBSSxDQUFDLFNBQVMsQ0FBQyxRQUFRLEdBQUcscUJBQU8sQ0FBQyxJQUFJLENBQUMsSUFBSSxDQUFDLFNBQVMsQ0FBQyxRQUFRLEVBQUUsSUFBSSxDQUFDLE1BQU0sQ0FBQyxTQUFTLENBQUMsUUFBUSxFQUFFLElBQUksQ0FBQyxLQUFLLENBQUMsQ0FBQztnQkFDNUcsSUFBSSxDQUFDLFNBQVMsQ0FBQyxRQUFRLEdBQUcsd0JBQVUsQ0FBQyxJQUFJLENBQUMsSUFBSSxDQUFDLFNBQVMsQ0FBQyxRQUFRLEVBQUUsSUFBSSxDQUFDLE1BQU0sQ0FBQyxTQUFTLENBQUMsUUFBUSxFQUFFLElBQUksQ0FBQyxLQUFLLENBQUMsQ0FBQzthQUNsSDtpQkFDSTtnQkFDRCxJQUFJLENBQUMsU0FBUyxDQUFDLFFBQVEsR0FBRyxJQUFJLENBQUMsTUFBTSxDQUFDLFNBQVMsQ0FBQyxRQUFRLENBQUM7Z0JBQ3pELElBQUksQ0FBQyxTQUFTLENBQUMsUUFBUSxHQUFHLElBQUksQ0FBQyxNQUFNLENBQUMsU0FBUyxDQUFDLFFBQVEsQ0FBQzthQUM1RDtTQUNKO0lBQ0wsQ0FBQztJQUVNLFNBQVMsQ0FBQyxNQUFrQjtRQUMvQixJQUFJLENBQUMsTUFBTSxHQUFHLE1BQU0sQ0FBQztJQUN6QixDQUFDO0lBRU0sUUFBUTtRQUNYLElBQUksQ0FBQyxRQUFRLEdBQUcsSUFBSSxDQUFDO1FBQ3JCLElBQUksQ0FBQyxTQUFTLENBQUMsUUFBUSxHQUFHLElBQUksQ0FBQyxNQUFNLENBQUMsU0FBUyxDQUFDLFFBQVEsQ0FBQztRQUN6RCxJQUFJLENBQUMsU0FBUyxDQUFDLFFBQVEsR0FBRyxJQUFJLENBQUMsTUFBTSxDQUFDLFNBQVMsQ0FBQyxRQUFRLENBQUM7UUFDekQsSUFBSSxDQUFDLFVBQVUsQ0FBQyxTQUFTLENBQUMsSUFBSSxDQUFDLENBQUM7SUFDcEMsQ0FBQztJQUVNLFNBQVM7UUFDWixJQUFJLENBQUMsUUFBUSxHQUFHLEtBQUssQ0FBQztRQUN0QixJQUFJLENBQUMsVUFBVSxDQUFDLFNBQVMsQ0FBQyxLQUFLLENBQUMsQ0FBQztJQUNyQyxDQUFDO0NBQ0o7QUFyQ0QsaUNBcUNDIn0=","assetPath":"Assets/Scripts/Utils/TargetFollower.ts","manifest":{"properties":[{"assembly":"UnityEngine.CoreModule","name":"target","type":"UnityEngine.Transform","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"mscorlib","name":"followOn","type":"System.Boolean","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"mscorlib","name":"teleportDistance","type":"System.Single","isArray":false,"initValue":["10"],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"mscorlib","name":"alpha","type":"System.Single","isArray":false,"initValue":["0.1"],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]}],"name":"TargetFollower","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: 0df8017b75cd33b59e0ec714b279231e
+  onlyWriteTrigger: 0

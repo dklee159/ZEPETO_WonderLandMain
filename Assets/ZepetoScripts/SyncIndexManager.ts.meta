@@ -1,0 +1,35 @@
+fileFormatVersion: 2
+guid: ad4b3e28e8a4241729aec4ffaf41ca8b
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
+    { value: true });\r\nconst ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nclass
+    SyncIndexManager extends ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n}\r\nexports.default
+    = SyncIndexManager;\r\n/** This is used to give a unique ID to synchronization
+    objects that do not have a separate ID. */\r\nSyncIndexManager.SyncIndex = 0;\r\nSyncIndexManager.SyncDestoryIndex
+    = 0;\r\nSyncIndexManager.SyncChairIndex = 0;\r\n/** Wonder **/\r\nSyncIndexManager.WonderCoin
+    = 0;\r\n/* Hall */\r\nSyncIndexManager.MISSION_CLEAR_JG = false;\r\nSyncIndexManager.MISSION_CLEAR_NT
+    = false;\r\nSyncIndexManager.BADGE_HALL = false;\r\nSyncIndexManager.TourBalloonIsPlay
+    = false;\r\nSyncIndexManager.WonderDraw_K = 0;\r\nSyncIndexManager.WonderDraw_WON
+    = 0;\r\nSyncIndexManager.WonderDraw_DER = 0;\r\nSyncIndexManager.WonderDraw_LAND
+    = 0;\r\nSyncIndexManager.WonderDrawData = [\r\n    { id: \"K\", amount: 0 },\r\n   
+    { id: \"Won\", amount: 0 },\r\n    { id: \"Der\", amount: 0 },\r\n    { id: \"Land\",
+    amount: 0 },\r\n];\r\nSyncIndexManager.DrawDataChanged = false;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiU3luY0luZGV4TWFuYWdlci5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIlN5bmNJbmRleE1hbmFnZXIudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7QUFBQSxpREFBcUQ7QUFFckQsTUFBcUIsZ0JBQWlCLFNBQVEscUNBQXFCOztBQUFuRSxtQ0FnQ0M7QUEvQkcsa0dBQWtHO0FBRXBGLDBCQUFTLEdBQVUsQ0FBQyxDQUFDO0FBQ3JCLGlDQUFnQixHQUFVLENBQUMsQ0FBQztBQUU1QiwrQkFBYyxHQUFVLENBQUMsQ0FBQztBQUl4QyxjQUFjO0FBQ0EsMkJBQVUsR0FBVyxDQUFDLENBQUM7QUFFckMsVUFBVTtBQUNJLGlDQUFnQixHQUFZLEtBQUssQ0FBQztBQUNsQyxpQ0FBZ0IsR0FBWSxLQUFLLENBQUM7QUFDbEMsMkJBQVUsR0FBWSxLQUFLLENBQUM7QUFFNUIsa0NBQWlCLEdBQVksS0FBSyxDQUFDO0FBRW5DLDZCQUFZLEdBQVcsQ0FBQyxDQUFDO0FBQ3pCLCtCQUFjLEdBQVcsQ0FBQyxDQUFDO0FBQzNCLCtCQUFjLEdBQVcsQ0FBQyxDQUFDO0FBQzNCLGdDQUFlLEdBQVcsQ0FBQyxDQUFDO0FBRTVCLCtCQUFjLEdBQUc7SUFDM0IsRUFBRSxFQUFFLEVBQUcsR0FBRyxFQUFFLE1BQU0sRUFBRyxDQUFDLEVBQUU7SUFDeEIsRUFBRSxFQUFFLEVBQUcsS0FBSyxFQUFFLE1BQU0sRUFBRyxDQUFDLEVBQUU7SUFDMUIsRUFBRSxFQUFFLEVBQUcsS0FBSyxFQUFFLE1BQU0sRUFBRyxDQUFDLEVBQUU7SUFDMUIsRUFBRSxFQUFFLEVBQUcsTUFBTSxFQUFFLE1BQU0sRUFBRyxDQUFDLEVBQUU7Q0FDOUIsQ0FBQTtBQUNhLGdDQUFlLEdBQVksS0FBSyxDQUFDIn0=","assetPath":"Assets/ZepetoScripts/SyncIndexManager.ts","manifest":{"properties":[],"name":"SyncIndexManager","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: 816c550ef9e11be607b1a284a48a4333
+  onlyWriteTrigger: 0

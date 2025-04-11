@@ -1,0 +1,49 @@
+fileFormatVersion: 2
+guid: baecd2919027aff4784467d2d0090145
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
+    { value: true });\r\nconst UnityEngine_1 = require(\"UnityEngine\");\r\nconst
+    UnityEngine_UI_1 = require(\"UnityEngine.UI\");\r\nconst ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nconst
+    HorrorZoneManager_1 = require(\"./HorrorZoneManager\");\r\nconst BalloonShopController_1
+    = require(\"../BalloonShop/BalloonShopController\");\r\nclass HorrorZoneController
+    extends ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n    Start() {\r\n        this.ballonShopController
+    = this._balloonShopController.GetComponent($typeof(BalloonShopController_1.default));\r\n       
+    this.horrorZoneEntranceConfirmButton.onClick.AddListener(() => {\r\n           
+    this.horrorZoneEntranceUI.SetActive(false);\r\n            this.horrorZoneNoticeUI.SetActive(true);\r\n       
+    });\r\n        this.horrorZoneEntranceCloseButton.onClick.AddListener(() => {\r\n           
+    this.horrorZoneEntranceUI.SetActive(false);\r\n        });\r\n        this.horrorZoneEntranceCancelButton.onClick.AddListener(()
+    => {\r\n            this.horrorZoneEntranceUI.SetActive(false);\r\n        });\r\n       
+    this.horrorZoneNoticeConfirmButton.onClick.AddListener(() => {\r\n           
+    this.HorrorZoneInit();\r\n        });\r\n        this.horrorZoneNoticeCloseButton.onClick.AddListener(()
+    => {\r\n            this.HorrorZoneInit();\r\n        });\r\n        this.horrorZoneTutorialConfirmButton.onClick.AddListener(()
+    => {\r\n            HorrorZoneManager_1.default.Instance.GameStart();\r\n           
+    this.horrorZoneTutorialUI.SetActive(false);\r\n        });\r\n        this.horrorZoneTutorialCloseButton.onClick.AddListener(()
+    => {\r\n            HorrorZoneManager_1.default.Instance.GameStart();\r\n           
+    this.horrorZoneTutorialUI.SetActive(false);\r\n        });\r\n        this.localHorrorZoneResultCloseButton.onClick.AddListener(()
+    => {\r\n            this.localHorrorZoneResultUI.SetActive(false);\r\n       
+    });\r\n    }\r\n    OpenUI() {\r\n        this.horrorZoneEntranceUI.SetActive(true);\r\n   
+    }\r\n    HorrorZoneInit() {\r\n        // Unequip            \r\n        this.ballonShopController.UnequipBalloon();\r\n       
+    HorrorZoneManager_1.default.Instance.InitGame();\r\n        this.horrorZoneNoticeUI.SetActive(false);\r\n   
+    }\r\n    HorrorGamePanelVisibler(isVisible) {\r\n        this.horrorZoneTutorialUI.SetActive(isVisible);\r\n       
+    this.horrorZoneGameUI.SetActive(isVisible);\r\n    }\r\n    OpenHorrorZoneResult()
+    {\r\n        this.localHorrorZoneResultUI.SetActive(true);\r\n    }\r\n}\r\nexports.default
+    = HorrorZoneController;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiSG9ycm9yWm9uZUNvbnRyb2xsZXIuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyJIb3Jyb3Jab25lQ29udHJvbGxlci50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOztBQUFBLDZDQUF5QztBQUN6QyxtREFBd0M7QUFDeEMsaURBQXFEO0FBQ3JELDJEQUFvRDtBQUNwRCxnRkFBeUU7QUFFekUsTUFBcUIsb0JBQXFCLFNBQVEscUNBQXFCO0lBc0JuRSxLQUFLO1FBQ0QsSUFBSSxDQUFDLG9CQUFvQixHQUFHLElBQUksQ0FBQyxzQkFBc0IsQ0FBQyxZQUFZLFNBQUMsK0JBQXFCLEVBQUcsQ0FBQztRQUU5RixJQUFJLENBQUMsK0JBQStCLENBQUMsT0FBTyxDQUFDLFdBQVcsQ0FBQyxHQUFHLEVBQUU7WUFDMUQsSUFBSSxDQUFDLG9CQUFvQixDQUFDLFNBQVMsQ0FBQyxLQUFLLENBQUMsQ0FBQztZQUMzQyxJQUFJLENBQUMsa0JBQWtCLENBQUMsU0FBUyxDQUFDLElBQUksQ0FBQyxDQUFDO1FBQzVDLENBQUMsQ0FBQyxDQUFBO1FBRUYsSUFBSSxDQUFDLDZCQUE2QixDQUFDLE9BQU8sQ0FBQyxXQUFXLENBQUMsR0FBRyxFQUFFO1lBQ3hELElBQUksQ0FBQyxvQkFBb0IsQ0FBQyxTQUFTLENBQUMsS0FBSyxDQUFDLENBQUM7UUFDL0MsQ0FBQyxDQUFDLENBQUE7UUFFRixJQUFJLENBQUMsOEJBQThCLENBQUMsT0FBTyxDQUFDLFdBQVcsQ0FBQyxHQUFHLEVBQUU7WUFDekQsSUFBSSxDQUFDLG9CQUFvQixDQUFDLFNBQVMsQ0FBQyxLQUFLLENBQUMsQ0FBQztRQUMvQyxDQUFDLENBQUMsQ0FBQTtRQUVGLElBQUksQ0FBQyw2QkFBNkIsQ0FBQyxPQUFPLENBQUMsV0FBVyxDQUFDLEdBQUcsRUFBRTtZQUN4RCxJQUFJLENBQUMsY0FBYyxFQUFFLENBQUM7UUFDMUIsQ0FBQyxDQUFDLENBQUE7UUFFRixJQUFJLENBQUMsMkJBQTJCLENBQUMsT0FBTyxDQUFDLFdBQVcsQ0FBQyxHQUFHLEVBQUU7WUFDdEQsSUFBSSxDQUFDLGNBQWMsRUFBRSxDQUFDO1FBQzFCLENBQUMsQ0FBQyxDQUFBO1FBRUYsSUFBSSxDQUFDLCtCQUErQixDQUFDLE9BQU8sQ0FBQyxXQUFXLENBQUMsR0FBRyxFQUFFO1lBQzFELDJCQUFpQixDQUFDLFFBQVEsQ0FBQyxTQUFTLEVBQUUsQ0FBQztZQUN2QyxJQUFJLENBQUMsb0JBQW9CLENBQUMsU0FBUyxDQUFDLEtBQUssQ0FBQyxDQUFDO1FBQy9DLENBQUMsQ0FBQyxDQUFBO1FBRUYsSUFBSSxDQUFDLDZCQUE2QixDQUFDLE9BQU8sQ0FBQyxXQUFXLENBQUMsR0FBRyxFQUFFO1lBQ3hELDJCQUFpQixDQUFDLFFBQVEsQ0FBQyxTQUFTLEVBQUUsQ0FBQztZQUN2QyxJQUFJLENBQUMsb0JBQW9CLENBQUMsU0FBUyxDQUFDLEtBQUssQ0FBQyxDQUFDO1FBQy9DLENBQUMsQ0FBQyxDQUFBO1FBRUYsSUFBSSxDQUFDLGdDQUFnQyxDQUFDLE9BQU8sQ0FBQyxXQUFXLENBQUMsR0FBRyxFQUFFO1lBQzNELElBQUksQ0FBQyx1QkFBdUIsQ0FBQyxTQUFTLENBQUMsS0FBSyxDQUFDLENBQUM7UUFDbEQsQ0FBQyxDQUFDLENBQUE7SUFDTixDQUFDO0lBRU0sTUFBTTtRQUNULElBQUksQ0FBQyxvQkFBb0IsQ0FBQyxTQUFTLENBQUMsSUFBSSxDQUFDLENBQUM7SUFDOUMsQ0FBQztJQUVPLGNBQWM7UUFDbEIsc0JBQXNCO1FBQ3RCLElBQUksQ0FBQyxvQkFBb0IsQ0FBQyxjQUFjLEVBQUUsQ0FBQztRQUUzQywyQkFBaUIsQ0FBQyxRQUFRLENBQUMsUUFBUSxFQUFFLENBQUM7UUFDdEMsSUFBSSxDQUFDLGtCQUFrQixDQUFDLFNBQVMsQ0FBQyxLQUFLLENBQUMsQ0FBQztJQUM3QyxDQUFDO0lBRU0sdUJBQXVCLENBQUMsU0FBa0I7UUFDN0MsSUFBSSxDQUFDLG9CQUFvQixDQUFDLFNBQVMsQ0FBQyxTQUFTLENBQUMsQ0FBQztRQUMvQyxJQUFJLENBQUMsZ0JBQWdCLENBQUMsU0FBUyxDQUFDLFNBQVMsQ0FBQyxDQUFDO0lBQy9DLENBQUM7SUFFTSxvQkFBb0I7UUFDdkIsSUFBSSxDQUFDLHVCQUF1QixDQUFDLFNBQVMsQ0FBQyxJQUFJLENBQUMsQ0FBQztJQUNqRCxDQUFDO0NBQ0o7QUFqRkQsdUNBaUZDIn0=","assetPath":"Assets/Scripts/Game/HorrorZone/HorrorZoneController.ts","manifest":{"properties":[{"assembly":"UnityEngine.CoreModule","name":"horrorZoneEntranceUI","type":"UnityEngine.GameObject","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.UI","name":"horrorZoneEntranceConfirmButton","type":"UnityEngine.UI.Button","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.UI","name":"horrorZoneEntranceCloseButton","type":"UnityEngine.UI.Button","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.UI","name":"horrorZoneEntranceCancelButton","type":"UnityEngine.UI.Button","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"horrorZoneNoticeUI","type":"UnityEngine.GameObject","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.UI","name":"horrorZoneNoticeConfirmButton","type":"UnityEngine.UI.Button","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.UI","name":"horrorZoneNoticeCloseButton","type":"UnityEngine.UI.Button","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"horrorZoneTutorialUI","type":"UnityEngine.GameObject","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.UI","name":"horrorZoneTutorialConfirmButton","type":"UnityEngine.UI.Button","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.UI","name":"horrorZoneTutorialCloseButton","type":"UnityEngine.UI.Button","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"horrorZoneGameUI","type":"UnityEngine.GameObject","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"localHorrorZoneResultUI","type":"UnityEngine.GameObject","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.UI","name":"localHorrorZoneResultCloseButton","type":"UnityEngine.UI.Button","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"_balloonShopController","type":"UnityEngine.GameObject","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]}],"name":"HorrorZoneController","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: 296dc454d4062f7dade7cd9fc5edc07a
+  onlyWriteTrigger: 0

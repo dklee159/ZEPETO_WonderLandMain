@@ -1,0 +1,34 @@
+fileFormatVersion: 2
+guid: d65c8584f6a3f0b41918d798d978a4a3
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
+    { value: true });\r\nconst UnityEngine_1 = require(\"UnityEngine\");\r\nconst
+    ZEPETO_Character_Controller_1 = require(\"ZEPETO.Character.Controller\");\r\nconst
+    ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nconst ZEPETO_World_1 = require(\"ZEPETO.World\");\r\nconst
+    TypeSyncHelper_1 = require(\"../../ZepetoScripts/SyncHelper/TypeSyncHelper\");\r\nclass
+    MoveToWorld extends ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n    Start() {\r\n       
+    this.fadeAnimator = this.fadeScreen.GetComponent($typeof(UnityEngine_1.Animator));\r\n   
+    }\r\n    OnTriggerEnter(coll) {\r\n        if (!coll.CompareTag(\"LocalPlayer\"))\r\n           
+    return;\r\n        if (coll.gameObject == ZEPETO_Character_Controller_1.ZepetoPlayers.instance.LocalPlayer.zepetoPlayer.character.gameObject)
+    {\r\n            this.fadeAnimator.SetTrigger(\"Teleport\");\r\n            ZEPETO_World_1.ZepetoWorldContent.MoveToWorld(TypeSyncHelper_1.WorldId[this.teleportType],
+    (errCode, errMsg) => {\r\n                console.log(`${errCode} - ${errMsg}`);\r\n           
+    });\r\n        }\r\n    }\r\n}\r\nexports.default = MoveToWorld;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiTW92ZVRvV29ybGQuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyJNb3ZlVG9Xb3JsZC50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOztBQUFBLDZDQUE2RDtBQUM3RCw2RUFBNEQ7QUFDNUQsaURBQXFEO0FBQ3JELCtDQUFrRDtBQUNsRCxrRkFBd0U7QUFFeEUsTUFBcUIsV0FBWSxTQUFRLHFDQUFxQjtJQU1sRCxLQUFLO1FBQ1QsSUFBSSxDQUFDLFlBQVksR0FBRyxJQUFJLENBQUMsVUFBVSxDQUFDLFlBQVksU0FBQyxzQkFBUSxFQUFHLENBQUM7SUFDakUsQ0FBQztJQUVPLGNBQWMsQ0FBQyxJQUFjO1FBQ2pDLElBQUksQ0FBQyxJQUFJLENBQUMsVUFBVSxDQUFDLGFBQWEsQ0FBQztZQUFFLE9BQU87UUFDNUMsSUFBSSxJQUFJLENBQUMsVUFBVSxJQUFJLDJDQUFhLENBQUMsUUFBUSxDQUFDLFdBQVcsQ0FBQyxZQUFZLENBQUMsU0FBUyxDQUFDLFVBQVUsRUFBRTtZQUN6RixJQUFJLENBQUMsWUFBWSxDQUFDLFVBQVUsQ0FBQyxVQUFVLENBQUMsQ0FBQztZQUV6QyxpQ0FBa0IsQ0FBQyxXQUFXLENBQUMsd0JBQU8sQ0FBQyxJQUFJLENBQUMsWUFBWSxDQUFDLEVBQUUsQ0FBQyxPQUFPLEVBQUUsTUFBTSxFQUFFLEVBQUU7Z0JBQy9FLE9BQU8sQ0FBQyxHQUFHLENBQUMsR0FBRyxPQUFPLE1BQU0sTUFBTSxFQUFFLENBQUMsQ0FBQztZQUN0QyxDQUFDLENBQUMsQ0FBQTtTQUNMO0lBQ0wsQ0FBQztDQUNKO0FBcEJELDhCQW9CQyJ9","assetPath":"Assets/Scripts/World/MoveToWorld.ts","manifest":{"properties":[{"assembly":"mscorlib","name":"teleportType","type":"System.String","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"fadeScreen","type":"UnityEngine.GameObject","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]}],"name":"MoveToWorld","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: 8fd1146decc86ff5568bd3f99ddbff9b
+  onlyWriteTrigger: 0

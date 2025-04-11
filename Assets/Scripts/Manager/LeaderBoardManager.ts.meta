@@ -1,0 +1,211 @@
+fileFormatVersion: 2
+guid: 80d93ecf84129d9458ee64954b6e0784
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
+    { value: true });\r\nconst TMPro_1 = require(\"TMPro\");\r\nconst UnityEngine_1
+    = require(\"UnityEngine\");\r\nconst UnityEngine_UI_1 = require(\"UnityEngine.UI\");\r\nconst
+    ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nconst ZEPETO_Script_Leaderboard_1
+    = require(\"ZEPETO.Script.Leaderboard\");\r\nconst ZEPETO_World_1 = require(\"ZEPETO.World\");\r\nconst
+    ZEPETO_Multiplay_1 = require(\"ZEPETO.Multiplay\");\r\nconst TypeSyncHelper_1
+    = require(\"../../ZepetoScripts/SyncHelper/TypeSyncHelper\");\r\nconst MultiplayManager_1
+    = require(\"../../ZepetoScripts/Multiplay/MultiplayManager\");\r\nclass LeaderBoardManager
+    extends ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n    constructor() {\r\n       
+    super(...arguments);\r\n        this.localRankUI = [];\r\n        // @SerializeField()
+    private horror_RankPanels_Result: Transform;\r\n        this.horror_RankUIs_World
+    = [];\r\n        this.horror_RankUIs_All = [];\r\n        this.horror_RankUIs_Notice
+    = [];\r\n        // private horror_LocalRankUI_Result: RankUI;\r\n        this.horror_LocalRankUI_Notice_RankTexts
+    = [];\r\n        this.nickCheckCount = 0;\r\n    }\r\n    static get Instance()
+    {\r\n        if (!LeaderBoardManager._instance) {\r\n            const managerObj
+    = UnityEngine_1.GameObject.Find(\"LeaderBoardManager\");\r\n            if (managerObj)\r\n               
+    LeaderBoardManager._instance = managerObj.GetComponent($typeof(LeaderBoardManager));\r\n       
+    }\r\n        return LeaderBoardManager._instance;\r\n    }\r\n    get nick()
+    { return this._nick; }\r\n    set nick(value) {\r\n        if (this._nick !=
+    null && this._nick != TypeSyncHelper_1.DATA_TYPE.NULL)\r\n            return;\r\n       
+    this._nick = value;\r\n        for (const ui of this.localRankUI)\r\n           
+    ui.text_Id.text = this.ProcessingId(value);\r\n        // GameManager.instance.AddPlayerId(value);\r\n   
+    }\r\n    get Nick() {\r\n        if (this.nick || this.nickCheckCount > 3)\r\n           
+    return false;\r\n        this.nickCheckCount++;\r\n        if (this.nickCheckCount
+    < 3)\r\n            return false;\r\n        const mem = [this._localUserId];\r\n       
+    ZEPETO_World_1.ZepetoWorldHelper.GetUserInfo(mem, (info) => {\r\n           
+    this.nick = info[0].name;\r\n        }, (error) => {\r\n            return console.log(error);\r\n       
+    });\r\n        return true;\r\n    }\r\n    Start() {\r\n        this.rankUICloseButton.onClick.AddListener(()
+    => {\r\n            this.rankUI.SetActive(false);\r\n        });\r\n    }\r\n   
+    /* From GameManager */\r\n    RemoteStart(userId) {\r\n        this._localUserId
+    = userId;\r\n        /* HorrorZone */\r\n        // World\r\n        for (let
+    i = 0; i < this.horror_RankPanels_World.childCount; i++) {\r\n            const
+    panel = this.horror_RankPanels_World.GetChild(i);\r\n            const ui = this.Processing_TimeAttack_SetRankPanel_Sprite(panel,
+    i, this.grayProfile);\r\n            this.horror_RankUIs_World.push(ui);\r\n       
+    }\r\n        for (let i = 0; i < this.horror_RankPanels_All.childCount; i++)
+    {\r\n            const panel = this.horror_RankPanels_All.GetChild(i);\r\n           
+    const ui = this.Processing_TimeAttack_SetRankPanel(panel, i);\r\n           
+    this.horror_RankUIs_All.push(ui);\r\n        }\r\n        for (let i = 0; i <
+    this.horror_RankPanels_Notice.childCount; i++) {\r\n            const panel =
+    this.horror_RankPanels_Notice.GetChild(i);\r\n            const ui = this.Processing_TimeAttack_SetRankPanel_Sprite(panel,
+    i, this.purpleProfile);\r\n            this.horror_RankUIs_Notice.push(ui);\r\n       
+    }\r\n        // for(let i=0; i<this.horror_RankPanels_Result.childCount; i++)
+    {\r\n        //     const panel = this.horror_RankPanels_Result.GetChild(i);\r\n       
+    //     const ui = this.Processing_TimeAttack_SetRankPanel(panel, i);\r\n       
+    //     this.horror_RankUIs_Result.push(ui);\r\n        // }\r\n        // Local\r\n       
+    if (this.horror_LocalRankPanel_All) {\r\n            const panel = this.horror_LocalRankPanel_All;\r\n           
+    const ui = this.Processing_TimeAttack_SetRankPanel(panel, -1);\r\n           
+    this.horror_LocalRankUI_All = ui;\r\n            this.localRankUI.push(ui);\r\n           
+    // Rank Text\r\n            this.horror_LocalRankUI_Notice_RankTexts.push(panel.GetChild(panel.childCount
+    - 1).GetComponent($typeof(TMPro_1.TextMeshProUGUI)));\r\n        }\r\n       
+    if (this.horror_LocalRankPanel_Notice) {\r\n            const panel = this.horror_LocalRankPanel_Notice;\r\n           
+    const ui = this.Processing_TimeAttack_SetRankPanel_Sprite(panel, -1, this.purpleProfile);\r\n           
+    this.horror_LocalRankUI_Notice = ui;\r\n            this.localRankUI.push(ui);\r\n           
+    // Rank Text\r\n            this.horror_LocalRankUI_Notice_RankTexts.push(panel.GetChild(panel.childCount
+    - 1).GetComponent($typeof(TMPro_1.TextMeshProUGUI)));\r\n        }\r\n       
+    // if(this.horror_LocalRankPanel_Result) {\r\n        //     const panel = this.horror_LocalRankPanel_Result;\r\n       
+    //     const ui = this.Processing_TimeAttack_SetRankPanel(panel, -1);\r\n       
+    //     this.horror_LocalRankUI_Result = ui;\r\n        //     this.localRankUI.push(ui);\r\n       
+    // }\r\n        // Update Data\r\n        this.Horror_SetLocalRankUI(0, false);\r\n   
+    }\r\n    /* Set Local Rank UI */\r\n    Horror_SetLocalRankUI(timer, rank = true)
+    {\r\n        this.horror_LocalRankUI_All.text_Id.text = this.ProcessingId(this.nick);\r\n       
+    this.horror_LocalRankUI_Notice.text_Id.text = this.ProcessingId(this.nick);\r\n       
+    // this.horror_LocalRankUI_Result.text_Id.text = this.ProcessingId(this.nick);\r\n       
+    // this.horror_LocalRankUI_Result.text_Score.text = this.FormatTimerText(timer);\r\n       
+    rank = rank && timer > 0;\r\n        if (rank)\r\n            this.Horror_RankScore(timer);\r\n       
+    else\r\n            this.Horror_UpdateRank();\r\n    }\r\n    ProcessingId(beforeId)
+    {\r\n        if (!beforeId)\r\n            return `***`;\r\n        if (beforeId.length
+    < 8) {\r\n            return beforeId;\r\n        }\r\n        return `${beforeId.slice(0,
+    6)}***`;\r\n    }\r\n    FormatTimerText(timer, formating = false) {\r\n       
+    const time = formating ? timer * 0.001 : timer;\r\n        const minutes = UnityEngine_1.Mathf.Floor(time
+    / 60);\r\n        const seconds = UnityEngine_1.Mathf.Floor(time % 60);\r\n       
+    const millSec = UnityEngine_1.Mathf.Floor((time * 100) % 100);\r\n        const
+    formattedString = `${minutes.toString().padStart(2, TypeSyncHelper_1.RankData.Zero)}:${seconds.toString().padStart(2,
+    TypeSyncHelper_1.RankData.Zero)}:${millSec.toString().padStart(2, TypeSyncHelper_1.RankData.Zero)}`;\r\n       
+    return formattedString;\r\n    }\r\n    /* Update Local Player''s Score */\r\n   
+    Horror_RankScore(time) {\r\n        ZEPETO_Script_Leaderboard_1.LeaderboardAPI.SetScore(TypeSyncHelper_1.RankData.HorrorZoneTimeId,
+    time * 1000, (result) => {\r\n            this.SendUpdateRank(TypeSyncHelper_1.RankData.HorrorZone);\r\n       
+    }, (error) => {\r\n            console.error(` UpdateScore error : ${error} `);\r\n       
+    });\r\n    }\r\n    /* Leaderboard Send Update Signal */\r\n    SendUpdateRank(rankType)
+    {\r\n        const data = new ZEPETO_Multiplay_1.RoomData();\r\n        data.Add(TypeSyncHelper_1.EVENT_MESSAGE.Type,
+    rankType);\r\n        MultiplayManager_1.default.instance.room.Send(TypeSyncHelper_1.EVENT_MESSAGE.LeaderBoard_Update,
+    data.GetObject());\r\n    }\r\n    /* Leaderboard + UserInfo */\r\n    Horror_UpdateRank()
+    {\r\n        console.log(`[LeaderBoard] Try to GetRangeRank ${TypeSyncHelper_1.RankData.HorrorZoneTimeId}`);\r\n       
+    //\r\n        ZEPETO_Script_Leaderboard_1.LeaderboardAPI.GetRangeRank(TypeSyncHelper_1.RankData.HorrorZoneTimeId,
+    TypeSyncHelper_1.RankData.Rank_Start, TypeSyncHelper_1.RankData.Rank_End, ZEPETO_Script_Leaderboard_1.ResetRule.none,
+    false, (result) => {\r\n            console.log(`[LeaderBoard] success GetRangeRank`);\r\n           
+    /* Get Player Datas */\r\n            let cheatUser = 0;\r\n            const
+    mems = [];\r\n            const rankList = result.rankInfo.rankList;\r\n           
+    if (rankList) {\r\n                for (let i = 0; i < rankList.length; i++)
+    {\r\n                    if (TypeSyncHelper_1.RankData.Rank_End > i) {\r\n                       
+    const data = rankList[i];\r\n                        if (data.score == 0)\r\n                           
+    cheatUser++;\r\n                        else\r\n                            mems.push(data.member);\r\n                   
+    }\r\n                    else {\r\n                        break;\r\n                   
+    }\r\n                }\r\n            }\r\n            if (mems.length < 1)\r\n               
+    return;\r\n            rankList.splice(0, cheatUser);\r\n            /* Set Local
+    UI */\r\n            const myRank = result.rankInfo.myRank;\r\n            if
+    (!this.nick || this.nick == TypeSyncHelper_1.DATA_TYPE.Empty || this.nick ==
+    TypeSyncHelper_1.DATA_TYPE.NULL) {\r\n                if (!myRank.name)\r\n                   
+    this.Nick;\r\n                else\r\n                    this.nick = myRank.name;\r\n           
+    }\r\n            for (const rankText of this.horror_LocalRankUI_Notice_RankTexts)\r\n               
+    rankText.text = this.FormatRankText(myRank.rank - cheatUser);\r\n           
+    this.horror_LocalRankUI_All.text_Score.text = this.FormatTimerText(myRank.score,
+    true);\r\n            this.horror_LocalRankUI_All.text_Id.text = this.ProcessingId(this.nick);\r\n           
+    this.horror_LocalRankUI_Notice.text_Score.text = this.FormatTimerText(myRank.score,
+    true);\r\n            this.horror_LocalRankUI_Notice.text_Id.text = this.ProcessingId(this.nick);\r\n           
+    // Profile\r\n            ZEPETO_World_1.ZepetoWorldHelper.GetProfileTexture(this._localUserId,
+    (texture) => {\r\n                const rect = new UnityEngine_1.Rect(0, 0, texture.width,
+    texture.height);\r\n                const sprite = UnityEngine_1.Sprite.Create(texture,
+    rect, new UnityEngine_1.Vector2(0.5, 0.5));\r\n                this.horror_LocalRankUI_Notice.profile.sprite
+    = sprite;\r\n            }, (error) => {\r\n                console.log(error);\r\n           
+    });\r\n            /* Get Player ID */\r\n            ZEPETO_World_1.ZepetoWorldHelper.GetUserInfo(mems,
+    (_info) => {\r\n                /* Text Clear */\r\n                for (let
+    i = 0; i < this.horror_RankUIs_World.length; i++) {\r\n                    const
+    ui = this.horror_RankUIs_World[i];\r\n                    ui.text_Id.text = TypeSyncHelper_1.RankData.Empty_Line;\r\n                   
+    ui.text_Score.text = TypeSyncHelper_1.RankData.Zero_Time;\r\n                   
+    ui.profile.sprite = this.grayProfile;\r\n                }\r\n               
+    for (let i = 0; i < this.horror_RankUIs_All.length; i++) {\r\n                   
+    const ui = this.horror_RankUIs_All[i];\r\n                    ui.text_Id.text
+    = TypeSyncHelper_1.RankData.Empty_Line;\r\n                    ui.text_Score.text
+    = TypeSyncHelper_1.RankData.Zero_Time;\r\n                }\r\n               
+    for (let i = 0; i < this.horror_RankUIs_Notice.length; i++) {\r\n                   
+    const ui = this.horror_RankUIs_Notice[i];\r\n                    ui.text_Id.text
+    = TypeSyncHelper_1.RankData.Empty_Line;\r\n                    ui.text_Score.text
+    = TypeSyncHelper_1.RankData.Zero_Time;\r\n                    ui.profile.sprite
+    = this.purpleProfile;\r\n                }\r\n                // for(let i=0;
+    i<this.horror_RankUIs_Result.length; i++) {\r\n                //     const ui
+    = this.horror_RankUIs_Result[i];\r\n                //     ui.text_Id.text =
+    RankData.Empty_Line;\r\n                //     ui.text_Score.text = RankData.Zero_Time;\r\n               
+    // }\r\n                /* Update Rank Text */\r\n                if (rankList)
+    {\r\n                    for (let i = 0; i < rankList.length; i++) {\r\n                       
+    if (TypeSyncHelper_1.RankData.Rank_End <= i)\r\n                            break;\r\n                       
+    const data = rankList[i];\r\n                        if (this.horror_RankUIs_World.length
+    > i) {\r\n                            const ui = this.horror_RankUIs_World[i];\r\n                           
+    ui.text_Id.text = this.ProcessingId(data.name);\r\n                           
+    ui.text_Score.text = this.FormatTimerText(data.score, true);\r\n                           
+    ui.profile.sprite = this.grayProfile;\r\n                        }\r\n                       
+    if (this.horror_RankUIs_All.length > i) {\r\n                            const
+    ui = this.horror_RankUIs_All[i];\r\n                            ui.text_Id.text
+    = this.ProcessingId(data.name);\r\n                            ui.text_Score.text
+    = this.FormatTimerText(data.score, true);\r\n                        }\r\n                       
+    if (this.horror_RankUIs_Notice.length > i) {\r\n                            const
+    ui = this.horror_RankUIs_Notice[i];\r\n                            ui.text_Id.text
+    = this.ProcessingId(data.name);\r\n                            ui.text_Score.text
+    = this.FormatTimerText(data.score, true);\r\n                            ui.profile.sprite
+    = this.purpleProfile;\r\n                        }\r\n                       
+    // if(this.horror_RankUIs_Result.length > i) {\r\n                        //    
+    const ui = this.horror_RankUIs_Result[i];\r\n                        //     ui.text_Id.text
+    = this.ProcessingId(data.name);\r\n                        //     ui.text_Score.text
+    = this.FormatTimerText(data.score, true);\r\n                        // }\r\n                       
+    // Profile\r\n                        ZEPETO_World_1.ZepetoWorldHelper.GetProfileTexture(data.member,
+    (texture) => {\r\n                            const rect = new UnityEngine_1.Rect(0,
+    0, texture.width, texture.height);\r\n                            const sprite
+    = UnityEngine_1.Sprite.Create(texture, rect, new UnityEngine_1.Vector2(0.5, 0.5));\r\n                           
+    if (this.horror_RankUIs_World.length > i)\r\n                               
+    this.horror_RankUIs_World[i].profile.sprite = sprite;\r\n                           
+    if (this.horror_RankUIs_Notice.length > i)\r\n                               
+    this.horror_RankUIs_Notice[i].profile.sprite = sprite;\r\n                       
+    }, (error) => {\r\n                            console.log(error, data.member);\r\n                       
+    });\r\n                    }\r\n                }\r\n            }, (error) =>
+    {\r\n                return console.log(error);\r\n            });\r\n       
+    }, (error) => {\r\n            console.error(error);\r\n        });\r\n    }\r\n   
+    Processing_TimeAttack_SetRankPanel_Sprite(panel, index, sprite) {\r\n       
+    return this.Processing_RankPanel_Sprite(panel, index, TypeSyncHelper_1.RankData.Zero_Time,
+    sprite);\r\n    }\r\n    Processing_TimeAttack_SetRankPanel(panel, index) {\r\n       
+    return this.Processing_RankPanel(panel, index, TypeSyncHelper_1.RankData.Zero_Time);\r\n   
+    }\r\n    Processing_RankPanel_Sprite(panel, index, score, sprite) {\r\n       
+    const text_Id = panel.GetChild(0).GetComponent($typeof(TMPro_1.TextMeshProUGUI));\r\n       
+    const text_Score = panel.GetChild(1).GetComponent($typeof(TMPro_1.TextMeshProUGUI));\r\n       
+    const profile = panel.GetChild(2).GetChild(0).GetComponent($typeof(UnityEngine_UI_1.Image));\r\n       
+    /* Set Clear */\r\n        text_Id.text = TypeSyncHelper_1.RankData.Empty_Line;\r\n       
+    text_Score.text = score;\r\n        profile.sprite = sprite;\r\n        /* Pushed
+    Array */\r\n        const ui = {\r\n            panel: panel.gameObject,\r\n           
+    rank: index,\r\n            text_Id: text_Id,\r\n            text_Score: text_Score,\r\n           
+    profile: profile,\r\n        };\r\n        return ui;\r\n    }\r\n    Processing_RankPanel(panel,
+    index, score) {\r\n        const text_Id = panel.GetChild(0).GetComponent($typeof(TMPro_1.TextMeshProUGUI));\r\n       
+    const text_Score = panel.GetChild(1).GetComponent($typeof(TMPro_1.TextMeshProUGUI));\r\n       
+    /* Set Clear */\r\n        text_Id.text = TypeSyncHelper_1.RankData.Empty_Line;\r\n       
+    text_Score.text = score;\r\n        /* Pushed Array */\r\n        const ui =
+    {\r\n            panel: panel.gameObject,\r\n            rank: index,\r\n           
+    text_Id: text_Id,\r\n            text_Score: text_Score,\r\n            profile:
+    null,\r\n        };\r\n        return ui;\r\n    }\r\n    FormatRankText(rank)
+    {\r\n        if (rank == 1)\r\n            return `${rank}st`;\r\n        else
+    if (rank == 2)\r\n            return `${rank}nd`;\r\n        else if (rank ==
+    3)\r\n            return `${rank}rd`;\r\n        else if (rank == 0)\r\n           
+    return TypeSyncHelper_1.RankData.Empty_Line;\r\n        return `${rank}th`;\r\n   
+    }\r\n    OpenRankUI() {\r\n        this.rankUI.SetActive(true);\r\n    }\r\n   
+    SetTreasureHuntRank(score) {\r\n        ZEPETO_Script_Leaderboard_1.LeaderboardAPI.SetScore(TypeSyncHelper_1.RankData.TreasureHuntId,
+    score, (result) => {\r\n            console.log(`score: ${score}`);\r\n       
+    });\r\n    }\r\n}\r\nexports.default = LeaderBoardManager;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiTGVhZGVyQm9hcmRNYW5hZ2VyLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiTGVhZGVyQm9hcmRNYW5hZ2VyLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7O0FBQUEsaUNBQXdDO0FBQ3hDLDZDQUFzRztBQUN0RyxtREFBK0M7QUFDL0MsaURBQXFEO0FBQ3JELHlFQUE4RztBQUM5RywrQ0FBd0Q7QUFDeEQsdURBQTRDO0FBQzVDLGtGQUFtRztBQUNuRyxxRkFBOEU7QUFFOUUsTUFBcUIsa0JBQW1CLFNBQVEscUNBQXFCO0lBQXJFOztRQWNZLGdCQUFXLEdBQWEsRUFBRSxDQUFDO1FBS25DLGlFQUFpRTtRQUN6RCx5QkFBb0IsR0FBWSxFQUFFLENBQUM7UUFDbkMsdUJBQWtCLEdBQVksRUFBRSxDQUFDO1FBQ2pDLDBCQUFxQixHQUFZLEVBQUUsQ0FBQztRQVc1Qyw2Q0FBNkM7UUFDckMsd0NBQW1DLEdBQXNCLEVBQUUsQ0FBQztRQWE1RCxtQkFBYyxHQUFVLENBQUMsQ0FBQztJQWtVdEMsQ0FBQztJQTlXVSxNQUFNLEtBQUssUUFBUTtRQUN0QixJQUFJLENBQUMsa0JBQWtCLENBQUMsU0FBUyxFQUFFO1lBQy9CLE1BQU0sVUFBVSxHQUFHLHdCQUFVLENBQUMsSUFBSSxDQUFDLG9CQUFvQixDQUFDLENBQUM7WUFDekQsSUFBSSxVQUFVO2dCQUFFLGtCQUFrQixDQUFDLFNBQVMsR0FBRyxVQUFVLENBQUMsWUFBWSxTQUFDLGtCQUFrQixFQUFHLENBQUM7U0FDaEc7UUFDRCxPQUFPLGtCQUFrQixDQUFDLFNBQVMsQ0FBQztJQUN4QyxDQUFDO0lBOEJELElBQVcsSUFBSSxLQUFhLE9BQU8sSUFBSSxDQUFDLEtBQUssQ0FBQyxDQUFDLENBQUM7SUFDaEQsSUFBVyxJQUFJLENBQUMsS0FBYTtRQUN6QixJQUFJLElBQUksQ0FBQyxLQUFLLElBQUksSUFBSSxJQUFJLElBQUksQ0FBQyxLQUFLLElBQUksMEJBQVMsQ0FBQyxJQUFJO1lBQUUsT0FBTztRQUMv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","assetPath":"Assets/Scripts/Manager/LeaderBoardManager.ts","manifest":{"properties":[{"assembly":"UnityEngine.CoreModule","name":"grayProfile","type":"UnityEngine.Sprite","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"Header","args":["\"Main\""]},{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"purpleProfile","type":"UnityEngine.Sprite","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"horror_RankPanels_World","type":"UnityEngine.Transform","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"horror_RankPanels_All","type":"UnityEngine.Transform","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"horror_RankPanels_Notice","type":"UnityEngine.Transform","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"horror_LocalRankPanel_All","type":"UnityEngine.Transform","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"horror_LocalRankPanel_Notice","type":"UnityEngine.Transform","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"rankUI","type":"UnityEngine.GameObject","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.UI","name":"rankUICloseButton","type":"UnityEngine.UI.Button","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]}],"name":"LeaderBoardManager","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: ab9d79999a6d713e7c8f93338bcb97c6
+  onlyWriteTrigger: 0

@@ -1,0 +1,53 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - LocalPlayer
+  - SpawnPoint
+  - Trigger
+  - Weapon
+  - Loading
+  - ShootTarget
+  - ShootSource
+  - BalloonPhoto
+  - NPC
+  - BumperCar
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - Button
+  - Render Frame
+  - Render Item
+  - 
+  - Wall
+  - Ground
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - NPC
+  - Player
+  - ShootTarget
+  - ShootSource
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0

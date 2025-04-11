@@ -1,0 +1,128 @@
+fileFormatVersion: 2
+guid: 9bccfec590afa424283754dac686164a
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: "{\"source\":\"\\\"use strict\\\";\\r\\nObject.defineProperty(exports,
+    \\\"__esModule\\\", { value: true });\\r\\nexports.TranslateStringData = exports.LanguageType
+    = void 0;\\r\\nconst UnityEngine_1 = require(\\\"UnityEngine\\\");\\r\\nconst
+    ZEPETO_Script_1 = require(\\\"ZEPETO.Script\\\");\\r\\nvar LanguageType;\\r\\n(function
+    (LanguageType) {\\r\\n    LanguageType[LanguageType[\\\"None\\\"] = -1] = \\\"None\\\";\\r\\n   
+    LanguageType[LanguageType[\\\"Kr\\\"] = 1] = \\\"Kr\\\";\\r\\n    LanguageType[LanguageType[\\\"En\\\"]
+    = 2] = \\\"En\\\";\\r\\n    LanguageType[LanguageType[\\\"Jp\\\"] = 3] = \\\"Jp\\\";\\r\\n   
+    LanguageType[LanguageType[\\\"ChS\\\"] = 4] = \\\"ChS\\\";\\r\\n    LanguageType[LanguageType[\\\"ChT\\\"]
+    = 5] = \\\"ChT\\\";\\r\\n    LanguageType[LanguageType[\\\"Th\\\"] = 6] = \\\"Th\\\";\\r\\n   
+    LanguageType[LanguageType[\\\"In\\\"] = 7] = \\\"In\\\";\\r\\n    LanguageType[LanguageType[\\\"Vn\\\"]
+    = 8] = \\\"Vn\\\";\\r\\n    LanguageType[LanguageType[\\\"Fr\\\"] = 9] = \\\"Fr\\\";\\r\\n})(LanguageType
+    = exports.LanguageType || (exports.LanguageType = {}));\\r\\nclass TranslateManager
+    extends ZEPETO_Script_1.ZepetoScriptBehaviour {\\r\\n    static reformat(a, ...arg)
+    {\\r\\n        var formatted = a;\\r\\n        for (let i = 0; i < arg.length;
+    i++) {\\r\\n            formatted = formatted.replace(\\\"{\\\" + i + \\\"}\\\",
+    arg[i]);\\r\\n        }\\r\\n        return formatted;\\r\\n    }\\r\\n    ;\\r\\n   
+    static get nowSystemLanguage() {\\r\\n        /* Backdoor */\\r\\n        //
+    if(GameManager.instance.editLanguage) return GameManager.instance.editLanguageType;\\r\\n       
+    if (this.nowLanguage = LanguageType.None) {\\r\\n            switch (UnityEngine_1.Application.systemLanguage)
+    {\\r\\n                case UnityEngine_1.SystemLanguage.Korean:\\r\\n                   
+    this.nowLanguage = LanguageType.Kr;\\r\\n                    break;\\r\\n               
+    case UnityEngine_1.SystemLanguage.English:\\r\\n                    this.nowLanguage
+    = LanguageType.En;\\r\\n                    break;\\r\\n                case
+    UnityEngine_1.SystemLanguage.Chinese:\\r\\n                    this.nowLanguage
+    = LanguageType.ChS;\\r\\n                    break;\\r\\n                case
+    UnityEngine_1.SystemLanguage.ChineseSimplified:\\r\\n                    this.nowLanguage
+    = LanguageType.ChS;\\r\\n                    break;\\r\\n                case
+    UnityEngine_1.SystemLanguage.ChineseTraditional:\\r\\n                    this.nowLanguage
+    = LanguageType.ChT;\\r\\n                    break;\\r\\n                case
+    UnityEngine_1.SystemLanguage.Japanese:\\r\\n                    this.nowLanguage
+    = LanguageType.Jp;\\r\\n                    break;\\r\\n                case
+    UnityEngine_1.SystemLanguage.Thai:\\r\\n                    this.nowLanguage
+    = LanguageType.Th;\\r\\n                    break;\\r\\n                case
+    UnityEngine_1.SystemLanguage.Vietnamese:\\r\\n                    this.nowLanguage
+    = LanguageType.Vn;\\r\\n                    break;\\r\\n                case
+    UnityEngine_1.SystemLanguage.French:\\r\\n                    this.nowLanguage
+    = LanguageType.Fr;\\r\\n                    break;\\r\\n                case
+    UnityEngine_1.SystemLanguage.Indonesian:\\r\\n                    this.nowLanguage
+    = LanguageType.In;\\r\\n                    break;\\r\\n                default:\\r\\n                   
+    this.nowLanguage = LanguageType.En;\\r\\n                    break;\\r\\n           
+    }\\r\\n        }\\r\\n        return this.nowLanguage;\\r\\n    }\\r\\n    static
+    get InitTextDB() {\\r\\n        if (this.textDB.length < 1) {\\r\\n           
+    let textDBText = UnityEngine_1.Resources.Load(\\\"kw_translate_all\\\");\\r\\n           
+    this.InputTextData(textDBText);\\r\\n        }\\r\\n        return this.textDB;\\r\\n   
+    }\\r\\n    static InputTextData(csvData) {\\r\\n        let textAsset = csvData;\\r\\n       
+    if (textAsset == null)\\r\\n            return;\\r\\n        let textAssetStr
+    = textAsset.text;\\r\\n        let strSplitLine = textAssetStr.split('\\\\n');\\r\\n       
+    for (let i = 0; i < strSplitLine.length; ++i) {\\r\\n            while (strSplitLine[i].includes(\\\"<br>\\\"))
+    {\\r\\n                strSplitLine[i] = strSplitLine[i].replace(\\\"<br>\\\",
+    '\\\\n');\\r\\n            }\\r\\n            const nowLineStr = strSplitLine[i].split(',');\\r\\n           
+    const test = [];\\r\\n            // let signOrder:number = 0;\\r\\n           
+    for (let j = 0; j < nowLineStr.length; ++j) {\\r\\n                let sumStr;\\r\\n               
+    const tstr = nowLineStr[j].trim();\\r\\n                if (tstr[0] == '\\\"'
+    && tstr[tstr.length - 1] == '\\\"') {\\r\\n                    const pattern
+    = /\\\"/g;\\r\\n                    const replacement = ``;\\r\\n                   
+    sumStr = nowLineStr[j].replace(pattern, replacement);\\r\\n                }\\r\\n               
+    else {\\r\\n                    if (nowLineStr[j].includes('\\\"')) //.Contains(\\\"\\\\\\\"\\\"))\\r\\n                    
+    {\\r\\n                        sumStr = nowLineStr[j];\\r\\n                       
+    for (j = j + 1; j < nowLineStr.length; ++j) {\\r\\n                           
+    sumStr += nowLineStr[j];\\r\\n                            if (nowLineStr[j].includes('\\\"'))
+    {\\r\\n                                break;\\r\\n                           
+    }\\r\\n                        }\\r\\n                        //sumStr = sumStr.split('\\\"')[1];\\r\\n                       
+    let kk = sumStr.split('\\\"');\\r\\n                        sumStr = kk[1];\\r\\n                   
+    }\\r\\n                    else {\\r\\n                        sumStr = nowLineStr[j];\\r\\n                   
+    }\\r\\n                }\\r\\n                test.push(sumStr);\\r\\n           
+    }\\r\\n            this.textDB.push(this.SetTextData(test));\\r\\n           
+    //console.log(test);\\r\\n        }\\r\\n    }\\r\\n    static ParseDataWithText(csvData)
+    {\\r\\n        let nowString = false;\\r\\n        let test = ['', '', '', '',
+    '', '', '', '', ''];\\r\\n        let idx = 0;\\r\\n        console.log(csvData.text.length);\\r\\n       
+    let x = csvData.text.length;\\r\\n        let argu = '';\\r\\n        for (let
+    i = 0; i < x; i++) {\\r\\n            switch (csvData.text[i]) {\\r\\n               
+    case '\\\\n':\\r\\n                    if (nowString == true) {\\r\\n                       
+    test[idx] += csvData.text[i];\\r\\n                    }\\r\\n                   
+    else {\\r\\n                        console.log(test);\\r\\n                       
+    this.textDB.push(this.SetTextData(test));\\r\\n                        idx +=
+    1;\\r\\n                        test = ['', '', '', '', '', '', '', '', ''];\\r\\n                       
+    idx = 0;\\r\\n                    }\\r\\n                    break;\\r\\n               
+    case ',':\\r\\n                    if (nowString == true) {\\r\\n                       
+    test[idx] += csvData.text[i];\\r\\n                    }\\r\\n                   
+    else {\\r\\n                        idx += 1;\\r\\n                    }\\r\\n                   
+    break;\\r\\n                case '\\\"':\\r\\n                    if (nowString
+    == false) {\\r\\n                        nowString = true;\\r\\n                   
+    }\\r\\n                    else {\\r\\n                        if (csvData.text[i
+    + 1] == '\\\"') {\\r\\n                            test[idx] += csvData.text[i];\\r\\n                           
+    i = i + 1;\\r\\n                        }\\r\\n                        else {\\r\\n                           
+    nowString = false;\\r\\n                        }\\r\\n                    }\\r\\n                   
+    break;\\r\\n                default:\\r\\n                    test[idx] += csvData.text[i];\\r\\n                   
+    break;\\r\\n            }\\r\\n        }\\r\\n    }\\r\\n    static SetTextData(stringData)
+    {\\r\\n        var newTextData = new TranslateStringData();\\r\\n        newTextData.stringData
+    = new Array();\\r\\n        newTextData.stringID = parseInt(stringData[0]);\\r\\n       
+    newTextData.stringData.push(stringData[LanguageType.Kr]);\\r\\n        newTextData.stringData.push(stringData[LanguageType.En]);\\r\\n       
+    newTextData.stringData.push(stringData[LanguageType.Jp]);\\r\\n        newTextData.stringData.push(stringData[LanguageType.ChS]);\\r\\n       
+    newTextData.stringData.push(stringData[LanguageType.ChT]);\\r\\n        newTextData.stringData.push(stringData[LanguageType.Th]);\\r\\n       
+    newTextData.stringData.push(stringData[LanguageType.In]);\\r\\n        newTextData.stringData.push(stringData[LanguageType.Vn]);\\r\\n       
+    newTextData.stringData.push(stringData[LanguageType.Fr]);\\r\\n        return
+    newTextData;\\r\\n    }\\r\\n    static GetText(idx) {\\r\\n        let stringdata;\\r\\n       
+    this.InitTextDB.forEach(ea => {\\r\\n            if (ea.stringID == idx) {\\r\\n               
+    stringdata = ea.stringData[this.nowSystemLanguage - 1];\\r\\n               
+    // if(TranslateManager.nowLanguage == LanguageType.In){\\r\\n               
+    //     stringdata = stringdata.trim();\\r\\n                // }\\r\\n           
+    }\\r\\n        });\\r\\n        if (stringdata == null) {\\r\\n            stringdata
+    = '[\uD14D\uC2A4\uD2B8\uAC00 \uC874\uC7AC\uD558\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4.]
+    \uC0AC\uC6A9\uB41C \uC778\uB371\uC2A4: ' + idx;\\r\\n        }\\r\\n        return
+    stringdata;\\r\\n    }\\r\\n}\\r\\nexports.default = TranslateManager;\\r\\nTranslateManager.nowLanguage
+    = LanguageType.None;\\r\\nTranslateManager.textDB = new Array();\\r\\nclass TranslateStringData
+    {\\r\\n}\\r\\nexports.TranslateStringData = TranslateStringData;\\r\\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiVHJhbnNsYXRlTWFuYWdlci5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIlRyYW5zbGF0ZU1hbmFnZXIudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7O0FBQUEsNkNBQWdGO0FBQ2hGLGlEQUFxRDtBQUVyRCxJQUFZLFlBWVg7QUFaRCxXQUFZLFlBQVk7SUFFcEIsZ0RBQVMsQ0FBQTtJQUNULDJDQUFNLENBQUE7SUFDTiwyQ0FBTSxDQUFBO0lBQ04sMkNBQU0sQ0FBQTtJQUNOLDZDQUFPLENBQUE7SUFDUCw2Q0FBTyxDQUFBO0lBQ1AsMkNBQU0sQ0FBQTtJQUNOLDJDQUFNLENBQUE7SUFDTiwyQ0FBTSxDQUFBO0lBQ04sMkNBQU0sQ0FBQTtBQUNWLENBQUMsRUFaVyxZQUFZLEdBQVosb0JBQVksS0FBWixvQkFBWSxRQVl2QjtBQUVELE1BQXFCLGdCQUFpQixTQUFRLHFDQUFxQjtJQUl4RCxNQUFNLENBQUMsUUFBUSxDQUFDLENBQVEsRUFBRSxHQUFHLEdBQVk7UUFFNUMsSUFBSSxTQUFTLEdBQUcsQ0FBQyxDQUFDO1FBQ2xCLEtBQUksSUFBSSxDQUFDLEdBQUMsQ0FBQyxFQUFDLENBQUMsR0FBQyxHQUFHLENBQUMsTUFBTSxFQUFDLENBQUMsRUFBRSxFQUM1QjtZQUNJLFNBQVMsR0FBRyxTQUFTLENBQUMsT0FBTyxDQUFDLEdBQUcsR0FBRyxDQUFDLEdBQUcsR0FBRyxFQUFFLEdBQUcsQ0FBQyxDQUFDLENBQUMsQ0FBQyxDQUFDO1NBQ3hEO1FBQ0QsT0FBTyxTQUFTLENBQUM7SUFDckIsQ0FBQztJQUFBLENBQUM7SUFFSyxNQUFNLEtBQUssaUJBQWlCO1FBRS9CLGNBQWM7UUFDZCxzRkFBc0Y7UUFFdEYsSUFBRyxJQUFJLENBQUMsV0FBVyxHQUFHLFlBQVksQ0FBQyxJQUFJLEVBQ3ZDO1lBQ0ksUUFBTyx5QkFBVyxDQUFDLGNBQWMsRUFDakM7Z0JBRUksS0FBSyw0QkFBYyxDQUFDLE1BQU07b0JBQ3RCLElBQUksQ0FBQyxXQUFXLEdBQUcsWUFB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\",\"assetPath\":\"Assets/ZepetoScripts/Localize/TranslateManager.ts\",\"manifest\":{\"properties\":[],\"name\":\"TranslateManager\",\"description\":\"\",\"hasAnimatorMove\":false},\"isCompiled\":true}"
+  typescriptHash: 402a377a9b4e813ff95a0322224b59a7
+  onlyWriteTrigger: 0

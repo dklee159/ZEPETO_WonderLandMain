@@ -1,0 +1,80 @@
+fileFormatVersion: 2
+guid: 9e9019f98e956c94c9e7728e42078b2c
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
+    { value: true });\r\nexports.TimeSpan = void 0;\r\nconst MILLIS_PER_SECOND =
+    1000;\r\nconst MILLIS_PER_MINUTE = MILLIS_PER_SECOND * 60; //     60,000\r\nconst
+    MILLIS_PER_HOUR = MILLIS_PER_MINUTE * 60; //  3,600,000\r\nconst MILLIS_PER_DAY
+    = MILLIS_PER_HOUR * 24; // 86,400,000\r\nclass TimeSpan {\r\n    static interval(value,
+    scale) {\r\n        if (Number.isNaN(value)) {\r\n            throw new Error(\"value
+    can''t be NaN\");\r\n        }\r\n        const tmp = value * scale;\r\n       
+    const millis = TimeSpan.round(tmp + (value >= 0 ? 0.5 : -0.5));\r\n        if
+    ((millis > TimeSpan.maxValue.totalMilliseconds) || (millis < TimeSpan.minValue.totalMilliseconds))
+    {\r\n            //throw new TimeSpanOverflowError(\"TimeSpanTooLong\");\r\n           
+    throw new Error(\"TimeSpanTooLong\");\r\n        }\r\n        return new TimeSpan(millis);\r\n   
+    }\r\n    static round(n) {\r\n        if (n < 0) {\r\n            return Math.ceil(n);\r\n       
+    }\r\n        else if (n > 0) {\r\n            return Math.floor(n);\r\n       
+    }\r\n        return 0;\r\n    }\r\n    static timeToMilliseconds(hour, minute,
+    second) {\r\n        const totalSeconds = (hour * 3600) + (minute * 60) + second;\r\n       
+    if (totalSeconds > TimeSpan.maxValue.totalSeconds || totalSeconds < TimeSpan.minValue.totalSeconds)
+    {\r\n            //throw new TimeSpanOverflowError(\"TimeSpanTooLong\");\r\n           
+    throw new Error(\"TimeSpanTooLong\");\r\n        }\r\n        return totalSeconds
+    * MILLIS_PER_SECOND;\r\n    }\r\n    static get zero() {\r\n        return new
+    TimeSpan(0);\r\n    }\r\n    static get maxValue() {\r\n        return new TimeSpan(Number.MAX_SAFE_INTEGER);\r\n   
+    }\r\n    static get minValue() {\r\n        return new TimeSpan(Number.MIN_SAFE_INTEGER);\r\n   
+    }\r\n    static fromDays(value) {\r\n        return TimeSpan.interval(value,
+    MILLIS_PER_DAY);\r\n    }\r\n    static fromHours(value) {\r\n        return
+    TimeSpan.interval(value, MILLIS_PER_HOUR);\r\n    }\r\n    static fromMilliseconds(value)
+    {\r\n        return TimeSpan.interval(value, 1);\r\n    }\r\n    static fromMinutes(value)
+    {\r\n        return TimeSpan.interval(value, MILLIS_PER_MINUTE);\r\n    }\r\n   
+    static fromSeconds(value) {\r\n        return TimeSpan.interval(value, MILLIS_PER_SECOND);\r\n   
+    }\r\n    static fromTime(daysOrHours, hoursOrMinutes, minutesOrSeconds, seconds,
+    milliseconds) {\r\n        if (milliseconds != undefined) {\r\n            return
+    this.fromTimeStartingFromDays(daysOrHours, hoursOrMinutes, minutesOrSeconds,
+    seconds, milliseconds);\r\n        }\r\n        else {\r\n            return
+    this.fromTimeStartingFromHours(daysOrHours, hoursOrMinutes, minutesOrSeconds);\r\n       
+    }\r\n    }\r\n    static fromTimeStartingFromHours(hours, minutes, seconds) {\r\n       
+    const millis = TimeSpan.timeToMilliseconds(hours, minutes, seconds);\r\n       
+    return new TimeSpan(millis);\r\n    }\r\n    static fromTimeStartingFromDays(days,
+    hours, minutes, seconds, milliseconds) {\r\n        const totalMilliSeconds =
+    (days * MILLIS_PER_DAY) +\r\n            (hours * MILLIS_PER_HOUR) +\r\n           
+    (minutes * MILLIS_PER_MINUTE) +\r\n            (seconds * MILLIS_PER_SECOND)
+    +\r\n            milliseconds;\r\n        if (totalMilliSeconds > TimeSpan.maxValue.totalMilliseconds
+    || totalMilliSeconds < TimeSpan.minValue.totalMilliseconds) {\r\n           
+    //throw new TimeSpanOverflowError(\"TimeSpanTooLong\");\r\n            throw
+    new Error(\"TimeSpanTooLong\");\r\n        }\r\n        return new TimeSpan(totalMilliSeconds);\r\n   
+    }\r\n    constructor(millis) {\r\n        this._millis = millis;\r\n    }\r\n   
+    get days() {\r\n        return TimeSpan.round(this._millis / MILLIS_PER_DAY);\r\n   
+    }\r\n    get hours() {\r\n        return TimeSpan.round((this._millis / MILLIS_PER_HOUR)
+    % 24);\r\n    }\r\n    get minutes() {\r\n        return TimeSpan.round((this._millis
+    / MILLIS_PER_MINUTE) % 60);\r\n    }\r\n    get seconds() {\r\n        return
+    TimeSpan.round((this._millis / MILLIS_PER_SECOND) % 60);\r\n    }\r\n    get
+    milliseconds() {\r\n        return TimeSpan.round(this._millis % 1000);\r\n   
+    }\r\n    get totalDays() {\r\n        return this._millis / MILLIS_PER_DAY;\r\n   
+    }\r\n    get totalHours() {\r\n        return this._millis / MILLIS_PER_HOUR;\r\n   
+    }\r\n    get totalMinutes() {\r\n        return this._millis / MILLIS_PER_MINUTE;\r\n   
+    }\r\n    get totalSeconds() {\r\n        return this._millis / MILLIS_PER_SECOND;\r\n   
+    }\r\n    get totalMilliseconds() {\r\n        return this._millis;\r\n    }\r\n   
+    add(ts) {\r\n        const result = this._millis + ts.totalMilliseconds;\r\n       
+    return new TimeSpan(result);\r\n    }\r\n    subtract(ts) {\r\n        const
+    result = this._millis - ts.totalMilliseconds;\r\n        return new TimeSpan(result);\r\n   
+    }\r\n}\r\nexports.TimeSpan = TimeSpan;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiVGltZVNwYW4uanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyJUaW1lU3Bhbi50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7QUFBQSxNQUFNLGlCQUFpQixHQUFHLElBQUksQ0FBQztBQUMvQixNQUFNLGlCQUFpQixHQUFHLGlCQUFpQixHQUFHLEVBQUUsQ0FBQyxDQUFHLGFBQWE7QUFDakUsTUFBTSxlQUFlLEdBQUcsaUJBQWlCLEdBQUcsRUFBRSxDQUFDLENBQUssYUFBYTtBQUNqRSxNQUFNLGNBQWMsR0FBRyxlQUFlLEdBQUcsRUFBRSxDQUFDLENBQVEsYUFBYTtBQUVqRSxNQUFhLFFBQVE7SUFHVCxNQUFNLENBQUMsUUFBUSxDQUFDLEtBQWEsRUFBRSxLQUFhO1FBQ2hELElBQUksTUFBTSxDQUFDLEtBQUssQ0FBQyxLQUFLLENBQUMsRUFBRTtZQUNyQixNQUFNLElBQUksS0FBSyxDQUFDLG9CQUFvQixDQUFDLENBQUM7U0FDekM7UUFFRCxNQUFNLEdBQUcsR0FBRyxLQUFLLEdBQUcsS0FBSyxDQUFDO1FBQzFCLE1BQU0sTUFBTSxHQUFHLFFBQVEsQ0FBQyxLQUFLLENBQUMsR0FBRyxHQUFHLENBQUMsS0FBSyxJQUFJLENBQUMsQ0FBQyxDQUFDLENBQUMsR0FBRyxDQUFDLENBQUMsQ0FBQyxDQUFDLEdBQUcsQ0FBQyxDQUFDLENBQUM7UUFDL0QsSUFBSSxDQUFDLE1BQU0sR0FBRyxRQUFRLENBQUMsUUFBUSxDQUFDLGlCQUFpQixDQUFDLElBQUksQ0FBQyxNQUFNLEdBQUcsUUFBUSxDQUFDLFFBQVEsQ0FBQyxpQkFBaUIsQ0FBQyxFQUFFO1lBQ2xHLHFEQUFxRDtZQUNyRCxNQUFNLElBQUksS0FBSyxDQUFDLGlCQUFpQixDQUFDLENBQUM7U0FDdEM7UUFFRCxPQUFPLElBQUksUUFBUSxDQUFDLE1BQU0sQ0FBQyxDQUFDO0lBQ2hDLENBQUM7SUFFTyxNQUFNLENBQUMsS0FBSyxDQUFDLENBQVM7UUFDMUIsSUFBSSxDQUFDLEdBQUcsQ0FBQyxF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","assetPath":"Assets/ZepetoScripts/ScreenShotScripts/TimeSpan.ts","manifest":{"properties":[],"name":"TimeSpan","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: be668d4a93ff8741d143142704429e44
+  onlyWriteTrigger: 0

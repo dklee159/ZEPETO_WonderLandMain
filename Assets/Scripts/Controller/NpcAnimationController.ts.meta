@@ -1,0 +1,36 @@
+fileFormatVersion: 2
+guid: 2e88c2e10d887244eb9a70ccef8ea330
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
+    { value: true });\r\nconst UnityEngine_1 = require(\"UnityEngine\");\r\nconst
+    ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nclass NpcAnimationController
+    extends ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n    constructor() {\r\n       
+    super(...arguments);\r\n        this.animList = [];\r\n        this.exitTimes
+    = [];\r\n    }\r\n    Start() {\r\n        this.npcAnimator = this.GetComponent($typeof(UnityEngine_1.Animator));\r\n       
+    this.StartCoroutine(this.PlayRandomAnimations());\r\n    }\r\n    *PlayRandomAnimations()
+    {\r\n        const wait = new UnityEngine_1.WaitForSeconds(3);\r\n        while
+    (true) {\r\n            let randomIndex = UnityEngine_1.Mathf.Floor(UnityEngine_1.Random.Range(0,
+    this.animList.length));\r\n            this.npcAnimator.Play(this.animList[randomIndex]);\r\n           
+    while (this.npcAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1 ||
+    this.npcAnimator.IsInTransition(0)) {\r\n                yield null;\r\n           
+    }\r\n            yield wait;\r\n        }\r\n    }\r\n}\r\nexports.default =
+    NpcAnimationController;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiTnBjQW5pbWF0aW9uQ29udHJvbGxlci5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIk5wY0FuaW1hdGlvbkNvbnRyb2xsZXIudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7QUFBQSw2Q0FBcUU7QUFDckUsaURBQXFEO0FBRXJELE1BQXFCLHNCQUF1QixTQUFRLHFDQUFxQjtJQUF6RTs7UUFFVyxhQUFRLEdBQWEsRUFBRSxDQUFDO1FBQ3hCLGNBQVMsR0FBYSxFQUFFLENBQUM7SUFxQnBDLENBQUM7SUFsQkcsS0FBSztRQUNELElBQUksQ0FBQyxXQUFXLEdBQUcsSUFBSSxDQUFDLFlBQVksU0FBQyxzQkFBUSxFQUFHLENBQUM7UUFDakQsSUFBSSxDQUFDLGNBQWMsQ0FBQyxJQUFJLENBQUMsb0JBQW9CLEVBQUUsQ0FBQyxDQUFDO0lBQ3JELENBQUM7SUFFTyxDQUFDLG9CQUFvQjtRQUN6QixNQUFNLElBQUksR0FBRyxJQUFJLDRCQUFjLENBQUMsQ0FBQyxDQUFDLENBQUM7UUFDbkMsT0FBTyxJQUFJLEVBQUU7WUFDVCxJQUFJLFdBQVcsR0FBRyxtQkFBSyxDQUFDLEtBQUssQ0FBQyxvQkFBTSxDQUFDLEtBQUssQ0FBQyxDQUFDLEVBQUUsSUFBSSxDQUFDLFFBQVEsQ0FBQyxNQUFNLENBQUMsQ0FBQyxDQUFDO1lBQ3JFLElBQUksQ0FBQyxXQUFXLENBQUMsSUFBSSxDQUFDLElBQUksQ0FBQyxRQUFRLENBQUMsV0FBVyxDQUFDLENBQUMsQ0FBQztZQUVsRCxPQUFPLElBQUksQ0FBQyxXQUFXLENBQUMsMkJBQTJCLENBQUMsQ0FBQyxDQUFDLENBQUMsY0FBYyxHQUFHLENBQUMsSUFBSSxJQUFJLENBQUMsV0FBVyxDQUFDLGNBQWMsQ0FBQyxDQUFDLENBQUMsRUFBRTtnQkFDN0csTUFBTSxJQUFJLENBQUM7YUFDZDtZQUNELE1BQU0sSUFBSSxDQUFDO1NBQ2Q7SUFDTCxDQUFDO0NBRUo7QUF4QkQseUNBd0JDIn0=","assetPath":"Assets/Scripts/Controller/NpcAnimationController.ts","manifest":{"properties":[{"assembly":"mscorlib","name":"animList","type":"System.String[]","isArray":true,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]},{"assembly":"mscorlib","name":"exitTimes","type":"System.Single[]","isArray":true,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]}],"name":"NpcAnimationController","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: 391f64b04200659a02d2e38fbf16e7a6
+  onlyWriteTrigger: 0

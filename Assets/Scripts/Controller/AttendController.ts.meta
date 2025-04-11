@@ -1,0 +1,105 @@
+fileFormatVersion: 2
+guid: 7d5c9a86fd90db44c8c20ed9da848ce4
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: "{\"source\":\"\\\"use strict\\\";\\r\\nObject.defineProperty(exports,
+    \\\"__esModule\\\", { value: true });\\r\\nconst TMPro_1 = require(\\\"TMPro\\\");\\r\\nconst
+    UnityEngine_1 = require(\\\"UnityEngine\\\");\\r\\nconst UnityEngine_UI_1 = require(\\\"UnityEngine.UI\\\");\\r\\nconst
+    ZEPETO_Script_1 = require(\\\"ZEPETO.Script\\\");\\r\\nconst DataManager_1 =
+    require(\\\"../Manager/DataManager\\\");\\r\\nconst TypeSyncHelper_1 = require(\\\"../../ZepetoScripts/SyncHelper/TypeSyncHelper\\\");\\r\\nconst
+    GameManager_1 = require(\\\"../GameManager\\\");\\r\\nclass AttendController
+    extends ZEPETO_Script_1.ZepetoScriptBehaviour {\\r\\n    constructor() {\\r\\n       
+    super(...arguments);\\r\\n        this.attendPanels = [];\\r\\n        this._dateIndex
+    = -1;\\r\\n        this.coinList = [5, 50, 100, 200, 500];\\r\\n        this.attending
+    = false;\\r\\n        this.exceptIds = [];\\r\\n    }\\r\\n    get dateIndex()
+    { return this._dateIndex; }\\r\\n    set dateIndex(value) {\\r\\n        if (!this.attendPanels
+    || this.attendPanels.length < 20 || value < 0 || value > this.attendPanels.length)
+    {\\r\\n            console.error(TypeSyncHelper_1.ERROR.NOT_MATCHED, value);\\r\\n       
+    }\\r\\n        else {\\r\\n            this._dateIndex = value;\\r\\n       
+    }\\r\\n    }\\r\\n    get month() { return this._month; }\\r\\n    set month(value)
+    { this._month = value; }\\r\\n    get dateId() { return this._dateId; }\\r\\n   
+    set dateId(value) { this._dateId = value; }\\r\\n    // private _yesterDateId:
+    string;\\r\\n    // public get yesterDateId(): string { return this._yesterDateId;
+    }\\r\\n    // private set yesterDateId(value: string) { this._yesterDateId =
+    value; }\\r\\n    /* GameManager */\\r\\n    RemoteStart() {\\r\\n        /*
+    Init Id */\\r\\n        const today = new Date();\\r\\n        // const yesterday
+    = new Date(today.getFullYear(), today.getMonth(), today.getDate() -1);\\r\\n       
+    this.month = `${today.getMonth() + 1}`;\\r\\n        this.dateId = this.FormatDate(today);\\r\\n       
+    // this.yesterDateId = this.FormatDate(yesterday);\\r\\n        // attend \uBC84\uD2BC
+    \uD018\uC2A4\uD2B8\uB85C \uAD50\uCCB4\\r\\n        // this.attendButton.onClick.AddListener(()
+    => {\\r\\n        //     this.attendUI.SetActive(!this.attendUI.activeSelf);\\r\\n       
+    //     if (!this.attendUI.activeSelf) {\\r\\n        //         if (this.coinRewardUI.gameObject.activeSelf)
+    this.coinRewardUI.gameObject.SetActive(false);\\r\\n        //     }\\r\\n       
+    // })\\r\\n        this.attendCloseButton.onClick.AddListener(() => {\\r\\n           
+    this.attendUI.SetActive(false);\\r\\n        });\\r\\n        this.yButton_coin.onClick.AddListener(()
+    => {\\r\\n            this.coinRewardUI.gameObject.SetActive(false);\\r\\n       
+    });\\r\\n        this.nButton_coin.onClick.AddListener(() => {\\r\\n           
+    this.coinRewardUI.gameObject.SetActive(false);\\r\\n        });\\r\\n       
+    /* Set Init */\\r\\n        this.SetAttendUI();\\r\\n    }\\r\\n    SetAttendUI()
+    {\\r\\n        // Attend   \\r\\n        for (let i = 0; i < this.attendContent.childCount;
+    i++) {\\r\\n            const attendPanel = this.attendContent.GetChild(i);\\r\\n           
+    const highlight = attendPanel.GetChild(0);\\r\\n            const lock = attendPanel.GetChild(1);\\r\\n           
+    attendPanel.gameObject.SetActive(false);\\r\\n            const data = {\\r\\n               
+    gameObject: attendPanel.gameObject,\\r\\n                transform: attendPanel,\\r\\n               
+    highlight: highlight.gameObject,\\r\\n                lock: lock.gameObject,\\r\\n               
+    index: i,\\r\\n            };\\r\\n            this.attendPanels.push(data);\\r\\n       
+    }\\r\\n        this.coinText = this.coinRewardUI.GetChild(3).GetComponent($typeof(TMPro_1.TextMeshProUGUI));\\r\\n   
+    }\\r\\n    UpdateAttendData(attendData) {\\r\\n        /* new version */\\r\\n       
+    const isFirst = attendData.lastDate == null || attendData.lastDate == TypeSyncHelper_1.DATA_TYPE.NULL
+    || attendData.lastDate.length < 1;\\r\\n        if (isFirst) {\\r\\n           
+    attendData.lastDate = `0_0_0`;\\r\\n            attendData.count = 0;\\r\\n       
+    }\\r\\n        // Attend Check Last Month\\r\\n        const date = attendData.lastDate.split(\\\"_\\\");\\r\\n       
+    if (this.month != date[1]) {\\r\\n            attendData.count = 0;\\r\\n       
+    }\\r\\n        // Lock\\r\\n        for (let i = 0; i < attendData.count; i++)\\r\\n           
+    this.LockCoin(i);\\r\\n        this.dateIndex = attendData.count;\\r\\n       
+    // This Month complete\\r\\n        const complete = attendData.count >= 20;\\r\\n       
+    if (complete)\\r\\n            return;\\r\\n        // Attend Already Today\\r\\n       
+    if (this.dateId == attendData.lastDate)\\r\\n            return;\\r\\n       
+    // Set Date\\r\\n        const today = this.attendPanels[attendData.count];\\r\\n       
+    today.gameObject.SetActive(true);\\r\\n        today.highlight.SetActive(true);\\r\\n       
+    today.lock.SetActive(false);\\r\\n        const coin = this.coinList[this.SelectCoin(attendData.count)];\\r\\n       
+    this.coinText.text = this.FormatText(coin);\\r\\n        this.OnGetCoin(this.dateIndex);\\r\\n       
+    this.StartCoroutine(this.AttendChecker());\\r\\n    }\\r\\n    /* Animation */\\r\\n   
+    *AttendChecker() {\\r\\n        const wait = new UnityEngine_1.WaitForSeconds(1);\\r\\n       
+    this.attending = true;\\r\\n        if (this.exceptIds.includes(GameManager_1.default.Instance.zepetoId))\\r\\n           
+    return;\\r\\n        // UIManager.Instance.openUI = this.attendUI.gameObject;\\r\\n       
+    this.attendUI.SetActive(true);\\r\\n        yield wait;\\r\\n        this.coinRewardUI.gameObject.SetActive(true);\\r\\n       
+    const anim = this.coinRewardUI.GetComponent($typeof(UnityEngine_1.Animator));\\r\\n       
+    anim.SetTrigger(TypeSyncHelper_1.Anim.Active);\\r\\n    }\\r\\n    LockCoin(index)
+    {\\r\\n        if (index < 0 || index >= this.attendPanels.length)\\r\\n           
+    return;\\r\\n        const data = this.attendPanels[index];\\r\\n        data.gameObject.SetActive(true);\\r\\n       
+    data.highlight.SetActive(false);\\r\\n        data.lock.SetActive(true);\\r\\n   
+    }\\r\\n    OnGetCoin(index) {\\r\\n        if (index < 0)\\r\\n            return;\\r\\n       
+    // Lock\\r\\n        this.LockCoin(index);\\r\\n        // Update Attend Data\\r\\n       
+    const attend = DataManager_1.default.Instance.PlayerDB.attend;\\r\\n        attend.count
+    = this.NextDate(index);\\r\\n        attend.lastDate = this.dateId;\\r\\n       
+    // Update Coin Data\\r\\n        const coin = this.coinList[this.SelectCoin(index)];\\r\\n       
+    DataManager_1.default.Instance.PlayerDB.wonderCoin = UnityEngine_1.Mathf.Clamp(DataManager_1.default.Instance.PlayerDB.wonderCoin
+    + coin, 0, DataManager_1.default.coinLimit);\\r\\n        // Finish\\r\\n       
+    //TODO\\r\\n        // GameManager.instance.LocalPlayerControllerSet(true);\\r\\n       
+    this.attending = false;\\r\\n    }\\r\\n    /** Methods **/\\r\\n    SelectCoin(index)
+    {\\r\\n        if ((index + 1) % 5 == 0)\\r\\n            return UnityEngine_1.Mathf.Floor((index
+    + 1) / 5);\\r\\n        return 0;\\r\\n    }\\r\\n    FormatText(coin) {\\r\\n       
+    return `COIN ${coin}`;\\r\\n    }\\r\\n    NextDate(index) {\\r\\n        return
+    (index + 1 < 20) ? index + 1 : 0;\\r\\n    }\\r\\n    FormatDate(date) {\\r\\n       
+    return `${date.getDate()}_${date.getMonth() + 1}_${date.getFullYear()}`;\\r\\n   
+    }\\r\\n}\\r\\nexports.default = AttendController;\\r\\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiQXR0ZW5kQ29udHJvbGxlci5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIkF0dGVuZENvbnRyb2xsZXIudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7QUFBQSxpQ0FBd0M7QUFDeEMsNkNBQXFGO0FBQ3JGLG1EQUF3QztBQUN4QyxpREFBc0Q7QUFDdEQsd0RBQWlEO0FBQ2pELGtGQUErRjtBQUMvRixnREFBeUM7QUFFekMsTUFBcUIsZ0JBQWlCLFNBQVEscUNBQXFCO0lBQW5FOztRQWFZLGlCQUFZLEdBQWtCLEVBQUUsQ0FBQztRQUVqQyxlQUFVLEdBQVcsQ0FBQyxDQUFDLENBQUM7UUFTZixhQUFRLEdBQUcsQ0FBRSxDQUFDLEVBQUUsRUFBRSxFQUFFLEdBQUcsRUFBRSxHQUFHLEVBQUUsR0FBRyxDQUFFLENBQUM7UUFDN0MsY0FBUyxHQUFZLEtBQUssQ0FBQztRQVVqQixjQUFTLEdBQWMsRUFBRSxDQUFDO0lBcUtoRCxDQUFDO0lBeExHLElBQVcsU0FBUyxLQUFhLE9BQU8sSUFBSSxDQUFDLFVBQVUsQ0FBQyxDQUFDLENBQUM7SUFDMUQsSUFBVyxTQUFTLENBQUMsS0FBYTtRQUM5QixJQUFHLENBQUMsSUFBSSxDQUFDLFlBQVksSUFBSSxJQUFJLENBQUMsWUFBWSxDQUFDLE1BQU0sR0FBRyxFQUFFLElBQUksS0FBSyxHQUFHLENBQUMsSUFBSSxLQUFLLEdBQUcsSUFBSSxDQUFDLFlBQVksQ0FBQyxNQUFNLEVBQUU7WUFDckcsT0FBTyxDQUFDLEtBQUssQ0FBQyxzQkFBSyxDQUFDLFdBQVcsRUFBRSxLQUFLLENBQUMsQ0FBQztTQUMzQzthQUFNO1lBQ0gsSUFBSSxDQUFDLFVBQVUsR0FBRyxLQUFLLENBQUM7U0FDM0I7SUFDTCxDQUFDO0lBS0QsSUFBVyxLQUFLLEtBQWEsT0FBTyxJQUFJLENBQUMsTUFBTSxDQUFDLENBQUMsQ0FBQztJQUNsRCxJQUFZLEtBQUssQ0FBQyxLQUFhLElBQUksSUFBSSxDQUFDLE1BQU0sR0FBRyxLQUFLLENBQUMs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\",\"assetPath\":\"Assets/Scripts/Controller/AttendController.ts\",\"manifest\":{\"properties\":[{\"assembly\":\"UnityEngine.CoreModule\",\"name\":\"attendUI\",\"type\":\"UnityEngine.GameObject\",\"isArray\":false,\"initValue\":[],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[{\"name\":\"SerializeField\",\"args\":[]}]},{\"assembly\":\"UnityEngine.UI\",\"name\":\"attendButton\",\"type\":\"UnityEngine.UI.Button\",\"isArray\":false,\"initValue\":[],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[{\"name\":\"SerializeField\",\"args\":[]}]},{\"assembly\":\"UnityEngine.UI\",\"name\":\"attendCloseButton\",\"type\":\"UnityEngine.UI.Button\",\"isArray\":false,\"initValue\":[],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[{\"name\":\"SerializeField\",\"args\":[]}]},{\"assembly\":\"UnityEngine.CoreModule\",\"name\":\"attendContent\",\"type\":\"UnityEngine.Transform\",\"isArray\":false,\"initValue\":[],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[{\"name\":\"SerializeField\",\"args\":[]}]},{\"assembly\":\"UnityEngine.CoreModule\",\"name\":\"coinRewardUI\",\"type\":\"UnityEngine.Transform\",\"isArray\":false,\"initValue\":[],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[{\"name\":\"SerializeField\",\"args\":[]}]},{\"assembly\":\"UnityEngine.UI\",\"name\":\"yButton_coin\",\"type\":\"UnityEngine.UI.Button\",\"isArray\":false,\"initValue\":[],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[{\"name\":\"Header\",\"args\":[\"\\\"RewardUI
+    Buttons\\\"\"]},{\"name\":\"SerializeField\",\"args\":[]}]},{\"assembly\":\"UnityEngine.UI\",\"name\":\"nButton_coin\",\"type\":\"UnityEngine.UI.Button\",\"isArray\":false,\"initValue\":[],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[{\"name\":\"SerializeField\",\"args\":[]}]},{\"assembly\":\"mscorlib\",\"name\":\"exceptIds\",\"type\":\"System.String[]\",\"isArray\":true,\"initValue\":[],\"enumKeys\":[],\"enumValues\":[],\"attributes\":[{\"name\":\"SerializeField\",\"args\":[]}]}],\"name\":\"AttendController\",\"description\":\"\",\"hasAnimatorMove\":false},\"isCompiled\":true}"
+  typescriptHash: a0cc6c71f2a5f6f7ef3d71af36e8c6cf
+  onlyWriteTrigger: 0

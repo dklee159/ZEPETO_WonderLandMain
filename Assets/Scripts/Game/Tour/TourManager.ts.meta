@@ -1,0 +1,72 @@
+fileFormatVersion: 2
+guid: 35cf7ce91d226a143b4b9a6a1de46913
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
+    { value: true });\r\nconst UnityEngine_1 = require(\"UnityEngine\");\r\nconst
+    ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nconst ZEPETO_Character_Controller_1
+    = require(\"ZEPETO.Character.Controller\");\r\nconst ZEPETO_World_1 = require(\"ZEPETO.World\");\r\nconst
+    TourBallonController_1 = require(\"./TourBallonController\");\r\nconst TypeSyncHelper_1
+    = require(\"../../../ZepetoScripts/SyncHelper/TypeSyncHelper\");\r\nconst UIManager_1
+    = require(\"../../Manager/UIManager\");\r\nconst MultiplayManager_1 = require(\"../../../ZepetoScripts/Multiplay/MultiplayManager\");\r\nconst
+    QuestManager_1 = require(\"../../Manager/QuestManager\");\r\nconst GameManager_1
+    = require(\"../../GameManager\");\r\nconst UIController_1 = require(\"../../../ZepetoScripts/ScreenShotScripts/UIController\");\r\nconst
+    TransformSyncHelper_1 = require(\"../../../ZepetoScripts/SyncHelper/TransformSyncHelper\");\r\nclass
+    TourManager extends ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n    static get
+    Instance() {\r\n        if (!TourManager._instance) {\r\n            const managerObj
+    = UnityEngine_1.GameObject.Find(\"TourManager\");\r\n            if (managerObj)\r\n               
+    TourManager._instance = managerObj.GetComponent($typeof(TourManager));\r\n       
+    }\r\n        return TourManager._instance;\r\n    }\r\n    get AirCamera() {\r\n       
+    return this.airCamera;\r\n    }\r\n    Start() {\r\n        this.balloonAnim
+    = this.ballonPrefab.GetComponent($typeof(UnityEngine_1.Animator));\r\n       
+    this._tourBalloonController = this.tourBalloonController.GetComponent($typeof(TourBallonController_1.default));\r\n   
+    }\r\n    TourStart(sessionId) {\r\n        this.balloonAnim.SetTrigger(TypeSyncHelper_1.Anim.Play);\r\n       
+    const character = ZEPETO_Character_Controller_1.ZepetoPlayers.instance.GetPlayer(sessionId).character;\r\n       
+    character.transform.SetParent(this.playerTeleportPos);\r\n        if (MultiplayManager_1.default.instance.room.SessionId
+    === sessionId) {\r\n            character.Teleport(this.playerTeleportPos.position,
+    UnityEngine_1.Quaternion.Euler(0, 180, 0));\r\n            this._tourBalloonController.SetTourDefaultUI(true);\r\n           
+    this.StartCoroutine(this.WaitForTourFinish());\r\n        }\r\n    }\r\n    TourExit(sessionId)
+    {\r\n        const character = ZEPETO_Character_Controller_1.ZepetoPlayers.instance.GetPlayer(sessionId).character;\r\n       
+    character.transform.SetParent(null);\r\n        if (MultiplayManager_1.default.instance.room.SessionId
+    === sessionId) {\r\n            character.Teleport(this.playerReturnPos.position,
+    this.playerReturnPos.rotation);\r\n            QuestManager_1.default.Instance.OnPlayGame();\r\n           
+    this._tourBalloonController.SetTourDefaultUI(false);\r\n        }\r\n    }\r\n   
+    *WaitForTourFinish() {\r\n        console.log(this.balloonTourAnim.length * 1.9);\r\n       
+    yield new UnityEngine_1.WaitForSeconds(this.balloonTourAnim.length);\r\n       
+    yield new UnityEngine_1.WaitForEndOfFrame();\r\n        console.log(\"FIn\");\r\n       
+    GameManager_1.default.Instance.ReceiveTourBalloonSignal(false);\r\n    }\r\n   
+    TakeBalloonPhoto() {\r\n        this.StartCoroutine(this.CountNumbering());\r\n   
+    }\r\n    *CountNumbering() {\r\n        const wait = new UnityEngine_1.WaitForSeconds(1);\r\n       
+    UIManager_1.default.Instance.TextAnimate_OneSec(\"3\");\r\n        yield wait;\r\n       
+    UIManager_1.default.Instance.TextAnimate_OneSec(\"2\");\r\n        yield wait;\r\n       
+    UIManager_1.default.Instance.TextAnimate_OneSec(\"1\");\r\n        yield wait;\r\n       
+    UIManager_1.default.Instance.TextAnimationOFF_OneSec();\r\n        this.photoCamera.SetActive(true);\r\n       
+    this.photoCamera.GetComponent($typeof(UnityEngine_1.Camera)).targetTexture =
+    this.balloonRenderTexture;\r\n        yield new UnityEngine_1.WaitForEndOfFrame();\r\n       
+    this.photoCamera.GetComponent($typeof(UnityEngine_1.Camera)).Render();\r\n       
+    this.photoCamera.GetComponent($typeof(UnityEngine_1.Camera)).targetTexture =
+    null;\r\n        this.photoCamera.SetActive(false);\r\n        yield new UnityEngine_1.WaitForEndOfFrame();\r\n       
+    UIManager_1.default.Instance.OpenTourPhoto();\r\n        this.StopCoroutine(this.CountNumbering());\r\n   
+    }\r\n    UploadTourPhoto() {\r\n        ZEPETO_World_1.ZepetoWorldContent.CreateFeed(this.balloonRenderTexture,
+    TypeSyncHelper_1.DATA_TYPE.FeedMessage, (result) => {\r\n            QuestManager_1.default.Instance.OnPostFeed();\r\n           
+    console.log(`[BalloonZoneManager] Feed Uploading ${result ? TypeSyncHelper_1.DATA_TYPE.Success
+    : TypeSyncHelper_1.DATA_TYPE.Failed}`);\r\n            UIManager_1.default.Instance.Toast(UIController_1.TOAST_MESSAGE.feedCompleted);\r\n       
+    });\r\n    }\r\n}\r\nexports.default = TourManager;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiVG91ck1hbmFnZXIuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyJUb3VyTWFuYWdlci50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOztBQUFBLDZDQUFrSjtBQUNsSixpREFBcUQ7QUFDckQsNkVBQTREO0FBQzVELCtDQUFrRDtBQUNsRCxpRUFBMEQ7QUFDMUQscUZBQW1GO0FBQ25GLHVEQUFnRDtBQUNoRCx3RkFBaUY7QUFDakYsNkRBQXNEO0FBQ3RELG1EQUE0QztBQUM1Qyx3RkFBc0Y7QUFDdEYsK0ZBQXdGO0FBRXhGLE1BQXFCLFdBQVksU0FBUSxxQ0FBcUI7SUFJbkQsTUFBTSxLQUFLLFFBQVE7UUFDdEIsSUFBSSxDQUFDLFdBQVcsQ0FBQyxTQUFTLEVBQUU7WUFDeEIsTUFBTSxVQUFVLEdBQUcsd0JBQVUsQ0FBQyxJQUFJLENBQUMsYUFBYSxDQUFDLENBQUM7WUFDbEQsSUFBSSxVQUFVO2dCQUFFLFdBQVcsQ0FBQyxTQUFTLEdBQUcsVUFBVSxDQUFDLFlBQVksU0FBQyxXQUFXLEVBQUcsQ0FBQztTQUNsRjtRQUNELE9BQU8sV0FBVyxDQUFDLFNBQVMsQ0FBQztJQUNqQyxDQUFDO0lBWUQsSUFBVyxTQUFTO1FBQ2hCLE9BQU8sSUFBSSxDQUFDLFNBQVMsQ0FBQztJQUMxQixDQUFDO0lBU0QsS0FBSztRQUNELElBQUksQ0FBQyxXQUFXLEdBQUcsSUFBSSxDQUFDLFlBQVksQ0FBQyxZQUFZLFNBQUMsc0JBQVEsRUFBRyxDQUFDO1FBQzlELElBQUksQ0FBQyxzQkFBc0IsR0FBRyxJQUFJLENBQUMscUJBQXFCLENBQUMsWUFBWSxTQUFDLDhCQUFvQixFQUFHLENBQUM7SUFDbEcsQ0FBQztJQUVNLFNBQVMsQ0FBQyxTQUFpQjtRQUM5QixJQUFJLENBQUMsV0FBVyxDQUFDLFVBQVUsQ0FBQyxxQkFBSSxDQUFDLElBQUksQ0FBQyxDQUFDO1FBRXZDLE1BQU0sU0FBUyxHQUFHLDJDQUFhLENBQUMsUUFBUSxDQUFDLFNBQVMsQ0FBQyxTQUFTLENBQUMs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","assetPath":"Assets/Scripts/Game/Tour/TourManager.ts","manifest":{"properties":[{"assembly":"UnityEngine.CoreModule","name":"tourBalloonController","type":"UnityEngine.GameObject","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"ballonPrefab","type":"UnityEngine.GameObject","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"playerTeleportPos","type":"UnityEngine.Transform","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"playerReturnPos","type":"UnityEngine.Transform","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"photoCamera","type":"UnityEngine.GameObject","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"airCamera","type":"UnityEngine.GameObject","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"balloonRenderTexture","type":"UnityEngine.RenderTexture","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.AnimationModule","name":"balloonTourAnim","type":"UnityEngine.AnimationClip","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]}],"name":"TourManager","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: f6dfe1587962a522ed979ae57e5db5ef
+  onlyWriteTrigger: 0

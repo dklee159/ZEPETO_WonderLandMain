@@ -1,0 +1,122 @@
+fileFormatVersion: 2
+guid: 9d11b4ee6f1e96748b96a40a60b382af
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
+    { value: true });\r\nconst UnityEngine_1 = require(\"UnityEngine\");\r\nconst
+    ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nconst ZEPETO_Character_Controller_1
+    = require(\"ZEPETO.Character.Controller\");\r\nconst UIManager_1 = require(\"./UIManager\");\r\nconst
+    SDManager_1 = require(\"./SDManager\");\r\nconst TypeSyncHelper_1 = require(\"../../ZepetoScripts/SyncHelper/TypeSyncHelper\");\r\nconst
+    SyncIndexManager_1 = require(\"../../ZepetoScripts/SyncIndexManager\");\r\nconst
+    QuestManager_1 = require(\"./QuestManager\");\r\nconst MultiplayManager_1 = require(\"../../ZepetoScripts/Multiplay/MultiplayManager\");\r\nclass
+    DataManager extends ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n    constructor()
+    {\r\n        super(...arguments);\r\n        this._playerDB = null;\r\n       
+    this._isGetPlayerDB = false;\r\n        // public MissionAllClear() {\r\n       
+    //     if (this._isGetPlayerDB) {\r\n        //         for (const item of this._playerDB.wonderCollection)
+    {\r\n        //             if (item.id != WonderCollectionList.Wonder_Badge_Hall)
+    continue;\r\n        //             if (item.has) return;\r\n        //            
+    item.has = true;\r\n        //             SyncIndexManager.BADGE_HALL = true;\r\n       
+    //             // UIManager.instance.UpdateBadgeUI();\r\n        //            
+    break;\r\n        //         }\r\n        //     }\r\n        //     this.room.Send(MESSAGE.MissionAllClear,
+    null);\r\n        //     this.AllClearCheck();\r\n        // }\r\n    }\r\n   
+    static get Instance() {\r\n        if (!DataManager._instance) {\r\n           
+    const managerObj = UnityEngine_1.GameObject.Find(\"DataManager\");\r\n           
+    if (managerObj)\r\n                DataManager._instance = managerObj.GetComponent($typeof(DataManager));\r\n       
+    }\r\n        return DataManager._instance;\r\n    }\r\n    get PlayerDB() {\r\n       
+    return this._playerDB;\r\n    }\r\n    set PlayerDB(db) {\r\n        if (!db
+    || this._playerDB)\r\n            return;\r\n        this._playerDB = db;\r\n   
+    }\r\n    get currentWonderState() { return this._currentWonderState; }\r\n   
+    set currentWonderState(value) {\r\n        this._currentWonderState = value;\r\n   
+    }\r\n    get IsGetPlayerDB() { return this._isGetPlayerDB; }\r\n    set IsGetPlayerDB(value)
+    { this._isGetPlayerDB = value; }\r\n    Awake() {\r\n        DataManager._instance
+    = this;\r\n    }\r\n    PlayerDataUpdate() {\r\n        // World Data Update\r\n       
+    const changeData = {\r\n            mission_JG: false,\r\n            mission_NT:
+    false,\r\n            mission_badge: false,\r\n        };\r\n        if (this._isGetPlayerDB)
+    {\r\n            if (SyncIndexManager_1.default.WonderCoin != this._playerDB.wonderCoin)
+    {\r\n                SyncIndexManager_1.default.WonderCoin = this._playerDB.wonderCoin;\r\n               
+    UIManager_1.default.Instance.UpdateCoinUI();\r\n            }\r\n           
+    for (let i = 0; i < SyncIndexManager_1.default.WonderDrawData.length; i++) {\r\n               
+    for (let j = 0; j < this._playerDB.wonderDraw.length; j++) {\r\n                   
+    if (SyncIndexManager_1.default.WonderDrawData[i].id === this._playerDB.wonderDraw[j].id)
+    {\r\n                        if (SyncIndexManager_1.default.WonderDrawData[i].amount
+    !== this._playerDB.wonderDraw[j].amount) {\r\n                            SyncIndexManager_1.default.WonderDrawData[i].amount
+    = this._playerDB.wonderDraw[j].amount;\r\n                            if (!SyncIndexManager_1.default.DrawDataChanged)\r\n                               
+    SyncIndexManager_1.default.DrawDataChanged = true;\r\n                       
+    }\r\n                        break;\r\n                    }\r\n               
+    }\r\n            }\r\n            const collectionData = this._playerDB.wonderCollection;\r\n           
+    for (const badge of collectionData) {\r\n                if (badge.id == TypeSyncHelper_1.WonderCollectionList.Wonder_Badge_Hall)
+    {\r\n                    if (SyncIndexManager_1.default.BADGE_HALL != badge.has)
+    {\r\n                        SyncIndexManager_1.default.BADGE_HALL = badge.has;\r\n                       
+    UIManager_1.default.Instance.UpdateBadgeUI();\r\n                    }\r\n                   
+    break;\r\n                }\r\n            }\r\n        }\r\n        // if(SyncIndexManager.MISSION_CLEAR_JG
+    != this.player.wonderWorldData.MissionClear_JG) {\r\n        //     SyncIndexManager.MISSION_CLEAR_JG
+    = this.player.wonderWorldData.MissionClear_JG;\r\n        //     changeData.mission_JG
+    = true;\r\n        // }\r\n        // if(SyncIndexManager.MISSION_CLEAR_NT !=
+    this.player.wonderWorldData.MissionClear_NT) {\r\n        //     SyncIndexManager.MISSION_CLEAR_NT
+    = this.player.wonderWorldData.MissionClear_NT;\r\n        //     changeData.mission_NT
+    = true;\r\n        // }\r\n        // if(this._isGetPlayerDB) {\r\n        //    
+    if(SyncIndexManager.BADGE_HALL != this.player.wonderWorldData.MissionClear_Badge)
+    {\r\n        //         SyncIndexManager.BADGE_HALL = this.player.wonderWorldData.MissionClear_Badge;\r\n       
+    //         changeData.mission_badge = true;\r\n        //     }\r\n        //
+    }\r\n        // /* Update Local UI */\r\n        // if(changeData.mission_badge)
+    {\r\n        //     UIManager.Instance.UpdateBadgeUI();\r\n        //     //
+    MinigameJGManager.instance.lastgameSuccess = SyncIndexManager.MISSION_CLEAR_JG
+    || MinigameJGManager.instance.lastgameSuccess;\r\n        //     // MinigameNTManager.instance.lastgameSuccess
+    = SyncIndexManager.MISSION_CLEAR_NT || MinigameNTManager.instance.lastgameSuccess;\r\n       
+    //     // const hasBadge = MinigameJGManager.instance.IsGetBadge || MinigameNTManager.instance.IsGetBadge
+    || SyncIndexManager.BADGE_HALL;\r\n        //     // MinigameJGManager.instance.IsGetBadge
+    = hasBadge;\r\n        //     // MinigameNTManager.instance.IsGetBadge = hasBadge;\r\n       
+    // }\r\n    }\r\n    SetLocalPlayer(player) {\r\n        this.player = player;\r\n   
+    }\r\n    AddBadge() {\r\n        let hasBadge = false;\r\n        let hasHidden
+    = false;\r\n        let hasCount = 0;\r\n        this.PlayerDB.wonderCollection.forEach((value,
+    index) => {\r\n            if (value.id !== TypeSyncHelper_1.WonderCollectionList.Hiddle_Collection)
+    {\r\n                if (value.id == TypeSyncHelper_1.WonderCollectionList.Wonder_Badge_Hall)
+    {\r\n                    if (value.has)\r\n                        hasBadge =
+    true;\r\n                    else\r\n                        value.has = true;\r\n               
+    }\r\n                if (value.has)\r\n                    hasCount++;\r\n           
+    }\r\n            else {\r\n                hasHidden = value.has;\r\n           
+    }\r\n        });\r\n        if (hasBadge) {\r\n            return;\r\n       
+    }\r\n        if (hasCount == 3) {\r\n            if (!hasHidden) {\r\n               
+    for (const wonderCollection of this.PlayerDB.wonderCollection) {\r\n                   
+    if (wonderCollection.id == TypeSyncHelper_1.WonderCollectionList.Hiddle_Collection)
+    {\r\n                        wonderCollection.has = true;\r\n                       
+    break;\r\n                    }\r\n                }\r\n                UIManager_1.default.Instance.UpdateGiftUI();\r\n           
+    }\r\n            SDManager_1.default.Instance.OnAddBadge();\r\n        }\r\n       
+    // MultiplayManager.instance.room.Send(EVENT_MESSAGE.AddBadge);\r\n        UIManager_1.default.Instance.UpdateBadgeUI();\r\n   
+    }\r\n    AddCoin(count = 1, isQuest = false) {\r\n        this._playerDB.wonderCoin
+    = UnityEngine_1.Mathf.Clamp(this._playerDB.wonderCoin + count, 0, DataManager.coinLimit);\r\n       
+    if (!isQuest)\r\n            QuestManager_1.default.Instance.OnGetCoin(count);\r\n       
+    UIManager_1.default.Instance.UpdateCoinUI();\r\n    }\r\n    /** Local Player
+    Animation **/\r\n    /* Local Player State */\r\n    SetWonderState(wonderState,
+    isPlay, isHold = false) {\r\n        const animator = ZEPETO_Character_Controller_1.ZepetoPlayers.instance.GetPlayer(MultiplayManager_1.default.instance.room.SessionId).character.ZepetoAnimator;\r\n       
+    const prevWonderState = animator.GetInteger(TypeSyncHelper_1.Anim.WonderState);\r\n       
+    this._currentWonderState = isPlay ? wonderState : TypeSyncHelper_1.WonderState.NONE;\r\n       
+    console.log(`${TypeSyncHelper_1.WonderState[wonderState]}, ${isPlay}, ${isHold}`);\r\n       
+    // const isPrevFood = prevWonderState == WonderState.Hold_RightHand_Side;       
+    \r\n        // if (isPrevFood) //TODO unequip\r\n        /* Animation Play */\r\n       
+    this.PlayAnimation(wonderState, isPlay);\r\n    }\r\n    /* Local Player Animation
+    */\r\n    PlayAnimation(wonderState, isPlay) {\r\n        const animator = ZEPETO_Character_Controller_1.ZepetoPlayers.instance.GetPlayer(MultiplayManager_1.default.instance.room.SessionId).character.ZepetoAnimator;\r\n       
+    /* Play Local Animaion */\r\n        if (isPlay)\r\n            animator.SetInteger(TypeSyncHelper_1.Anim.WonderState,
+    wonderState);\r\n        else\r\n            animator.SetInteger(TypeSyncHelper_1.Anim.WonderState,
+    TypeSyncHelper_1.WonderState.NONE);\r\n    }\r\n    /* Set Local Rank */\r\n   
+    Horror_SetLocalRankUI(timer) {\r\n        UIManager_1.default.Instance.Open_Horror_ResultUI();\r\n   
+    }\r\n}\r\nexports.default = DataManager;\r\nDataManager.coinLimit = 999999;\r\n//#
+    sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiRGF0YU1hbmFnZXIuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyJEYXRhTWFuYWdlci50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOztBQUFBLDZDQUFnRDtBQUNoRCxpREFBcUQ7QUFFckQsNkVBQTREO0FBQzVELDJDQUFvQztBQUNwQywyQ0FBb0M7QUFDcEMsa0ZBQWtIO0FBQ2xILDJFQUFvRTtBQUNwRSxpREFBMEM7QUFDMUMscUZBQThFO0FBRzlFLE1BQXFCLFdBQVksU0FBUSxxQ0FBcUI7SUFBOUQ7O1FBY1ksY0FBUyxHQUFhLElBQUksQ0FBQztRQWdCM0IsbUJBQWMsR0FBWSxLQUFLLENBQUM7UUErSnhDLDZCQUE2QjtRQUM3QixpQ0FBaUM7UUFDakMsZ0VBQWdFO1FBQ2hFLCtFQUErRTtRQUMvRSxvQ0FBb0M7UUFDcEMsK0JBQStCO1FBQy9CLGtEQUFrRDtRQUNsRCxxREFBcUQ7UUFDckQscUJBQXFCO1FBQ3JCLFlBQVk7UUFDWixRQUFRO1FBQ1IscURBQXFEO1FBQ3JELDRCQUE0QjtRQUM1QixJQUFJO0lBRVIsQ0FBQztJQXhNVSxNQUFNLEtBQUssUUFBUTtRQUN0QixJQUFJLENBQUMsV0FBVyxDQUFDLFNBQVMsRUFBRTtZQUN4QixNQUFNLFVBQVUsR0FBRyx3QkFBVSxDQUFDLElBQUksQ0FBQyxhQUFhLENBQUMsQ0FBQztZQUNsRCxJQUFJLFVBQVU7Z0JBQUUsV0FBVyxDQUFDLFNBQVMsR0FBRyxVQUFVLENBQUMsWUFBWSxTQUFDLFdBQVcsRUFBRyxDQUFDO1NBQ2xGO1FBQ0QsT0FBTyxXQUFXLENBQUMsU0FBUyxDQUFDO0lBQ2pDLENBQUM7SUFLRCxJQUFXLFFBQVE7UUFDZixPQUFPLElBQUksQ0FBQyxTQUFTLENBQUM7SUFDMUIsQ0FBQztJQUNELElBQVcsUUFBUSxDQUFDLEVBQVk7UUFDNUIsSUFBSSxDQUFDLEVBQUUsSUFBSSxJQUFJLENBQUMsU0FBUztZQUFFLE9BQU87UUFDbEMsSUFBSSxDQUFDLFNBQVMsR0FBRyxFQUFFLENB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","assetPath":"Assets/Scripts/Manager/DataManager.ts","manifest":{"properties":[],"name":"DataManager","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: 19ce0af8c7f310c8532fc14f55b0875b
+  onlyWriteTrigger: 0

@@ -1,0 +1,37 @@
+fileFormatVersion: 2
+guid: 189ee395b505142778b3b41d069d75c5
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
+    { value: true });\r\nconst __UnityEngine__ = require(\"UnityEngine\");\r\nconst
+    UnityEngine_1 = require(\"UnityEngine\");\r\nconst ZEPETO_Character_Controller_1
+    = require(\"ZEPETO.Character.Controller\");\r\nconst ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nconst
+    TypeSyncHelper_1 = require(\"../../ZepetoScripts/SyncHelper/TypeSyncHelper\");\r\nclass
+    FallChecking extends ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n    OnTriggerEnter(collider)
+    {\r\n        if (!ZEPETO_Character_Controller_1.ZepetoPlayers.instance.LocalPlayer)\r\n           
+    return console.error(TypeSyncHelper_1.ERROR.NOT_FOUND_LOCAL_PLAYER);\r\n       
+    const character = ZEPETO_Character_Controller_1.ZepetoPlayers.instance.LocalPlayer.zepetoPlayer.character.gameObject;\r\n       
+    if (__UnityEngine__.Object.op_Inequality(collider.gameObject, character))\r\n           
+    return;\r\n        const localCharacter = ZEPETO_Character_Controller_1.ZepetoPlayers.instance.LocalPlayer.zepetoPlayer.character;\r\n       
+    if (this.returnPoint)\r\n            localCharacter.Teleport(this.returnPoint.position,
+    this.returnPoint.rotation);\r\n        else\r\n            localCharacter.Teleport(UnityEngine_1.Vector3.zero,
+    UnityEngine_1.Quaternion.identity);\r\n    }\r\n}\r\nexports.default = FallChecking;\r\n//#
+    sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiRmFsbENoZWNraW5nLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiRmFsbENoZWNraW5nLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7OztBQUFBLDZDQUFxRTtBQUNyRSw2RUFBNEQ7QUFDNUQsaURBQXFEO0FBQ3JELGtGQUFzRTtBQUd0RSxNQUFxQixZQUFhLFNBQVEscUNBQXFCO0lBR25ELGNBQWMsQ0FBQyxRQUFrQjtRQUNyQyxJQUFHLENBQUMsMkNBQWEsQ0FBQyxRQUFRLENBQUMsV0FBVztZQUFFLE9BQU8sT0FBTyxDQUFDLEtBQUssQ0FBQyxzQkFBSyxDQUFDLHNCQUFzQixDQUFDLENBQUM7UUFDM0YsTUFBTSxTQUFTLEdBQUcsMkNBQWEsQ0FBQyxRQUFRLENBQUMsV0FBVyxDQUFDLFlBQVksQ0FBQyxTQUFTLENBQUMsVUFBVSxDQUFDO1FBQ3ZGLDJCQU1rbVUsYUFBYyxDQU43bVUsUUFBUSxDQUFDLFVBQVUsRUFBSSxTQUFTO1lBQUUsT0FBTztRQUU1QyxNQUFNLGNBQWMsR0FBRywyQ0FBYSxDQUFDLFFBQVEsQ0FBQyxXQUFXLENBQUMsWUFBWSxDQUFDLFNBQVMsQ0FBQztRQUNqRixJQUFJLElBQUksQ0FBQyxXQUFXO1lBQUUsY0FBYyxDQUFDLFFBQVEsQ0FBQyxJQUFJLENBQUMsV0FBVyxDQUFDLFFBQVEsRUFBRSxJQUFJLENBQUMsV0FBVyxDQUFDLFFBQVEsQ0FBQyxDQUFDOztZQUMvRixjQUFjLENBQUMsUUFBUSxDQUFDLHFCQUFPLENBQUMsSUFBSSxFQUFFLHdCQUFVLENBQUMsUUFBUSxDQUFDLENBQUM7SUFDcEUsQ0FBQztDQUNKO0FBWkQsK0JBWUMifQ==","assetPath":"Assets/Scripts/World/FallChecking.ts","manifest":{"properties":[{"assembly":"UnityEngine.CoreModule","name":"returnPoint","type":"UnityEngine.Transform","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]}],"name":"FallChecking","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: f7630dcdf943cb519c7cdeaeb44e6374
+  onlyWriteTrigger: 0

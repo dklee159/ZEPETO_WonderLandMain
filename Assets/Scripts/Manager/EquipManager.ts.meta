@@ -1,0 +1,153 @@
+fileFormatVersion: 2
+guid: 7de52c5ff9dd0bc4f9a72558ab705fb5
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
+    { value: true });\r\nconst UnityEngine_1 = require(\"UnityEngine\");\r\nconst
+    ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nconst ZEPETO_Character_Controller_1
+    = require(\"ZEPETO.Character.Controller\");\r\nconst TypeSyncHelper_1 = require(\"../../ZepetoScripts/SyncHelper/TypeSyncHelper\");\r\nconst
+    MultiplayManager_1 = require(\"../../ZepetoScripts/Multiplay/MultiplayManager\");\r\nconst
+    ZEPETO_Multiplay_1 = require(\"ZEPETO.Multiplay\");\r\nconst UnityEngine_Events_1
+    = require(\"UnityEngine.Events\");\r\nclass EquipManager extends ZEPETO_Script_1.ZepetoScriptBehaviour
+    {\r\n    constructor() {\r\n        super(...arguments);\r\n        this.headItems
+    = [];\r\n        this.rightHandItems = [];\r\n        this.balloons = [];\r\n       
+    this.neckItems = [];\r\n        this.equipMap = new Map();\r\n        this.onUnequipRightHand
+    = new UnityEngine_Events_1.UnityEvent();\r\n        this.equipBalloon = new UnityEngine_Events_1.UnityEvent();\r\n       
+    this.onEquipBalloon = new UnityEngine_Events_1.UnityEvent();\r\n    }\r\n   
+    static get Instance() {\r\n        if (!EquipManager._instance) {\r\n           
+    const managerObj = (UnityEngine_1.GameObject.FindObjectOfType);\r\n           
+    if (this._instance === null) {\r\n                this._instance = new UnityEngine_1.GameObject(EquipManager.name).AddComponent($typeof(EquipManager));\r\n           
+    }\r\n        }\r\n        return EquipManager._instance;\r\n    }\r\n    Awake()
+    {\r\n        EquipManager._instance = this;\r\n    }\r\n    Start() {\r\n       
+    this.balloons.forEach((obj, index) => {\r\n            this.rightHandItems.push(obj);\r\n       
+    });\r\n        ZEPETO_Character_Controller_1.ZepetoPlayers.instance.OnAddedPlayer.AddListener((sessionId)
+    => {\r\n            this.equipMap.set(sessionId, {\r\n                Head: null,\r\n               
+    RightHand: null,\r\n                Neck: null,\r\n            });\r\n       
+    });\r\n        ZEPETO_Character_Controller_1.ZepetoPlayers.instance.OnRemovedPlayer.AddListener((sessionId)
+    => {\r\n            this.equipMap.delete(sessionId);\r\n        });\r\n       
+    MultiplayManager_1.default.instance.multiplay.add_RoomJoined(room => {\r\n           
+    this.localId = room.SessionId;\r\n            room.AddMessageHandler(TypeSyncHelper_1.MESSAGE.EquipItem,
+    (itemData) => {\r\n                const { SessionId, Bone, ItemIndex } = itemData;\r\n               
+    this.OnEquipItem(SessionId.toString(), Bone, ItemIndex);\r\n            });\r\n           
+    room.AddMessageHandler(TypeSyncHelper_1.MESSAGE.UnequipItem, (itemData) => {\r\n               
+    const { SessionId, Bone } = itemData;\r\n                this.OnUnequipItem(SessionId.toString(),
+    Bone);\r\n            });\r\n            room.AddMessageHandler(TypeSyncHelper_1.MESSAGE.VisibleItem,
+    (itemData) => {\r\n                const { SessionId, Bone } = itemData;\r\n               
+    this.OnVisible(SessionId.toString(), Bone);\r\n            });\r\n           
+    room.AddMessageHandler(TypeSyncHelper_1.MESSAGE.InvisibleItem, (itemData) =>
+    {\r\n                const { SessionId, Bone } = itemData;\r\n               
+    this.OnInvisible(SessionId.toString(), Bone);\r\n            });\r\n        });\r\n   
+    }\r\n    InitEquipData() {\r\n        MultiplayManager_1.default.instance.room.Send(TypeSyncHelper_1.MESSAGE.InstantiatedEquip);\r\n   
+    }\r\n    EquipRandomBalloon() {\r\n        const randomBalloonNum = UnityEngine_1.Mathf.Floor(UnityEngine_1.Random.Range(+TypeSyncHelper_1.EquipList.Balloon_1,
+    +TypeSyncHelper_1.EquipList.Balloon_7 + 1));\r\n        this.EquipItem(randomBalloonNum);\r\n       
+    return randomBalloonNum;\r\n    }\r\n    EquipItem(equipItem) {\r\n        const
+    bone = this.GetItemBone(equipItem);\r\n        const s = 10;\r\n        const
+    index = +equipItem % s;\r\n        const data = new ZEPETO_Multiplay_1.RoomData();\r\n       
+    data.Add(\"bone\", +bone);\r\n        data.Add(\"itemIndex\", index);\r\n       
+    if (+equipItem >= 3 && +equipItem <= 9) {\r\n            this.equipBalloon.Invoke();\r\n       
+    }\r\n        MultiplayManager_1.default.instance.room.Send(TypeSyncHelper_1.MESSAGE.EquipItem,
+    data.GetObject());\r\n    }\r\n    UnequipItem(equipItem) {\r\n        const
+    bone = this.GetItemBone(equipItem);\r\n        const data = new ZEPETO_Multiplay_1.RoomData();\r\n       
+    data.Add(\"bone\", +bone);\r\n        MultiplayManager_1.default.instance.room.Send(TypeSyncHelper_1.MESSAGE.UnequipItem,
+    data.GetObject());\r\n    }\r\n    OnEquipItem(sessionId, bone, itemIndex) {\r\n       
+    const items = this.GetBoneItemList(bone);\r\n        const player = ZEPETO_Character_Controller_1.ZepetoPlayers.instance.GetPlayer(sessionId);\r\n       
+    if (player) {\r\n            const animator = player.character.ZepetoAnimator;\r\n           
+    const attachBone = animator.GetBoneTransform(bone);\r\n            const itemPrefab
+    = items[itemIndex];\r\n            const item = UnityEngine_1.GameObject.Instantiate(itemPrefab,
+    attachBone);\r\n            switch (bone) {\r\n                case UnityEngine_1.HumanBodyBones.Head:\r\n                   
+    this.equipMap.get(sessionId).Head = item;\r\n                    break;\r\n               
+    case UnityEngine_1.HumanBodyBones.Neck:\r\n                    this.equipMap.get(sessionId).Neck
+    = item;\r\n                    break;\r\n                case UnityEngine_1.HumanBodyBones.RightHand:\r\n                   
+    this.equipMap.get(sessionId).RightHand = item;\r\n                    if (sessionId
+    == this.localId && +itemIndex >= 3 && +itemIndex < 10)\r\n                       
+    this.onEquipBalloon.Invoke();\r\n                    break;\r\n            }\r\n       
+    }\r\n    }\r\n    OnUnequipItem(sessionId, bone) {\r\n        const equip = this.equipMap.get(sessionId);\r\n       
+    let item;\r\n        switch (bone) {\r\n            case UnityEngine_1.HumanBodyBones.Head:\r\n               
+    item = equip.Head;\r\n                equip.Head = null;\r\n                break;\r\n           
+    case UnityEngine_1.HumanBodyBones.Neck:\r\n                item = equip.Neck;\r\n               
+    equip.Neck = null;\r\n                break;\r\n            case UnityEngine_1.HumanBodyBones.RightHand:\r\n               
+    item = equip.RightHand;\r\n                equip.RightHand = null;\r\n               
+    if (sessionId == this.localId)\r\n                    this.onUnequipRightHand.Invoke();\r\n               
+    break;\r\n        }\r\n        if (item) {\r\n            UnityEngine_1.GameObject.Destroy(item);\r\n       
+    }\r\n    }\r\n    VisibleRightHand() {\r\n        const data = new ZEPETO_Multiplay_1.RoomData();\r\n       
+    data.Add(\"bone\", UnityEngine_1.HumanBodyBones.RightHand);\r\n        MultiplayManager_1.default.instance.room.Send(TypeSyncHelper_1.MESSAGE.VisibleItem,
+    data.GetObject());\r\n    }\r\n    InvisibleRightHand() {\r\n        const data
+    = new ZEPETO_Multiplay_1.RoomData();\r\n        data.Add(\"bone\", UnityEngine_1.HumanBodyBones.RightHand);\r\n       
+    MultiplayManager_1.default.instance.room.Send(TypeSyncHelper_1.MESSAGE.InvisibleItem,
+    data.GetObject());\r\n    }\r\n    VisibleHead() {\r\n        const data = new
+    ZEPETO_Multiplay_1.RoomData();\r\n        data.Add(\"bone\", UnityEngine_1.HumanBodyBones.Head);\r\n       
+    MultiplayManager_1.default.instance.room.Send(TypeSyncHelper_1.MESSAGE.VisibleItem,
+    data.GetObject());\r\n    }\r\n    InvisibleHead() {\r\n        const data =
+    new ZEPETO_Multiplay_1.RoomData();\r\n        data.Add(\"bone\", UnityEngine_1.HumanBodyBones.Head);\r\n       
+    MultiplayManager_1.default.instance.room.Send(TypeSyncHelper_1.MESSAGE.InvisibleItem,
+    data.GetObject());\r\n    }\r\n    VisibleNeck() {\r\n        const data = new
+    ZEPETO_Multiplay_1.RoomData();\r\n        data.Add(\"bone\", UnityEngine_1.HumanBodyBones.Neck);\r\n       
+    MultiplayManager_1.default.instance.room.Send(TypeSyncHelper_1.MESSAGE.VisibleItem,
+    data.GetObject());\r\n    }\r\n    InvisibleNeck() {\r\n        const data =
+    new ZEPETO_Multiplay_1.RoomData();\r\n        data.Add(\"bone\", UnityEngine_1.HumanBodyBones.Neck);\r\n       
+    MultiplayManager_1.default.instance.room.Send(TypeSyncHelper_1.MESSAGE.InvisibleItem,
+    data.GetObject());\r\n    }\r\n    VisibleAll() {\r\n        this.VisibleRightHand();\r\n       
+    this.VisibleNeck();\r\n        this.VisibleHead();\r\n    }\r\n    InvisibleAll()
+    {\r\n        this.InvisibleRightHand();\r\n        this.InvisibleNeck();\r\n       
+    this.InvisibleHead();\r\n    }\r\n    OnVisible(sessionId, bone) {\r\n       
+    const equip = this.equipMap.get(sessionId);\r\n        console.log(equip.RightHand);\r\n       
+    switch (bone) {\r\n            case UnityEngine_1.HumanBodyBones.Head:\r\n               
+    if (equip.Head)\r\n                    equip.Head.SetActive(true);\r\n               
+    break;\r\n            case UnityEngine_1.HumanBodyBones.Neck:\r\n               
+    if (equip.Neck)\r\n                    equip.Neck.SetActive(true);\r\n               
+    break;\r\n            case UnityEngine_1.HumanBodyBones.RightHand:\r\n               
+    if (equip.RightHand)\r\n                    equip.RightHand.SetActive(true);\r\n               
+    break;\r\n        }\r\n    }\r\n    OnInvisible(sessionId, bone) {\r\n       
+    const equip = this.equipMap.get(sessionId);\r\n        switch (bone) {\r\n           
+    case UnityEngine_1.HumanBodyBones.Head:\r\n                if (equip.Head)\r\n                   
+    equip.Head.SetActive(false);\r\n                break;\r\n            case UnityEngine_1.HumanBodyBones.Neck:\r\n               
+    if (equip.Neck)\r\n                    equip.Neck.SetActive(false);\r\n               
+    break;\r\n            case UnityEngine_1.HumanBodyBones.RightHand:\r\n               
+    if (equip.RightHand)\r\n                    equip.RightHand.SetActive(false);\r\n               
+    break;\r\n        }\r\n    }\r\n    GetItemBone(equipItem) {\r\n        switch
+    (equipItem) {\r\n            case TypeSyncHelper_1.EquipList.AnimMike:\r\n           
+    case TypeSyncHelper_1.EquipList.AwardsMike_1:\r\n            case TypeSyncHelper_1.EquipList.AwardsMike_2:\r\n           
+    case TypeSyncHelper_1.EquipList.Balloon_1:\r\n            case TypeSyncHelper_1.EquipList.Balloon_2:\r\n           
+    case TypeSyncHelper_1.EquipList.Balloon_3:\r\n            case TypeSyncHelper_1.EquipList.Balloon_4:\r\n           
+    case TypeSyncHelper_1.EquipList.Balloon_5:\r\n            case TypeSyncHelper_1.EquipList.Balloon_6:\r\n           
+    case TypeSyncHelper_1.EquipList.Balloon_7:\r\n                return UnityEngine_1.HumanBodyBones.RightHand;\r\n           
+    case TypeSyncHelper_1.EquipList.AwardsHead:\r\n                return UnityEngine_1.HumanBodyBones.Head;\r\n           
+    case TypeSyncHelper_1.EquipList.AwardsNeck_1:\r\n            case TypeSyncHelper_1.EquipList.AwardsNeck_2:\r\n               
+    return UnityEngine_1.HumanBodyBones.Neck;\r\n        }\r\n    }\r\n    GetBoneItemList(bone)
+    {\r\n        switch (bone) {\r\n            case UnityEngine_1.HumanBodyBones.Head:\r\n               
+    return this.headItems;\r\n            case UnityEngine_1.HumanBodyBones.RightHand:\r\n               
+    return this.rightHandItems;\r\n            case UnityEngine_1.HumanBodyBones.Neck:\r\n               
+    return this.neckItems;\r\n        }\r\n    }\r\n}\r\nexports.default = EquipManager;\r\nvar
+    EquipItem;\r\n(function (EquipItem) {\r\n    EquipItem[\"balloon_Castle\"] =
+    \"balloon_Castle\";\r\n    EquipItem[\"balloon_Gabin\"] = \"balloon_Gabin\";\r\n   
+    EquipItem[\"balloon_Hajun\"] = \"balloon_Hajun\";\r\n    EquipItem[\"balloon_Jia\"]
+    = \"balloon_Jia\";\r\n    EquipItem[\"balloon_Logo\"] = \"balloon_Logo\";\r\n   
+    EquipItem[\"balloon_Siwoo\"] = \"balloon_Siwoo\";\r\n    EquipItem[\"balloon_Yubin\"]
+    = \"balloon_Yubin\";\r\n})(EquipItem || (EquipItem = {}));\r\nvar BalloonIndex;\r\n(function
+    (BalloonIndex) {\r\n    BalloonIndex[BalloonIndex[\"balloon_Castle\"] = 0] =
+    \"balloon_Castle\";\r\n    BalloonIndex[BalloonIndex[\"balloon_Gabin\"] = 1]
+    = \"balloon_Gabin\";\r\n    BalloonIndex[BalloonIndex[\"balloon_Hajun\"] = 2]
+    = \"balloon_Hajun\";\r\n    BalloonIndex[BalloonIndex[\"balloon_Jia\"] = 3] =
+    \"balloon_Jia\";\r\n    BalloonIndex[BalloonIndex[\"balloon_Logo\"] = 4] = \"balloon_Logo\";\r\n   
+    BalloonIndex[BalloonIndex[\"balloon_Siwoo\"] = 5] = \"balloon_Siwoo\";\r\n   
+    BalloonIndex[BalloonIndex[\"balloon_Yubin\"] = 6] = \"balloon_Yubin\";\r\n})(BalloonIndex
+    || (BalloonIndex = {}));\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiRXF1aXBNYW5hZ2VyLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiRXF1aXBNYW5hZ2VyLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7O0FBQUEsNkNBQTZGO0FBQzdGLGlEQUFxRDtBQUNyRCw2RUFBNEQ7QUFDNUQsa0ZBQW1GO0FBQ25GLHFGQUE4RTtBQUM5RSx1REFBNEM7QUFFNUMsMkRBQTJFO0FBRTNFLE1BQXFCLFlBQWEsU0FBUSxxQ0FBcUI7SUFBL0Q7O1FBZThCLGNBQVMsR0FBa0IsRUFBRSxDQUFDO1FBRzlCLG1CQUFjLEdBQWtCLEVBQUUsQ0FBQztRQUNwQyxhQUFRLEdBQWtCLEVBQUUsQ0FBQztRQUc1QixjQUFTLEdBQWtCLEVBQUUsQ0FBQztRQUdoRCxhQUFRLEdBQStCLElBQUksR0FBRyxFQUF3QixDQUFDO1FBRXhFLHVCQUFrQixHQUFnQixJQUFJLCtCQUFVLEVBQUUsQ0FBQztRQUNuRCxpQkFBWSxHQUFnQixJQUFJLCtCQUFVLEVBQUUsQ0FBQztRQUM3QyxtQkFBYyxHQUFnQixJQUFJLCtCQUFVLEVBQUUsQ0FBQztJQStPMUQsQ0FBQztJQXhRVSxNQUFNLEtBQUssUUFBUTtRQUN0QixJQUFJLENBQUMsWUFBWSxDQUFDLFNBQVMsRUFBRTtZQUN6QixNQUFNLFVBQVUsR0FBRyxDQUFBLHdCQUFVLENBQUMsZ0JBQThCLENBQUEsQ0FBQztZQUM3RCxJQUFJLElBQUksQ0FBQyxTQUFTLEtBQUssSUFBSSxFQUFFO2dCQUN6QixJQUFJLENBQUMsU0FBUyxHQUFHLElBQUksd0JBQVUsQ0FBQyxZQUFZLENBQUMsSUFBSSxDQUFDLENBQUMsWUFBWSxTQUFDLFlBQVksRUFBRyxDQUFDO2FBQ25GO1NBQ0o7UUFDRCxPQUFPLFlBQVksQ0FBQyxTQUFTLENBQUM7SUFDbEMsQ0FBQztJQW1CRCxLQUFLO1FBQ0QsWUFBWSxDQUFDLFNBQVMsR0FBRyxJQUFJLENBQUM7SUFDbEMsQ0FBQztJQUVELEtBQUs7UUFDRCxJQUFJLENBQUMsUUFBUSxDQUFD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","assetPath":"Assets/Scripts/Manager/EquipManager.ts","manifest":{"properties":[{"assembly":"UnityEngine.CoreModule","name":"headItems","type":"UnityEngine.GameObject[]","isArray":true,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"Header","args":["\"Head\""]},{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"rightHandItems","type":"UnityEngine.GameObject[]","isArray":true,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"Header","args":["\"Right
+    Hand\""]},{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"balloons","type":"UnityEngine.GameObject[]","isArray":true,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"neckItems","type":"UnityEngine.GameObject[]","isArray":true,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"Header","args":["\"Neck\""]},{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"onUnequipRightHand","type":"UnityEngine.Events.UnityEvent","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]},{"assembly":"UnityEngine.CoreModule","name":"equipBalloon","type":"UnityEngine.Events.UnityEvent","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]},{"assembly":"UnityEngine.CoreModule","name":"onEquipBalloon","type":"UnityEngine.Events.UnityEvent","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[]}],"name":"EquipManager","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: 8d29031890ff2608eddb9d29d6c27711
+  onlyWriteTrigger: 0

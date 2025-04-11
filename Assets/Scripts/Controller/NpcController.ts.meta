@@ -1,0 +1,53 @@
+fileFormatVersion: 2
+guid: 213c19ce5d81ca4419eec09cb3c4610d
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
+    { value: true });\r\nconst TMPro_1 = require(\"TMPro\");\r\nconst UnityEngine_1
+    = require(\"UnityEngine\");\r\nconst UnityEngine_UI_1 = require(\"UnityEngine.UI\");\r\nconst
+    ZEPETO_Character_Controller_1 = require(\"ZEPETO.Character.Controller\");\r\nconst
+    ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nconst LocalizationController_1
+    = require(\"../../ZepetoScripts/Localize/LocalizationController\");\r\nconst
+    DataManager_1 = require(\"../Manager/DataManager\");\r\nclass NpcController extends
+    ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n    constructor() {\r\n        super(...arguments);\r\n       
+    this.indexList = [];\r\n        this.pageNum = 0;\r\n    }\r\n    Start() {\r\n       
+    this.localizationController = this.dialogueText.GetComponent($typeof(LocalizationController_1.default));\r\n       
+    this.StartCoroutine(this.SpawnNpc());\r\n        // ZepetoCharacterCreator.CreateByZepetoId(this.zepetoId,
+    spawnInfo, (character: ZepetoCharacter) => {\r\n        //     character.tag
+    = \"NPC\";\r\n        //     this._npc = character;\r\n        // });\r\n       
+    this.nextDialogueButton.onClick.AddListener(() => {\r\n            this.pageNum
+    = UnityEngine_1.Mathf.Clamp(this.pageNum + 1, 0, this.indexList.length - 1);\r\n           
+    this.localizationController.TranslateText(this.indexList[this.pageNum]);\r\n           
+    if (this.pageNum === this.indexList.length - 1)\r\n                this.nextDialogueButton.gameObject.SetActive(false);\r\n       
+    });\r\n        this.closeDialogueButton.onClick.AddListener(() => {\r\n           
+    this.dialogueUI.SetActive(false);\r\n            this.pageNum = 0;\r\n           
+    this.dialogueText.text = \"\";\r\n            if (!this.nextDialogueButton.gameObject.activeSelf)\r\n               
+    this.nextDialogueButton.gameObject.SetActive(true);\r\n        });\r\n    }\r\n   
+    *SpawnNpc() {\r\n        while (true) {\r\n            yield null;\r\n           
+    if (DataManager_1.default.Instance?.IsGetPlayerDB)\r\n                break;\r\n       
+    }\r\n        if (DataManager_1.default.Instance.PlayerDB.isHSManager == true)\r\n           
+    return;\r\n        const spawnInfo = new ZEPETO_Character_Controller_1.SpawnInfo();\r\n       
+    spawnInfo.position = this.spawnPos.position;\r\n        spawnInfo.rotation =
+    this.spawnPos.rotation;\r\n        ZEPETO_Character_Controller_1.ZepetoCharacterCreator.CreateByUserId(this.zepetoId,
+    spawnInfo, (character) => {\r\n            character.tag = \"NPC\";\r\n           
+    this._npc = character;\r\n        });\r\n    }\r\n    OpenDialogue() {\r\n       
+    this.dialogueUI.SetActive(true);\r\n        this.localizationController.TranslateText(this.indexList[this.pageNum]);\r\n   
+    }\r\n}\r\nexports.default = NpcController;\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiTnBjQ29udHJvbGxlci5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIk5wY0NvbnRyb2xsZXIudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7QUFBQSxpQ0FBd0M7QUFDeEMsNkNBQTBEO0FBQzFELG1EQUF3QztBQUN4Qyw2RUFBaUc7QUFDakcsaURBQXFEO0FBQ3JELGdHQUF5RjtBQUN6Rix3REFBaUQ7QUFFakQsTUFBcUIsYUFBYyxTQUFRLHFDQUFxQjtJQUFoRTs7UUFROEIsY0FBUyxHQUFhLEVBQUUsQ0FBQztRQUkzQyxZQUFPLEdBQVcsQ0FBQyxDQUFDO0lBbURoQyxDQUFDO0lBakRXLEtBQUs7UUFDVCxJQUFJLENBQUMsc0JBQXNCLEdBQUcsSUFBSSxDQUFDLFlBQVksQ0FBQyxZQUFZLFNBQUMsZ0NBQXNCLEVBQUcsQ0FBQztRQUV2RixJQUFJLENBQUMsY0FBYyxDQUFDLElBQUksQ0FBQyxRQUFRLEVBQUUsQ0FBQyxDQUFDO1FBRXJDLHNHQUFzRztRQUN0Ryw2QkFBNkI7UUFDN0IsNkJBQTZCO1FBQzdCLE1BQU07UUFFTixJQUFJLENBQUMsa0JBQWtCLENBQUMsT0FBTyxDQUFDLFdBQVcsQ0FBQyxHQUFHLEVBQUU7WUFDN0MsSUFBSSxDQUFDLE9BQU8sR0FBRyxtQkFBSyxDQUFDLEtBQUssQ0FBQyxJQUFJLENBQUMsT0FBTyxHQUFHLENBQUMsRUFBRSxDQUFDLEVBQUUsSUFBSSxDQUFDLFNBQVMsQ0FBQyxNQUFNLEdBQUcsQ0FBQyxDQUFDLENBQUM7WUFDM0UsSUFBSSxDQUFDLHNCQUFzQixDQUFDLGFBQWEsQ0FBQyxJQUFJLENBQUMsU0FBUyxDQUFDLElBQUksQ0FBQyxPQUFPLENBQUMsQ0FBQyxDQUFDO1lBRXhFLElBQUksSUFBSSxDQUFDLE9BQU8sS0FBSyxJQUFJLENBQUMsU0FBUyxDQUFDLE1BQU0sR0FBRyxDQUFDO2dCQUFFLElBQUksQ0FBQyxrQkFBa0IsQ0FBQyxVQUFVLENBQUMsU0FBUyxDQUFDLEtBQUssQ0FBQyxDQUFDO1FBQ3hHLENBQUMsQ0FBQyxDQUFBO1FBRUYsSUFBSSxDQUFDLG1CQUFtQixDQUFDLE9BQU8sQ0FBQyxXQUFXLENBQUMsR0FBRyxFQUFFO1lBQzlDLElBQUksQ0FBQyxVQUFVLENBQUMsU0FBUyxDQUFDLEtBQUssQ0FBQyxDQUFDO1lBQ2pDLElBQUksQ0FBQyxPQUFPLEdBQUcsQ0FBQyxDQUFDO1lBQ2pCLElBQUksQ0FBQyxZQUFZLENBQUMsSUFBSSxHQUFHLEVBQUUsQ0FBQTtZQUMzQixJQUFJLENBQUMsSUFBSSxDQUFDLGtCQUFrQixDQUFDLFVBQVUsQ0FBQyxVQUFVO2dCQUFFLElBQUksQ0FBQyxrQkFBa0IsQ0FBQyxVQUFVLENBQUMsU0FBUyxDQUFDLElBQUksQ0FBQyxDQUFDO1FBQzNHLENBQUMsQ0FBQyxDQUFBO0lBRU4sQ0FBQztJQUVPLENBQUMsUUFBUTtRQUNiLE9BQU8sSUFBSSxFQUFFO1lBQ1QsTUFBTSxJQUFJLENBQUM7WUFDWCxJQUFJLHFCQUFXLENBQUMsUUFBUSxFQUFFLGFBQWE7Z0JBQUUsTUFBTTtTQUNsRDtRQUVELElBQUkscUJBQVcsQ0FBQyxRQUFRLENBQUMsUUFBUSxDQUFDLFdBQVcsSUFBSSxJQUFJO1lBQUUsT0FBTztRQUU5RCxNQUFNLFNBQVMsR0FBRyxJQUFJLHVDQUFTLEVBQUUsQ0FBQztRQUNsQyxTQUFTLENBQUMsUUFBUSxHQUFHLElBQUksQ0FBQyxRQUFRLENBQUMsUUFBUSxDQUFDO1FBQzVDLFNBQVMsQ0FBQyxRQUFRLEdBQUcsSUFBSSxDQUFDLFFBQVEsQ0FBQyxRQUFRLENBQUM7UUFFNUMsb0RBQXNCLENBQUMsY0FBYyxDQUFDLElBQUksQ0FBQyxRQUFRLEVBQUUsU0FBUyxFQUFFLENBQUMsU0FBMEIsRUFBRSxFQUFFO1lBQzNGLFNBQVMsQ0FBQyxHQUFHLEdBQUcsS0FBSyxDQUFDO1lBQ3RCLElBQUksQ0FBQyxJQUFJLEdBQUcsU0FBUyxDQUFDO1FBQzFCLENBQUMsQ0FBQyxDQUFDO0lBQ1AsQ0FBQztJQUVNLFlBQVk7UUFDZixJQUFJLENBQUMsVUFBVSxDQUFDLFNBQVMsQ0FBQyxJQUFJLENBQUMsQ0FBQztRQUNoQyxJQUFJLENBQUMsc0JBQXNCLENBQUMsYUFBYSxDQUFDLElBQUksQ0FBQyxTQUFTLENBQUMsSUFBSSxDQUFDLE9BQU8sQ0FBQyxDQUFDLENBQUM7SUFDNUUsQ0FBQztDQUVKO0FBL0RELGdDQStEQyJ9","assetPath":"Assets/Scripts/Controller/NpcController.ts","manifest":{"properties":[{"assembly":"UnityEngine.CoreModule","name":"spawnPos","type":"UnityEngine.Transform","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"mscorlib","name":"zepetoId","type":"System.String","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"dialogueUI","type":"UnityEngine.GameObject","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"Unity.TextMeshPro","name":"dialogueText","type":"TMPro.TextMeshProUGUI","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.UI","name":"nextDialogueButton","type":"UnityEngine.UI.Button","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.UI","name":"closeDialogueButton","type":"UnityEngine.UI.Button","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"mscorlib","name":"indexList","type":"System.Single[]","isArray":true,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]}],"name":"NpcController","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: 9e4fc545ab4131da7c39d2abeda0436a
+  onlyWriteTrigger: 0

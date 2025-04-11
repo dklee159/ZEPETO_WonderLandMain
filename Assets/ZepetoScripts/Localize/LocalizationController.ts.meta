@@ -1,0 +1,66 @@
+fileFormatVersion: 2
+guid: 4a7da1b24ca9b4d4daa38287634d69ba
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
+    { value: true });\r\nconst ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nconst
+    TMPro_1 = require(\"TMPro\");\r\nconst UnityEngine_UI_1 = require(\"UnityEngine.UI\");\r\nconst
+    TypeSyncHelper_1 = require(\"../SyncHelper/TypeSyncHelper\");\r\nconst TranslateManager_1
+    = require(\"./TranslateManager\");\r\nclass LocalizationController extends ZEPETO_Script_1.ZepetoScriptBehaviour
+    {\r\n    constructor() {\r\n        super(...arguments);\r\n        this.textIndex
+    = 0;\r\n        this.supportHead = false;\r\n        this.supportTail = false;\r\n       
+    this.isArray = false;\r\n        this.indexs = [];\r\n        this._textList
+    = [];\r\n        this.textMap = new Map();\r\n        this.isStarted = false;\r\n   
+    }\r\n    get textList() { return this._textList; }\r\n    set textList(value)
+    { this._textList = value; }\r\n    Start() {\r\n        this.onStart();\r\n   
+    }\r\n    // public RemoteStart() {\r\n    //     this.onStart();\r\n    // }\r\n   
+    onStart() {\r\n        if (this.isStarted)\r\n            return;\r\n       
+    this.isStarted = true;\r\n        if (this.gameObject.TryGetComponent($typeof(UnityEngine_UI_1.Text),
+    null)) {\r\n            this.gameObject.GetComponent($typeof(UnityEngine_UI_1.Text)).text
+    = this.SupportText(TranslateManager_1.default.GetText(this.textIndex));\r\n       
+    }\r\n        else if (this.gameObject.TryGetComponent($typeof(TMPro_1.TextMeshPro),
+    null)) {\r\n            this.gameObject.GetComponent($typeof(TMPro_1.TextMeshPro)).text
+    = this.SupportText(TranslateManager_1.default.GetText(this.textIndex));\r\n       
+    }\r\n        else if (this.gameObject.TryGetComponent($typeof(TMPro_1.TextMeshProUGUI),
+    null)) {\r\n            this.gameObject.GetComponent($typeof(TMPro_1.TextMeshProUGUI)).text
+    = this.SupportText(TranslateManager_1.default.GetText(this.textIndex));\r\n       
+    }\r\n        else {\r\n            console.error(TypeSyncHelper_1.ERROR.TRANSLATE_NOT_FOUND);\r\n       
+    }\r\n        // Array\r\n        if (!this.isArray)\r\n            return;\r\n       
+    for (const index of this.indexs) {\r\n            const text = TranslateManager_1.default.GetText(index);\r\n           
+    this.textMap.set(index, text);\r\n            this.textList.push(text);\r\n       
+    }\r\n    }\r\n    SupportText(text) {\r\n        if (this.supportHead)\r\n           
+    text = this.headText.concat(text);\r\n        if (this.supportTail)\r\n           
+    text = text.concat(this.tailText);\r\n        return text;\r\n    }\r\n    TranslateText(index)
+    {\r\n        if (this.gameObject.TryGetComponent($typeof(UnityEngine_UI_1.Text),
+    null)) {\r\n            this.gameObject.GetComponent($typeof(UnityEngine_UI_1.Text)).text
+    = this.SupportText(TranslateManager_1.default.GetText(index));\r\n        }\r\n       
+    else if (this.gameObject.TryGetComponent($typeof(TMPro_1.TextMeshPro), null))
+    {\r\n            this.gameObject.GetComponent($typeof(TMPro_1.TextMeshPro)).text
+    = this.SupportText(TranslateManager_1.default.GetText(index));\r\n        }\r\n       
+    else if (this.gameObject.TryGetComponent($typeof(TMPro_1.TextMeshProUGUI), null))
+    {\r\n            this.gameObject.GetComponent($typeof(TMPro_1.TextMeshProUGUI)).text
+    = this.SupportText(TranslateManager_1.default.GetText(index));\r\n        }\r\n       
+    else {\r\n            console.error(TypeSyncHelper_1.ERROR.TRANSLATE_NOT_FOUND);\r\n       
+    }\r\n    }\r\n    GetTextInArray(index) {\r\n        if (!this.isStarted)\r\n           
+    this.onStart();\r\n        if (this.textMap.has(index))\r\n            return
+    this.textMap.get(index);\r\n    }\r\n}\r\nexports.default = LocalizationController;\r\n//#
+    sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiTG9jYWxpemF0aW9uQ29udHJvbGxlci5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIkxvY2FsaXphdGlvbkNvbnRyb2xsZXIudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7QUFBQSxpREFBcUQ7QUFDckQsaUNBQXFEO0FBQ3JELG1EQUFzQztBQUN0QyxpRUFBcUQ7QUFDckQseURBQWtEO0FBR2xELE1BQXFCLHNCQUF1QixTQUFRLHFDQUFxQjtJQUF6RTs7UUFFOEIsY0FBUyxHQUFXLENBQUMsQ0FBQztRQUd0QixnQkFBVyxHQUFZLEtBQUssQ0FBQztRQUM3QixnQkFBVyxHQUFZLEtBQUssQ0FBQztRQUs3QixZQUFPLEdBQVksS0FBSyxDQUFDO1FBQ3pCLFdBQU0sR0FBYSxFQUFFLENBQUM7UUFDeEMsY0FBUyxHQUFhLEVBQUUsQ0FBQztRQUcxQixZQUFPLEdBQXlCLElBQUksR0FBRyxFQUFrQixDQUFDO1FBRXpELGNBQVMsR0FBWSxLQUFLLENBQUM7SUF1RHZDLENBQUM7SUEzREcsSUFBVyxRQUFRLEtBQWUsT0FBTyxJQUFJLENBQUMsU0FBUyxDQUFDLENBQUMsQ0FBQztJQUMxRCxJQUFZLFFBQVEsQ0FBQyxLQUFlLElBQUksSUFBSSxDQUFDLFNBQVMsR0FBRyxLQUFLLENBQUMsQ0FBQyxDQUFDO0lBS2pFLEtBQUs7UUFDRCxJQUFJLENBQUMsT0FBTyxFQUFFLENBQUM7SUFDbkIsQ0FBQztJQUVELHlCQUF5QjtJQUN6QixzQkFBc0I7SUFDdEIsSUFBSTtJQUVJLE9BQU87UUFDWCxJQUFHLElBQUksQ0FBQyxTQUFTO1lBQUUsT0FBTztRQUMxQixJQUFJLENBQUMsU0FBUyxHQUFHLElBQUksQ0FBQztRQUV0QixJQUFJLElBQUksQ0FBQyxVQUFVLENBQUMsZUFBZSxTQUFDLHFCQUFJLEdBQUUsSUFBSSxDQUFDLEVBQUU7WUFDN0MsSUFBSSxDQUFDLFVBQVUsQ0FBQyxZQUFZLFNBQUMscUJBQUksRUFBRyxDQUFDLElBQUksR0FBRyxJQUFJLENBQUMs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","assetPath":"Assets/ZepetoScripts/Localize/LocalizationController.ts","manifest":{"properties":[{"assembly":"mscorlib","name":"textIndex","type":"System.Single","isArray":false,"initValue":["0"],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"mscorlib","name":"supportHead","type":"System.Boolean","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"Header","args":["\"Support
+    - Index\""]},{"name":"SerializeField","args":[]}]},{"assembly":"mscorlib","name":"supportTail","type":"System.Boolean","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"mscorlib","name":"headText","type":"System.String","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"mscorlib","name":"tailText","type":"System.String","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"mscorlib","name":"isArray","type":"System.Boolean","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"Header","args":["\"Array\""]},{"name":"SerializeField","args":[]}]},{"assembly":"mscorlib","name":"indexs","type":"System.Single[]","isArray":true,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]}],"name":"LocalizationController","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: 1a553dbcd96cf30a3c0e701fea0f4afc
+  onlyWriteTrigger: 0

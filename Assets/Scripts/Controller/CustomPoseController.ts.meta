@@ -1,0 +1,83 @@
+fileFormatVersion: 2
+guid: 2210c1960ebdc7743853057bedb902da
+importerOverride: ZEPETO.Script.Compiler:ZEPETO.Script:TypescriptAssetImporter
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: -1123457745, guid: 54cf806323ffe4418a4ce4cc63fe6b9d, type: 3}
+  isAssemblyDeclarations: 0
+  assembly: 
+  generateAllTypes: 1
+  types: []
+  generateWrapper: 0
+  overrideWrapperTypes: 0
+  wrapperTypes: []
+  WrapperFilters: []
+  wrapperOutputDirectory: Generated
+  compiledResult: '{"source":"\"use strict\";\r\nObject.defineProperty(exports, \"__esModule\",
+    { value: true });\r\nconst UnityEngine_UI_1 = require(\"UnityEngine.UI\");\r\nconst
+    ZEPETO_Script_1 = require(\"ZEPETO.Script\");\r\nconst UnityEngine_1 = require(\"UnityEngine\");\r\nconst
+    ZEPETO_Character_Controller_1 = require(\"ZEPETO.Character.Controller\");\r\nconst
+    DataManager_1 = require(\"../Manager/DataManager\");\r\nconst EquipManager_1
+    = require(\"../Manager/EquipManager\");\r\nconst GameManager_1 = require(\"../GameManager\");\r\nconst
+    TypeSyncHelper_1 = require(\"../../ZepetoScripts/SyncHelper/TypeSyncHelper\");\r\nconst
+    MultiplayManager_1 = require(\"../../ZepetoScripts/Multiplay/MultiplayManager\");\r\nclass
+    CustomPoseController extends ZEPETO_Script_1.ZepetoScriptBehaviour {\r\n    constructor()
+    {\r\n        super(...arguments);\r\n        this.poseAnimations = [];\r\n   
+    }\r\n    RemoteStart() {\r\n        this.poseButton1.onClick.AddListener(() =>
+    {\r\n            this.CustomPosePressed(this.poseAnimations[Pose_Anim.Panel_Pose_1]);\r\n           
+    // this.PoseButtonPushed(WonderState.Panel_Pose_1);\r\n        });\r\n       
+    this.poseButton2.onClick.AddListener(() => {\r\n            this.CustomPosePressed(this.poseAnimations[Pose_Anim.Panel_Pose_2]);\r\n           
+    // this.PoseButtonPushed(WonderState.Panel_Pose_2);\r\n        });\r\n       
+    this.poseButton3.onClick.AddListener(() => {\r\n            this.CustomPosePressed(this.poseAnimations[Pose_Anim.Panel_Pose_3]);\r\n           
+    // this.PoseButtonPushed(WonderState.Panel_Pose_3);\r\n        });\r\n       
+    this.awardPoseButton1.onClick.AddListener(() => {\r\n            this.CustomPosePressed(this.poseAnimations[Pose_Anim.Panel_LOCK_Pose_1]);\r\n           
+    // this.PoseButtonPushed(WonderState.Panel_LOCK_Pose_1);\r\n        });\r\n       
+    this.awardPoseButton2.onClick.AddListener(() => {\r\n            this.CustomPosePressed(this.poseAnimations[Pose_Anim.Panel_LOCK_Pose_2]);\r\n           
+    // this.PoseButtonPushed(WonderState.Panel_LOCK_Pose_2);\r\n        });\r\n       
+    this.awardPoseButton3.onClick.AddListener(() => {\r\n            this.CustomPosePressed(this.poseAnimations[Pose_Anim.Panel_LOCK_Pose_3]);\r\n           
+    // this.PoseButtonPushed(WonderState.Panel_LOCK_Pose_3);\r\n        });\r\n       
+    this._localCharacter = ZEPETO_Character_Controller_1.ZepetoPlayers.instance.LocalPlayer.zepetoPlayer.character;\r\n   
+    }\r\n    CustomPosePressed(anim) {\r\n        this._localCharacter.SetGesture(anim);\r\n       
+    this.StartCoroutine(this.WaitForExit());\r\n    }\r\n    *WaitForExit() {\r\n       
+    if (this._localCharacter) {\r\n            while (true) {\r\n               
+    if (this._localCharacter.tryJump || this._localCharacter.tryMove) {\r\n                   
+    this._localCharacter.CancelGesture();\r\n                    break;\r\n               
+    }\r\n                yield;\r\n            }\r\n        }\r\n    }\r\n    PoseButtonPushed(wonderState)
+    {\r\n        DataManager_1.default.Instance.SetWonderState(wonderState, true);\r\n       
+    this.StopCoroutine(this.OnMoveChecker_Pose());\r\n        if (this.poseCoroutine)\r\n           
+    this.StopCoroutine(this.poseCoroutine);\r\n        this.poseCoroutine = this.StartCoroutine(this.OnMoveChecker_Pose());\r\n       
+    // Sing Mic Unequip\r\n        // if (EquipManager.Instance.micEquip) {\r\n       
+    //     const data = new RoomData();\r\n        //     data.Add(EVENT_MESSAGE.Name,
+    EquipManager.Instance.MicName);\r\n        //     data.Add(EVENT_MESSAGE.Attach,
+    HumanBodyBones.RightHand);\r\n        //     GameManager.Instance.ReceiveEquipSignal(data,
+    false);\r\n        // }\r\n        // // Sing Mic Equip\r\n        // if (wonderState
+    == WonderState.Panel_LOCK_Pose_1) {\r\n        //     const data = new RoomData();\r\n       
+    //     data.Add(EVENT_MESSAGE.Name, EquipManager.Instance.MicName);\r\n       
+    //     data.Add(EVENT_MESSAGE.Attach, HumanBodyBones.RightHand);\r\n        //    
+    MultiplayManager.instance.room.Send(EVENT_MESSAGE.Equip, data.GetObject());\r\n       
+    // }\r\n    }\r\n    /* Player Move Check Pose */\r\n    *OnMoveChecker_Pose()
+    {\r\n        const character = ZEPETO_Character_Controller_1.ZepetoPlayers.instance.GetPlayer(MultiplayManager_1.default.instance.room.SessionId).character;\r\n       
+    const animator = character.ZepetoAnimator;\r\n        while (true) {\r\n           
+    if (character.tryJump || character.tryMove)\r\n                break;\r\n           
+    yield null;\r\n        }\r\n        const wonderState = animator.GetInteger(TypeSyncHelper_1.Anim.WonderState);\r\n       
+    DataManager_1.default.Instance.SetWonderState(wonderState, false);\r\n       
+    // Sing Mic Unequip\r\n        // if (wonderState == WonderState.Panel_LOCK_Pose_1
+    || EquipManager.Instance.micEquip) {\r\n        //     const data = new RoomData();\r\n       
+    //     data.Add(EVENT_MESSAGE.Name, EquipManager.Instance.MicName);\r\n       
+    //     data.Add(EVENT_MESSAGE.Attach, HumanBodyBones.RightHand);\r\n        //    
+    GameManager.Instance.ReceiveEquipSignal(data, false);\r\n        // }\r\n   
+    }\r\n    UpdateAwardPose(isClear) {\r\n        if (isClear)\r\n            this.awardPoseLockPanel.SetActive(false);\r\n   
+    }\r\n}\r\nexports.default = CustomPoseController;\r\nvar Pose_Anim;\r\n(function
+    (Pose_Anim) {\r\n    Pose_Anim[Pose_Anim[\"Panel_Pose_1\"] = 0] = \"Panel_Pose_1\";\r\n   
+    Pose_Anim[Pose_Anim[\"Panel_Pose_2\"] = 1] = \"Panel_Pose_2\";\r\n    Pose_Anim[Pose_Anim[\"Panel_Pose_3\"]
+    = 2] = \"Panel_Pose_3\";\r\n    Pose_Anim[Pose_Anim[\"Panel_LOCK_Pose_1\"] =
+    3] = \"Panel_LOCK_Pose_1\";\r\n    Pose_Anim[Pose_Anim[\"Panel_LOCK_Pose_2\"]
+    = 4] = \"Panel_LOCK_Pose_2\";\r\n    Pose_Anim[Pose_Anim[\"Panel_LOCK_Pose_3\"]
+    = 5] = \"Panel_LOCK_Pose_3\";\r\n})(Pose_Anim || (Pose_Anim = {}));\r\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiQ3VzdG9tUG9zZUNvbnRyb2xsZXIuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyJDdXN0b21Qb3NlQ29udHJvbGxlci50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOztBQUFBLG1EQUF3QztBQUN4QyxpREFBcUQ7QUFDckQsNkNBQW1GO0FBQ25GLDZFQUE2RTtBQUU3RSx3REFBaUQ7QUFDakQsMERBQW1EO0FBQ25ELGdEQUF5QztBQUN6QyxrRkFBaUc7QUFDakcscUZBQThFO0FBRTlFLE1BQXFCLG9CQUFxQixTQUFRLHFDQUFxQjtJQUF2RTs7UUFVOEIsbUJBQWMsR0FBb0IsRUFBRSxDQUFDO0lBeUduRSxDQUFDO0lBcEdVLFdBQVc7UUFDZCxJQUFJLENBQUMsV0FBVyxDQUFDLE9BQU8sQ0FBQyxXQUFXLENBQUMsR0FBRyxFQUFFO1lBQ3RDLElBQUksQ0FBQyxpQkFBaUIsQ0FBQyxJQUFJLENBQUMsY0FBYyxDQUFDLFNBQVMsQ0FBQyxZQUFZLENBQUMsQ0FBQyxDQUFDO1lBQ3BFLG1EQUFtRDtRQUN2RCxDQUFDLENBQUMsQ0FBQztRQUVILElBQUksQ0FBQyxXQUFXLENBQUMsT0FBTyxDQUFDLFdBQVcsQ0FBQyxHQUFHLEVBQUU7WUFDdEMsSUFBSSxDQUFDLGlCQUFpQixDQUFDLElBQUksQ0FBQyxjQUFjLENBQUMsU0FBUyxDQUFDLFlBQVksQ0FBQyxDQUFDLENBQUM7WUFDcEUsbURBQW1EO1FBQ3ZELENBQUMsQ0FBQyxDQUFDO1FBRUgsSUFBSSxDQUFDLFdBQVcsQ0FBQyxPQUFPLENBQUMsV0FBVyxDQUFDLEdBQUcsRUFBRTtZQUN0QyxJQUFJLENBQUMsaUJBQWlCLENBQUMsSUFBSSxDQUFDLGNBQWMsQ0FBQyxTQUFTLENBQUMsWUFBWSxDQUFDLENBQUMsQ0FBQztZQUNwRSxtREFBbUQ7UUFDdkQsQ0FBQyxDQUFDLENBQUM7UUFFSCxJQUFJLENBQUMsZ0JBQWdCLENBQUMsT0FBTyxDQUFDLFdBQVcsQ0FBQyxHQUFHLEVBQUU7WUFDM0MsSUFBSSxD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","assetPath":"Assets/Scripts/Controller/CustomPoseController.ts","manifest":{"properties":[{"assembly":"UnityEngine.UI","name":"poseButton1","type":"UnityEngine.UI.Button","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.UI","name":"poseButton2","type":"UnityEngine.UI.Button","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.UI","name":"poseButton3","type":"UnityEngine.UI.Button","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.UI","name":"awardPoseButton1","type":"UnityEngine.UI.Button","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.UI","name":"awardPoseButton2","type":"UnityEngine.UI.Button","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.UI","name":"awardPoseButton3","type":"UnityEngine.UI.Button","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.CoreModule","name":"awardPoseLockPanel","type":"UnityEngine.GameObject","isArray":false,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]},{"assembly":"UnityEngine.AnimationModule","name":"poseAnimations","type":"UnityEngine.AnimationClip[]","isArray":true,"initValue":[],"enumKeys":[],"enumValues":[],"attributes":[{"name":"SerializeField","args":[]}]}],"name":"CustomPoseController","description":"","hasAnimatorMove":false},"isCompiled":true}'
+  typescriptHash: ff24b0c930f63b95e4ae45decaca8657
+  onlyWriteTrigger: 0
